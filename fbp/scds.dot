@@ -1,0 +1,31 @@
+digraph G {
+graph[rankdir=LR];
+byPort -> port;
+byPortgrp -> portgrp;
+byBlock -> block;
+byVport_Port -> pointer;
+byBlock_InPort -> assoc;
+byBlock_OutPort -> assoc;
+byMain_Block -> assoc;
+byBlock_Subcircuit -> assoc;
+byBlock_Portgrp -> assoc;
+byPortgrp_Port -> assoc;
+byInPort_OutPort -> lattice;
+Block -> byBlock_InPort [label="init_whole",fontsize=8];
+Block -> byMain_Block [label="init_part_new",fontsize=8];
+Block -> byBlock_OutPort [label="init_whole",fontsize=8];
+Block -> byBlock_Portgrp [label="init_whole",fontsize=8];
+Port -> byBlock_InPort [label="init_part_new",fontsize=8];
+Main -> byMain_Block [label="init_whole",fontsize=8];
+Port -> byBlock_OutPort [label="init_part_new",fontsize=8];
+Port -> byInPort_OutPort [label="init_entity",fontsize=8];
+Portgrp -> byBlock_Portgrp [label="init_part_new",fontsize=8];
+Block -> byBlock [label="init",fontsize=8];
+Portgrp -> byPortgrp_Port [label="init_whole",fontsize=8];
+Block -> byBlock_Subcircuit [label="init_whole",fontsize=8];
+Block -> byBlock_Subcircuit [label="init_part_new",fontsize=8];
+Port -> byPort [label="init",fontsize=8];
+Portgrp -> byPortgrp [label="init",fontsize=8];
+Port -> byVport_Port [label="init_entity",fontsize=8];
+Port -> byPortgrp_Port [label="init_part_new",fontsize=8];
+}

@@ -1,0 +1,494 @@
+#!/bin/sh
+# \
+exec tclsh $0 $@
+
+source idpool.tcl
+
+package require tcltest
+namespace import ::tcltest::*
+
+# Returns 1 if custom match is okay
+#         0 otherwise
+proc regionlist_match {expect actual} {
+	# Both list should be of equal length.
+	if {[llength $expect] != [llength $actual]} {
+		return 0
+	}
+	foreach region $expect {
+		if {[lsearch $actual $region] == -1} {
+			return 0
+		}
+	}
+	# All regions in expect result found in actual result.
+	return 1
+}
+
+customMatch regionmatch regionlist_match
+#configure -verbose bpte
+eval configure $argv
+
+test split_region_1 {test split region: single point region} -setup {
+	set region [list "5 5" "5 5"]
+} -body {
+	set newregionlist ""
+	set id "5 5"
+	idpool_split_region $region $id newregionlist
+	set rc $newregionlist
+} -result {}
+
+test split_region_2 {test split region: horizontal region} -setup {
+	set region [list "0 0" "5 0"]
+} -body {
+	set newregionlist ""
+	set id "0 0"
+	idpool_split_region $region $id newregionlist
+	set rc $newregionlist
+} -result {{{1 0} {5 0}}}
+
+test split_region_4 {test split region: horizontal region} -setup {
+	set region [list "0 0" "5 0"]
+} -body {
+	set newregionlist ""
+	set id "2 0"
+	idpool_split_region $region $id newregionlist
+	set rc $newregionlist
+} -result {{{0 0} {1 0}} {{3 0} {5 0}}}
+
+test split_region_5 {test split region: horizontal region} -setup {
+	set region [list "0 0" "5 0"]
+} -body {
+	set newregionlist ""
+	set id "5 0"
+	idpool_split_region $region $id newregionlist
+	set rc $newregionlist
+} -result {{{0 0} {4 0}}}
+
+test split_region_6 {test split region: vertical region} -setup {
+	set region [list "0 0" "0 5"]
+} -body {
+	set newregionlist ""
+	set id "0 0"
+	idpool_split_region $region $id newregionlist
+	set rc $newregionlist
+} -result {{{0 1} {0 5}}}
+
+test split_region_7 {test split region: vertical region} -setup {
+	set region [list "0 0" "0 5"]
+} -body {
+	set newregionlist ""
+	set id "0 2"
+	idpool_split_region $region $id newregionlist
+	set rc $newregionlist
+} -result {{{0 0} {0 1}} {{0 3} {0 5}}}
+
+test split_region_8 {test split region: vertical region} -setup {
+	set region [list "0 0" "0 5"]
+} -body {
+	set newregionlist ""
+	set id "0 5"
+	idpool_split_region $region $id newregionlist
+	set rc $newregionlist
+} -result {{{0 0} {0 4}}}
+
+test split_region_9 {test split region: rectangular region} -setup {
+	set region [list "0 0" "5 5"]
+} -body {
+	set newregionlist ""
+	set id "0 0"
+	idpool_split_region $region $id newregionlist
+	set rc $newregionlist
+} -match {regionmatch} \
+-result {{{0 1} {5 5}} {{1 0} {5 0}}}
+
+test split_region_10 {test split region: rectangular region} -setup {
+	set region [list "0 0" "5 5"]
+} -body {
+	set newregionlist ""
+	set id "2 0"
+	idpool_split_region $region $id newregionlist
+	set rc $newregionlist
+} -match {regionmatch} \
+-result {{{0 0} {1 0}} {{3 0} {5 0}} {{0 1} {5 5}}}
+
+test split_region_11 {test split region: rectangular region} -setup {
+	set region [list "0 0" "5 5"]
+} -body {
+	set newregionlist ""
+	set id "5 0"
+	idpool_split_region $region $id newregionlist
+	set rc $newregionlist
+} -match {regionmatch} \
+-result {{{0 0} {4 0}} {{0 1} {5 5}}}
+
+test split_region_12 {test split region: rectangular region} -setup {
+	set region [list "0 0" "5 5"]
+} -body {
+	set newregionlist ""
+	set id "0 3"
+	idpool_split_region $region $id newregionlist
+	set rc $newregionlist
+} -match {regionmatch} \
+-result {{{0 0} {5 2}} {{1 3} {5 3}} {{0 4} {5 5}}}
+
+test split_region_13 {test split region: rectangular region} -setup {
+	set region [list "0 0" "5 5"]
+} -body {
+	set newregionlist ""
+	set id "3 3"
+	idpool_split_region $region $id newregionlist
+	set rc $newregionlist
+} -match {regionmatch} \
+-result {{{0 0} {5 2}} {{0 3} {2 3}} {{4 3} {5 3}} {{0 4} {5 5}}}
+
+test split_region_13 {test split region: rectangular region} -setup {
+	set region [list "0 0" "5 5"]
+} -body {
+	set newregionlist ""
+	set id "5 3"
+	idpool_split_region $region $id newregionlist
+	set rc $newregionlist
+} -match {regionmatch} \
+-result {{{0 0} {5 2}} {{0 3} {4 3}} {{0 4} {5 5}}}
+
+test split_region_14 {test split region: rectangular region} -setup {
+	set region [list "0 0" "5 5"]
+} -body {
+	set newregionlist ""
+	set id "0 5"
+	idpool_split_region $region $id newregionlist
+	set rc $newregionlist
+} -match {regionmatch} \
+-result {{{0 0} {5 4}} {{1 5} {5 5}}}
+
+test split_region_15 {test split region: rectangular region} -setup {
+	set region [list "0 0" "5 5"]
+} -body {
+	set newregionlist ""
+	set id "3 5"
+	idpool_split_region $region $id newregionlist
+	set rc $newregionlist
+} -match {regionmatch} \
+-result {{{0 0} {5 4}} {{0 5} {2 5}} {{4 5} {5 5}}}
+
+test split_region_16 {test split region: rectangular region} -setup {
+	set region [list "0 0" "5 5"]
+} -body {
+	set newregionlist ""
+	set id "5 5"
+	idpool_split_region $region $id newregionlist
+	set rc $newregionlist
+} -match {regionmatch} \
+-result {{{0 0} {5 4}} {{0 5} {4 5}}}
+
+test idpool_1 {test locating region: rectangular region} -setup {
+} -body {
+	set regionlist ""
+	set region [list "0 0" "5 5"]
+	lappend regionlist $region
+	set region [list "6 6" "6 6"]
+	lappend regionlist $region
+
+	set id "3 3"
+	set rc [idpool_get_id_region $regionlist $id]
+} -result {{0 0} {5 5}}
+
+test idpool_2 {test locating region: point region} -setup {
+} -body {
+	set regionlist ""
+	set region [list "0 0" "5 5"]
+	lappend regionlist $region
+	set region [list "6 6" "6 6"]
+	lappend regionlist $region
+
+	set id "6 6"
+	set rc [idpool_get_id_region $regionlist $id]
+} -result {{6 6} {6 6}}
+
+test idpool_3 {test allocating id: id not in valid region} -setup {
+	array set pool {}
+	idpool_init_member pool
+	
+	set region [list "0 0" "5 5"]
+	idpool_add_region pool $region	
+	set region [list "6 6" "6 6"]
+	idpool_add_region pool $region
+	
+} -body {
+
+	set id "7 7"
+	set rc [idpool_alloc_id pool $id]
+} -result {-1}
+
+test idpool_4 {test allocating id: id from region} -setup {
+	array set pool {}
+	idpool_init_member pool
+	
+	set region [list "0 0" "5 5"]
+	idpool_add_region pool $region	
+	set region [list "6 6" "6 6"]
+	idpool_add_region pool $region
+	
+} -body {
+
+	set id "0 0"
+	set rc [idpool_alloc_id pool $id]
+} -result {1}
+
+test idpool_5 {test allocating id: id from region} -setup {
+	array set pool {}
+	idpool_init_member pool
+	
+	set region [list "0 0" "5 5"]
+	idpool_add_region pool $region	
+	set region [list "6 6" "6 6"]
+	idpool_add_region pool $region
+	
+} -body {
+
+	set id "5 5"
+	set rc [idpool_alloc_id pool $id]
+} -result {1}
+
+test idpool_6 {test allocating id: id from region} -setup {
+	array set pool {}
+	idpool_init_member pool
+	
+	set region [list "0 0" "5 5"]
+	idpool_add_region pool $region	
+	set region [list "6 6" "6 6"]
+	idpool_add_region pool $region
+	
+} -body {
+
+	set id "6 6"
+	set rc [idpool_alloc_id pool $id]
+} -result {1}
+
+test idpool_7 {test allocating next id} -setup {
+	array set pool {}
+	idpool_init_member pool
+	
+	set region [list "0 0" "5 5"]
+	idpool_add_region pool $region	
+	set region [list "6 6" "6 6"]
+	idpool_add_region pool $region
+	
+} -body {
+
+    # Initialize id list.
+	set idlist ""
+	while {1} {
+		set id [idpool_alloc_next_id pool]
+		if {$id == ""} {
+			break
+		}
+		lappend idlist $id
+	}
+	set rc [llength $idlist]
+} -result {37}
+
+test idpool_8 {test allocating next id then free all ids} -setup {
+	array set pool {}
+	idpool_init_member pool
+	
+	set region [list "0 0" "5 5"]
+	idpool_add_region pool $region	
+	set region [list "6 6" "6 6"]
+	idpool_add_region pool $region
+	
+} -body {
+
+    # Initialize id list.
+	set idlist ""
+	while {1} {
+		set id [idpool_alloc_next_id pool]
+		if {$id == ""} {
+			break
+		}
+		lappend idlist $id
+	}
+	foreach id $idlist {
+		set rc [idpool_free_id pool $id]
+		if {$rc != 1} {
+			break
+		}
+	}
+	set rc2 $rc
+} -result {1}
+
+test idpool_9 {test allocating next id then free all ids: invalid region error} -setup {
+	array set pool {}
+	idpool_init_member pool
+	
+	set region [list "0 0" "5 5"]
+	idpool_add_region pool $region	
+	set region [list "6 6" "6 6"]
+	idpool_add_region pool $region
+	
+} -body {
+
+    # Initialize id list.
+	set idlist ""
+	while {1} {
+		set id [idpool_alloc_next_id pool]
+		if {$id == ""} {
+			break
+		}
+		lappend idlist $id
+	}
+
+	# Add invalid id.
+	lappend idlist "7 7"
+
+	foreach id $idlist {
+		set rc [idpool_free_id pool $id]
+		if {$rc != 1} {
+			break
+		}
+	}
+	set rc2 $rc
+} -result {-1}
+
+test idpool_10 {test allocating next id then free all ids: duplicate id error} -setup {
+	array set pool {}
+	idpool_init_member pool
+	
+	set region [list "0 0" "5 5"]
+	idpool_add_region pool $region	
+	set region [list "6 6" "6 6"]
+	idpool_add_region pool $region
+	
+} -body {
+
+    # Initialize id list.
+	set idlist ""
+	while {1} {
+		set id [idpool_alloc_next_id pool]
+		if {$id == ""} {
+			break
+		}
+		lappend idlist $id
+	}
+
+	# Add duplicate id.
+	lappend idlist "0 0"
+
+	foreach id $idlist {
+		set rc [idpool_free_id pool $id]
+		if {$rc != 1} {
+			break
+		}
+	}
+	set rc2 $rc
+} -result {0}
+
+test idpool_11 {test allocating next id then free all ids, then allocate all ids}  -setup {
+	array set pool {}
+	idpool_init_member pool
+	
+	set region [list "0 0" "5 5"]
+	idpool_add_region pool $region	
+	set region [list "6 6" "6 6"]
+	idpool_add_region pool $region
+	
+} -body {
+
+    # Initialize id list.
+	set idlist ""
+	while {1} {
+		set id [idpool_alloc_next_id pool]
+		if {$id == ""} {
+			break
+		}
+		lappend idlist $id
+	}
+
+	foreach id $idlist {
+		idpool_free_id pool $id
+	}
+
+    # Allocate all ids again.
+	set idlist ""
+	while {1} {
+		set id [idpool_alloc_next_id pool]
+		if {$id == ""} {
+			break
+		}
+		lappend idlist $id
+	}
+	set rc [llength $idlist]
+} -result {37}
+
+test idpool_12 {test allocating next id then free all ids, then allocate all ids, 1000s}  -setup {
+	array set pool {}
+	idpool_init_member pool
+	
+	set region [list "0 0" "39 39"]
+	idpool_add_region pool $region	
+	set region [list "40 40" "79 79"]
+	idpool_add_region pool $region
+	
+} -body {
+
+    # Initialize id list.
+	#puts "Alloc ids..."
+	set idlist ""
+	while {1} {
+		set id [idpool_alloc_next_id pool]
+		if {$id == ""} {
+			break
+		}
+		lappend idlist $id
+	}
+	#puts "Free ids..."
+	foreach id $idlist {
+		idpool_free_id pool $id
+	}
+	#puts "Realloc ids..."
+    # Allocate all ids again.
+	set idlist ""
+	while {1} {
+		set id [idpool_alloc_next_id pool]
+		if {$id == ""} {
+			break
+		}
+		lappend idlist $id
+	}
+	set rc [llength $idlist]
+} -result {3200}
+
+test idpool_13 {test resetting the pool after allocating ids}  -setup {
+	array set pool {}
+	idpool_init_member pool
+	
+	set region [list "0 0" "39 39"]
+	idpool_add_region pool $region	
+	set region [list "40 40" "79 79"]
+	idpool_add_region pool $region
+	
+} -body {
+
+    # Initialize id list.
+	set idlist ""
+	while {1} {
+		set id [idpool_alloc_next_id pool]
+		if {$id == ""} {
+			break
+		}
+		lappend idlist $id
+	}
+	foreach id $idlist {
+		idpool_free_id pool $id
+	}
+
+	# Reset the pool
+	idpool_reset_member pool
+	if {$pool(&regionlist) == $pool(&org_regionlist)} {
+		set rc 1 
+	}
+	if {$pool(&freedidlist) == ""} {
+		set rc 1
+	}
+} -result {1}
+
+cleanupTests

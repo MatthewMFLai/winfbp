@@ -1,0 +1,6 @@
+name symbol_source
+filepath $env(DISK2)/component/stock/symbol_source_loopback
+init {T {A B C D E F G H I J K L M N O P Q R S T U V W X Y Z 0}}
+kicker red-ball
+inports {1}
+outports {0 1 2}

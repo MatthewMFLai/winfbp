@@ -1,0 +1,4 @@
+name timer 
+filepath $env(DISK2)/component/basic/timer
+kicker {red-ball}
+outports {1}

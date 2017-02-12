@@ -1,0 +1,13 @@
+set DISK2=C:/winfbp
+set PATH=%DISK2%;C:/winfbp/tclkit;%PATH%
+set PATTERN_HOME=%DISK2%/pattern_tcl
+set UTIL_HOME=%DISK2%/pattern_tcl
+set FBP_HOME=%DISK2%/fbp
+set LAUNCHER_HOME=%DISK2%/launcher
+set COMP_HOME=%DISK2%/component
+set FSM_HOME=%DISK2%/fsm
+set WEB_DRIVER=%DISK2%/web_driver
+set SCDS_HOME=%DISK2%/scds
+set WEB_DRIVER_HOME=%DISK2%/web_driver
+set FACTORY=%DISK2%/factory
+set PHANTOMJS=%DISK2%/utility/phantomjs-2.1.1-windows/bin

@@ -1,0 +1,9 @@
+variable g_service_port
+set g_service_port 14000
+variable g_fcopy_port
+set g_fcopy_port 14001
+variable g_info_port
+set g_info_port 14002
+variable g_workdir
+#set g_workdir /tmp
+set g_workdir [pwd] 

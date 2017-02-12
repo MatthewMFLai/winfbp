@@ -1,0 +1,34 @@
+#Node section
+#Name process_proc
+BEGIN_STATE 
+FIND_TABLE table_fsm::process_generic
+FIND_ROW table_fsm::process_generic
+FIND_FIELD table_fsm::process_generic
+FIND_FIELD_END table_fsm::process_generic
+FIND_ROW_END table_fsm::process_generic
+FIND_TABLE_END table_fsm::process_generic
+END_STATE
+
+#Link section
+#from_state to_state eval_proc action_proc
+BEGIN_LINK
+FIND_TABLE FIND_ROW table_fsm::eval_to_row null 
+FIND_ROW FIND_FIELD table_fsm::eval_to_field table_fsm::act_to_field 
+FIND_FIELD FIND_FIELD_END table_fsm::eval_field_to_field_end table_fsm::act_to_field_end 
+FIND_FIELD FIND_FIELD null table_fsm::act_to_field
+FIND_FIELD_END FIND_FIELD table_fsm::eval_to_field null
+FIND_FIELD_END FIND_ROW_END table_fsm::eval_field_end_to_row_end table_fsm::act_to_row_end
+FIND_ROW_END FIND_ROW table_fsm::eval_to_row null
+FIND_ROW_END FIND_TABLE_END table_fsm::eval_row_end_to_table_end table_fsm::act_to_table_end
+FIND_TABLE_END FIND_TABLE table_fsm::eval_to_table null
+END_LINK
+
+#Init section
+BEGIN_INIT
+proc = table_fsm::init
+END_INIT
+
+#Default state section
+BEGIN_DEFAULT_STATE
+state = FIND_TABLE_END 
+END_DEFAULT_STATE

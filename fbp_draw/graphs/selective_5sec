@@ -1,0 +1,76 @@
+# contents of .c
+draw rectangle 295.0 135.0 355.0 205.0 -fill {light cyan} -tags {system6200 mv}
+draw rectangle 163.0 229.0 211.0 281.0 -fill {light cyan} -tags {system5912 mv}
+draw rectangle 162.0 135.0 210.0 187.0 -fill {light cyan} -tags {system4073 mv}
+draw rectangle 163.0 46.0 211.0 98.0 -fill {light cyan} -tags {system6973 mv}
+draw rectangle 54.0 230.0 105.0 262.0 -fill {light cyan} -tags {system6197 mv}
+draw rectangle 50.0 135.0 101.0 167.0 -fill {light cyan} -tags {system681 mv}
+draw rectangle 52.0 47.0 103.0 79.0 -fill {light cyan} -tags {system8589 mv}
+draw text 55.0 47.0 -anchor nw -font fontBold -tags {system8589 BLOCK mv} -text source1
+draw text 55.0 62.0 -anchor nw -fill red -font fontNormal -tags {system8589 system8589:INPORT:1 PORT mv} -text 1
+draw text 89.0 62.0 -anchor nw -fill blue -font fontNormal -justify right -tags {system8589 system8589:OUTPORT:1 PORT mv} -text 1
+draw line 52.0 62.0 103.0 62.0 -tags {system8589 mv}
+draw text 53.0 135.0 -anchor nw -font fontBold -tags {system681 BLOCK mv} -text source2
+draw text 53.0 150.0 -anchor nw -fill red -font fontNormal -tags {system681 system681:INPORT:1 PORT mv} -text 1
+draw text 87.0 150.0 -anchor nw -fill blue -font fontNormal -justify right -tags {system681 system681:OUTPORT:1 PORT mv} -text 1
+draw line 50.0 150.0 101.0 150.0 -tags {system681 mv}
+draw text 57.0 230.0 -anchor nw -font fontBold -tags {system6197 BLOCK mv} -text source3
+draw text 57.0 245.0 -anchor nw -fill red -font fontNormal -tags {system6197 system6197:INPORT:1 PORT mv} -text 1
+draw text 91.0 245.0 -anchor nw -fill blue -font fontNormal -justify right -tags {system6197 system6197:OUTPORT:1 PORT mv} -text 1
+draw line 54.0 245.0 105.0 245.0 -tags {system6197 mv}
+draw text 166.0 46.0 -anchor nw -font fontBold -tags {system6973 BLOCK mv} -text cloner1
+draw text 166.0 61.0 -anchor nw -fill red -font fontNormal -tags {system6973 system6973:INPORT:1 PORT mv} -text 1
+draw text 200.0 61.0 -anchor nw -fill blue -font fontNormal -justify right -tags {system6973 system6973:OUTPORT:1 PORT mv} -text 1
+draw text 200.0 81.0 -anchor nw -fill blue -font fontNormal -justify right -tags {system6973 system6973:OUTPORT:2 PORT mv} -text 2
+draw line 163.0 61.0 211.0 61.0 -tags {system6973 mv}
+draw text 165.0 135.0 -anchor nw -font fontBold -tags {system4073 BLOCK mv} -text cloner2
+draw text 165.0 150.0 -anchor nw -fill red -font fontNormal -tags {system4073 system4073:INPORT:1 PORT mv} -text 1
+draw text 199.0 150.0 -anchor nw -fill blue -font fontNormal -justify right -tags {system4073 system4073:OUTPORT:1 PORT mv} -text 1
+draw text 199.0 170.0 -anchor nw -fill blue -font fontNormal -justify right -tags {system4073 system4073:OUTPORT:2 PORT mv} -text 2
+draw line 162.0 150.0 210.0 150.0 -tags {system4073 mv}
+draw text 166.0 229.0 -anchor nw -font fontBold -tags {system5912 BLOCK mv} -text cloner3
+draw text 166.0 244.0 -anchor nw -fill red -font fontNormal -tags {system5912 system5912:INPORT:1 PORT mv} -text 1
+draw text 200.0 244.0 -anchor nw -fill blue -font fontNormal -justify right -tags {system5912 system5912:OUTPORT:1 PORT mv} -text 1
+draw text 200.0 264.0 -anchor nw -fill blue -font fontNormal -justify right -tags {system5912 system5912:OUTPORT:2 PORT mv} -text 2
+draw line 163.0 244.0 211.0 244.0 -tags {system5912 mv}
+draw text 298.0 135.0 -anchor nw -font fontBold -tags {system6200 BLOCK mv} -text seq5sec
+draw text 298.0 150.0 -anchor nw -fill red -font fontNormal -tags {system6200 system6200:INPORT:1 PORT mv} -text 1
+draw text 298.0 170.0 -anchor nw -fill red -font fontNormal -tags {system6200 system6200:INPORT:2 PORT mv} -text 2
+draw text 298.0 190.0 -anchor nw -fill red -font fontNormal -tags {system6200 system6200:INPORT:3 PORT mv} -text 3
+draw line 295.0 150.0 355.0 150.0 -tags {system6200 mv}
+draw line 209.0 68.5 234.0 69.0 234.0 23.0 28.0 23.0 28.0 70.0 54.0 69.5 -tags {edge system6973:OUTPORT:1%system8589:INPORT:1}
+draw polygon 237.0 69.0 234.0 66.0 231.0 69.0 234.0 72.0 -fill {} -tags bendtag
+draw polygon 237.0 23.0 234.0 20.0 231.0 23.0 234.0 26.0 -fill {} -tags bendtag
+draw polygon 31.0 23.0 28.0 20.0 25.0 23.0 28.0 26.0 -fill {} -tags bendtag
+draw polygon 31.0 70.0 28.0 67.0 25.0 70.0 28.0 73.0 -fill {} -tags bendtag
+draw line 46.0 78.0 54.0 69.5 45.0 61.0 -tags {deco edge system6973:OUTPORT:1%system8589:INPORT:1}
+draw line 98.0 69.5 165.0 68.5 -tags {edge system8589:OUTPORT:1%system6973:INPORT:1}
+draw line 157.0 77.0 165.0 68.5 156.0 60.0 -tags {deco edge system8589:OUTPORT:1%system6973:INPORT:1}
+draw line 208.0 157.5 235.0 158.0 235.0 116.0 25.0 115.0 25.0 159.0 52.0 157.5 -tags {edge system4073:OUTPORT:1%system681:INPORT:1}
+draw polygon 238.0 158.0 235.0 155.0 232.0 158.0 235.0 161.0 -fill {} -tags bendtag
+draw polygon 238.0 116.0 235.0 113.0 232.0 116.0 235.0 119.0 -fill {} -tags bendtag
+draw polygon 28.0 115.0 25.0 112.0 22.0 115.0 25.0 118.0 -fill {} -tags bendtag
+draw polygon 28.0 159.0 25.0 156.0 22.0 159.0 25.0 162.0 -fill {} -tags bendtag
+draw line 44.0 166.0 52.0 157.5 43.0 149.0 -tags {deco edge system4073:OUTPORT:1%system681:INPORT:1}
+draw line 96.0 157.5 164.0 157.5 -tags {edge system681:OUTPORT:1%system4073:INPORT:1}
+draw line 156.0 166.0 164.0 157.5 156.0 149.0 -tags {deco edge system681:OUTPORT:1%system4073:INPORT:1}
+draw line 209.0 251.5 233.0 252.0 233.0 210.0 28.0 210.0 28.0 253.0 56.0 252.5 -tags {edge system5912:OUTPORT:1%system6197:INPORT:1}
+draw polygon 236.0 252.0 233.0 249.0 230.0 252.0 233.0 255.0 -fill {} -tags bendtag
+draw polygon 236.0 210.0 233.0 207.0 230.0 210.0 233.0 213.0 -fill {} -tags bendtag
+draw polygon 31.0 210.0 28.0 207.0 25.0 210.0 28.0 213.0 -fill {} -tags bendtag
+draw polygon 31.0 253.0 28.0 250.0 25.0 253.0 28.0 256.0 -fill {} -tags bendtag
+draw line 48.0 261.0 56.0 252.5 47.0 244.0 -tags {deco edge system5912:OUTPORT:1%system6197:INPORT:1}
+draw line 100.0 252.5 165.0 251.5 -tags {edge system6197:OUTPORT:1%system5912:INPORT:1}
+draw line 157.0 260.0 165.0 251.5 156.0 243.0 -tags {deco edge system6197:OUTPORT:1%system5912:INPORT:1}
+draw line 209.0 88.5 259.0 89.0 259.0 158.0 297.0 157.5 -tags {edge system6973:OUTPORT:2%system6200:INPORT:1}
+draw polygon 262.0 89.0 259.0 86.0 256.0 89.0 259.0 92.0 -fill {} -tags bendtag
+draw polygon 262.0 158.0 259.0 155.0 256.0 158.0 259.0 161.0 -fill {} -tags bendtag
+draw line 289.0 166.0 297.0 157.5 288.0 149.0 -tags {deco edge system6973:OUTPORT:2%system6200:INPORT:1}
+draw line 208.0 177.5 297.0 177.5 -tags {edge system4073:OUTPORT:2%system6200:INPORT:2}
+draw line 289.0 186.0 297.0 177.5 289.0 169.0 -tags {deco edge system4073:OUTPORT:2%system6200:INPORT:2}
+draw line 209.0 271.5 261.0 272.0 261.0 198.0 297.0 197.5 -tags {edge system5912:OUTPORT:2%system6200:INPORT:3}
+draw polygon 264.0 272.0 261.0 269.0 258.0 272.0 261.0 275.0 -fill {} -tags bendtag
+draw polygon 264.0 198.0 261.0 195.0 258.0 198.0 261.0 201.0 -fill {} -tags bendtag
+draw line 289.0 206.0 297.0 197.5 288.0 189.0 -tags {deco edge system5912:OUTPORT:2%system6200:INPORT:3}
+
+array set m_block "system8589,kicker red system681,outports 1 system4073,filename cloner system681,ipaddr localhost system5912,filepath {\$env(DISK2)/component/basic/cloner} system4073,outports {1 2} system681,inports 1 system8589,filename source system6197,kicker red system4073,init {} system6197,init 100000 system6973,init {} system6973,ipaddr localhost system8589,outports 1 system681,timeout 0 system5912,inports 1 system681,portset {} system5912,filename cloner system8589,init 100000 system6197,filepath {\$env(DISK2)/component/basic/source} system6200,filepath {\$env(DISK2)/component/basic/sequencer} system4073,inports 1 system6973,filepath {\$env(DISK2)/component/basic/cloner} system5912,timeout 0 system5912,outports {1 2} system5912,portset {} system5912,kicker {} system4073,ipaddr localhost system6200,ipaddr localhost system4073,timeout 0 system8589,inports 1 system4073,portset {} system681,kicker red system6197,filename source system6973,inports 1 system6200,filename seq5sec system8589,ipaddr localhost system6973,filename cloner system681,init 100000 system8589,timeout 0 system6200,inports {1 2 3} system8589,portset {} system6197,outports 1 system6200,outports {} system6973,timeout 0 system6973,outports {1 2} system6973,kicker {} system6973,portset {} system6197,ipaddr localhost system681,filepath {\$env(DISK2)/component/basic/source} system6200,init {} system6197,inports 1 system6200,timeout 0 system6200,portset {{PG1 {1 ON} {2 OFF} {3 OFF}}} system4073,filepath {\$env(DISK2)/component/basic/cloner} system6197,timeout 0 system4073,kicker {} system681,filename source system6197,portset {} system6200,kicker {} system8589,filepath {\$env(DISK2)/component/basic/source} system5912,ipaddr localhost system5912,init {}"

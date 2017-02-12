@@ -1,0 +1,4 @@
+name source 
+filepath $env(DISK2)/component/basic/source
+inports {1}
+outports {1}

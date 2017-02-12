@@ -1,0 +1,2330 @@
+tag = hmstart
+slash = 
+param = 
+text = 
+
+tag = html
+slash = 
+param = 
+text = 
+
+tag = head
+slash = 
+param = 
+text =   
+
+tag = title
+slash = 
+param = 
+text = Stock Listings | Companies with a Stock Listing on			 	Toronto Stock Exchange -                Currently Listed
+
+tag = title
+slash = /
+param = 
+text =   
+
+tag = meta
+slash = 
+param = name="Keywords" content="stock listings, stock listing"
+text =   
+
+tag = meta
+slash = 
+param = name="Description" content="Browse our stock listings directory to find all companies listed on the Toronto Stock Exchange and TSX Venture Exchange. Search for a stock listing by company name or symbol."
+text =   
+
+tag = meta
+slash = 
+param = name="Location" content=""
+text =   
+
+tag = META
+slash = 
+param = NAME="WT.cg_n" CONTENT="About TMX Group;English"
+text =   
+
+tag = META
+slash = 
+param = NAME="WT.cg_s" CONTENT="Listed Company Directory"
+text =   
+
+tag = META
+slash = 
+param = NAME="WT.ti" CONTENT="English &gt; About TMX Group &gt; Listed Company Directory &gt;&#10;				Toronto Stock Exchange &gt;&#10;                Currently Listed"
+text =   
+
+tag = link
+slash = 
+param = rel="stylesheet" type="text/css" media="screen" href="http://tmx.com/en/styles/screen.css"
+text =   
+
+tag = link
+slash = 
+param = rel="stylesheet" type="text/css" media="screen" href="http://tmx.com/en/styles/sub.css"
+text =   
+
+tag = link
+slash = 
+param = rel="stylesheet" type="text/css" media="screen" href="http://tmx.com/en/styles/about.css"
+text =   
+
+tag = link
+slash = 
+param = rel="stylesheet" type="text/css" media="print" href="http://tmx.com/en/styles/print.css"
+text =   
+
+tag = script
+slash = 
+param = type="text/javascript" src="http://tmx.com/en/scripts/menu.js"
+text = 
+
+tag = script
+slash = /
+param = 
+text =   
+
+tag = script
+slash = 
+param = type="text/javascript" src="http://tmx.com/en/scripts/ngx.js"
+text = 
+
+tag = script
+slash = /
+param = 
+text =   
+
+tag = script
+slash = 
+param = type="text/javascript" src="http://tmx.com/en/scripts/scripts.js"
+text = 
+
+tag = script
+slash = /
+param = 
+text =   
+
+tag = script
+slash = 
+param = type="text/javascript" src="http://tmx.com/en/scripts/jquery.js"
+text = 
+
+tag = script
+slash = /
+param = 
+text =   
+
+tag = meta
+slash = 
+param = http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"
+text = 
+
+tag = head
+slash = /
+param = 
+text = 
+
+tag = body
+slash = 
+param = id="aboutSection"
+text = 
+
+tag = div
+slash = 
+param = id="pageWrapper"
+text =   
+
+tag = div
+slash = 
+param = id="headerWrapper"
+text =     
+
+tag = div
+slash = 
+param = id="headerContentAd"
+text =       
+
+tag = div
+slash = 
+param = id="logoGlobalNavAd"
+text =         
+
+tag = h1
+slash = 
+param = 
+text = 
+
+tag = a
+slash = 
+param = href="/en/index.html"
+text = 
+
+tag = abbr
+slash = 
+param = title="Toronto Stock Exchange"
+text = TSX
+
+tag = abbr
+slash = /
+param = 
+text =  group
+
+tag = a
+slash = /
+param = 
+text = 
+
+tag = img
+slash = 
+param = src="http://tmx.com/en/images/logos/x_logo_print.gif" alt="TSX Group"
+text = 
+
+tag = h1
+slash = /
+param = 
+text =         
+
+tag = div
+slash = 
+param = id="topAd"
+text =           
+
+tag = script
+slash = 
+param = type="text/javascript" src="http://tmx.com/en/scripts/topAd.js"
+text = 
+
+tag = script
+slash = /
+param = 
+text =         
+
+tag = div
+slash = /
+param = 
+text =         
+
+tag = script
+slash = 
+param = type="text/javascript" src="http://tmx.com/en/scripts/globalNav.js"
+text = 
+
+tag = script
+slash = /
+param = 
+text =       
+
+tag = div
+slash = /
+param = 
+text =     
+
+tag = div
+slash = /
+param = 
+text =   
+
+tag = div
+slash = /
+param = 
+text =   
+
+tag = div
+slash = 
+param = id="mainNavigation"
+text =     
+
+tag = script
+slash = 
+param = type="text/javascript" src="http://tmx.com/en/scripts/mainNav.js"
+text = 
+
+tag = script
+slash = /
+param = 
+text =   
+
+tag = div
+slash = /
+param = 
+text =   
+
+tag = div
+slash = 
+param = id="contentWrapper"
+text =     
+
+tag = div
+slash = 
+param = id="sidebar1Bottom"
+text =       
+
+tag = div
+slash = 
+param = id="sidebar1"
+text =         
+
+tag = script
+slash = 
+param = type="text/javascript" src="http://tmx.com/en/scripts/getQuote.js"
+text = 
+
+tag = script
+slash = /
+param = 
+text =         
+
+tag = script
+slash = 
+param = type="text/javascript" src="http://tmx.com/en/scripts/search.js"
+text = 
+
+tag = script
+slash = /
+param = 
+text =         
+
+tag = div
+slash = 
+param = id="subNavigation" class="aboutListed "
+text =           
+
+tag = div
+slash = 
+param = id="subNavigationTop"
+text =             
+
+tag = script
+slash = 
+param = type="text/javascript" src="http://tmx.com/en/scripts/aboutNav.js"
+text = 
+
+tag = script
+slash = /
+param = 
+text =           
+
+tag = div
+slash = /
+param = 
+text =         
+
+tag = div
+slash = /
+param = 
+text =         
+
+tag = div
+slash = 
+param = class="sidebar1Wrapper"
+text =           
+
+tag = center
+slash = 
+param = 
+text =             
+
+tag = script
+slash = 
+param = type="text/javascript" src="http://tmx.com/en/scripts/superButtonB2BAd.js"
+text = 
+
+tag = script
+slash = /
+param = 
+text =           
+
+tag = center
+slash = /
+param = 
+text =         
+
+tag = div
+slash = /
+param = 
+text =       
+
+tag = div
+slash = /
+param = 
+text =       
+
+tag = div
+slash = 
+param = id="contentHeader"
+text =         
+
+tag = table
+slash = 
+param = cellspacing="0"
+text =         
+
+tag = tbody
+slash = 
+param = 
+text =           
+
+tag = tr
+slash = 
+param = 
+text =             
+
+tag = td
+slash = 
+param = id="breadcrumb"
+text = 
+
+tag = a
+slash = 
+param = href="/en/index.html"
+text = Home
+
+tag = a
+slash = /
+param = 
+text =             &gt;            
+
+tag = a
+slash = 
+param = href="/en/about_tsx/index.html"
+text = About TMX Group
+
+tag = a
+slash = /
+param = 
+text =             &gt;            Listed Company Directory
+
+tag = td
+slash = /
+param = 
+text =             
+
+tag = td
+slash = 
+param = id="printHelp"
+text =               
+
+tag = script
+slash = 
+param = type="text/javascript" src="http://tmx.com/en/scripts/printHelp.js"
+text = 
+
+tag = script
+slash = /
+param = 
+text =             
+
+tag = td
+slash = /
+param = 
+text =           
+
+tag = tr
+slash = /
+param = 
+text =         
+
+tag = tbody
+slash = /
+param = 
+text =         
+
+tag = table
+slash = /
+param = 
+text =         
+
+tag = h2
+slash = 
+param = 
+text = 
+
+tag = img
+slash = 
+param = src="http://tmx.com/en/images/h2_about.gif" alt="Stock Listing"
+text = 
+
+tag = h2
+slash = /
+param = 
+text =       
+
+tag = div
+slash = /
+param = 
+text =       
+
+tag = div
+slash = 
+param = id="mainContent"
+text =         
+
+tag = h3
+slash = 
+param = 
+text = Listed Company Directory
+
+tag = h3
+slash = /
+param = 
+text =         
+
+tag = p
+slash = 
+param = 
+text = Use this directory to search for companies listed on Toronto Stock Exchange and TSX Venture Exchange. Choose the tab associated with the exchange you wish to search, then search for stock listings by company name or stock symbol.
+
+tag = p
+slash = /
+param = 
+text =         
+
+tag = div
+slash = 
+param = class="detailedWrapper"
+text =           
+
+tag = ul
+slash = 
+param = class="tabbedNav"
+text =           
+
+tag = li
+slash = 
+param = id="currentTab"
+text = 
+
+tag = a
+slash = 
+param = href="/HttpController?GetPage=ListedCompaniesViewPage&amp;Market=T&amp;Language=en"
+text = Toronto Stock Exchange
+
+tag = a
+slash = /
+param = 
+text =           
+
+tag = li
+slash = 
+param = 
+text = 
+
+tag = a
+slash = 
+param = href="/HttpController?GetPage=ListedCompaniesViewPage&amp;Market=V&amp;Language=en"
+text = TSX Venture Exchange
+
+tag = a
+slash = /
+param = 
+text =           
+
+tag = ul
+slash = /
+param = 
+text =           
+
+tag = div
+slash = 
+param = class="secondLevelTabs"
+text =             
+
+tag = ul
+slash = 
+param = 
+text =             
+
+tag = li
+slash = 
+param = class="selected"
+text = 
+
+tag = a
+slash = 
+param = href="/HttpController?GetPage=ListedCompaniesViewPage&amp;Market=T&amp;Language=en"
+text = Currently Listed
+
+tag = a
+slash = /
+param = 
+text =             
+
+tag = li
+slash = 
+param = 
+text = 
+
+tag = a
+slash = 
+param = href="/HttpController?GetPage=ListedCompaniesViewPage&amp;ListedCompanyTab=RecentlyListed&amp;Market=T&amp;Language=en"
+text = Recently Listed
+
+tag = a
+slash = /
+param = 
+text =             
+
+tag = li
+slash = 
+param = 
+text = 
+
+tag = a
+slash = 
+param = href="/HttpController?GetPage=ListedCompaniesViewPage&amp;ListedCompanyTab=RecentlyDelisted&amp;Market=T&amp;Language=en"
+text = Recently Delisted
+
+tag = a
+slash = /
+param = 
+text =             
+
+tag = li
+slash = 
+param = 
+text = 
+
+tag = a
+slash = 
+param = href="/HttpController?GetPage=ListedCompaniesViewPage&amp;ListedCompanyTab=SuspendedCompanies&amp;Market=T&amp;Language=en"
+text = Suspended
+
+tag = a
+slash = /
+param = 
+text =             
+
+tag = ul
+slash = /
+param = 
+text =           
+
+tag = div
+slash = /
+param = 
+text =           
+
+tag = div
+slash = 
+param = id="companySearch"
+text =             
+
+tag = div
+slash = 
+param = class="followHighlight"
+text =               
+
+tag = p
+slash = 
+param = class="smallMessage"
+text = To find stock listings, select a letter or enter a company name or a symbol below (full or partial entries are fine) and click on the Search button.
+
+tag = p
+slash = /
+param = 
+text =             
+
+tag = div
+slash = /
+param = 
+text =             
+
+tag = h4
+slash = 
+param = align="center" style="font-size: 16px; "
+text = 
+
+tag = a
+slash = 
+param = href="/HttpController?GetPage=ListedCompaniesViewPage&amp;SearchCriteria=Name&amp;SearchKeyword=A&amp;SearchType=StartWith&amp;Page=1&amp;SearchIsMarket=Yes&amp;Market=T&amp;Language=en"
+text = A
+
+tag = a
+slash = /
+param = 
+text = &nbsp;                
+
+tag = a
+slash = 
+param = href="/HttpController?GetPage=ListedCompaniesViewPage&amp;SearchCriteria=Name&amp;SearchKeyword=B&amp;SearchType=StartWith&amp;Page=1&amp;SearchIsMarket=Yes&amp;Market=T&amp;Language=en"
+text = B
+
+tag = a
+slash = /
+param = 
+text = &nbsp;                
+
+tag = a
+slash = 
+param = href="/HttpController?GetPage=ListedCompaniesViewPage&amp;SearchCriteria=Name&amp;SearchKeyword=C&amp;SearchType=StartWith&amp;Page=1&amp;SearchIsMarket=Yes&amp;Market=T&amp;Language=en"
+text = C
+
+tag = a
+slash = /
+param = 
+text = &nbsp;                
+
+tag = a
+slash = 
+param = href="/HttpController?GetPage=ListedCompaniesViewPage&amp;SearchCriteria=Name&amp;SearchKeyword=D&amp;SearchType=StartWith&amp;Page=1&amp;SearchIsMarket=Yes&amp;Market=T&amp;Language=en"
+text = D
+
+tag = a
+slash = /
+param = 
+text = &nbsp;                
+
+tag = a
+slash = 
+param = href="/HttpController?GetPage=ListedCompaniesViewPage&amp;SearchCriteria=Name&amp;SearchKeyword=E&amp;SearchType=StartWith&amp;Page=1&amp;SearchIsMarket=Yes&amp;Market=T&amp;Language=en"
+text = E
+
+tag = a
+slash = /
+param = 
+text = &nbsp;                
+
+tag = a
+slash = 
+param = href="/HttpController?GetPage=ListedCompaniesViewPage&amp;SearchCriteria=Name&amp;SearchKeyword=F&amp;SearchType=StartWith&amp;Page=1&amp;SearchIsMarket=Yes&amp;Market=T&amp;Language=en"
+text = F
+
+tag = a
+slash = /
+param = 
+text = &nbsp;                
+
+tag = a
+slash = 
+param = href="/HttpController?GetPage=ListedCompaniesViewPage&amp;SearchCriteria=Name&amp;SearchKeyword=G&amp;SearchType=StartWith&amp;Page=1&amp;SearchIsMarket=Yes&amp;Market=T&amp;Language=en"
+text = G
+
+tag = a
+slash = /
+param = 
+text = &nbsp;                
+
+tag = a
+slash = 
+param = href="/HttpController?GetPage=ListedCompaniesViewPage&amp;SearchCriteria=Name&amp;SearchKeyword=H&amp;SearchType=StartWith&amp;Page=1&amp;SearchIsMarket=Yes&amp;Market=T&amp;Language=en"
+text = H
+
+tag = a
+slash = /
+param = 
+text = &nbsp;                
+
+tag = a
+slash = 
+param = href="/HttpController?GetPage=ListedCompaniesViewPage&amp;SearchCriteria=Name&amp;SearchKeyword=I&amp;SearchType=StartWith&amp;Page=1&amp;SearchIsMarket=Yes&amp;Market=T&amp;Language=en"
+text = I
+
+tag = a
+slash = /
+param = 
+text = &nbsp;                
+
+tag = a
+slash = 
+param = href="/HttpController?GetPage=ListedCompaniesViewPage&amp;SearchCriteria=Name&amp;SearchKeyword=J&amp;SearchType=StartWith&amp;Page=1&amp;SearchIsMarket=Yes&amp;Market=T&amp;Language=en"
+text = J
+
+tag = a
+slash = /
+param = 
+text = &nbsp;                
+
+tag = a
+slash = 
+param = href="/HttpController?GetPage=ListedCompaniesViewPage&amp;SearchCriteria=Name&amp;SearchKeyword=K&amp;SearchType=StartWith&amp;Page=1&amp;SearchIsMarket=Yes&amp;Market=T&amp;Language=en"
+text = K
+
+tag = a
+slash = /
+param = 
+text = &nbsp;                
+
+tag = a
+slash = 
+param = href="/HttpController?GetPage=ListedCompaniesViewPage&amp;SearchCriteria=Name&amp;SearchKeyword=L&amp;SearchType=StartWith&amp;Page=1&amp;SearchIsMarket=Yes&amp;Market=T&amp;Language=en"
+text = L
+
+tag = a
+slash = /
+param = 
+text = &nbsp;                
+
+tag = a
+slash = 
+param = href="/HttpController?GetPage=ListedCompaniesViewPage&amp;SearchCriteria=Name&amp;SearchKeyword=M&amp;SearchType=StartWith&amp;Page=1&amp;SearchIsMarket=Yes&amp;Market=T&amp;Language=en"
+text = M
+
+tag = a
+slash = /
+param = 
+text = &nbsp;                
+
+tag = a
+slash = 
+param = href="/HttpController?GetPage=ListedCompaniesViewPage&amp;SearchCriteria=Name&amp;SearchKeyword=N&amp;SearchType=StartWith&amp;Page=1&amp;SearchIsMarket=Yes&amp;Market=T&amp;Language=en"
+text = N
+
+tag = a
+slash = /
+param = 
+text = &nbsp;                
+
+tag = a
+slash = 
+param = href="/HttpController?GetPage=ListedCompaniesViewPage&amp;SearchCriteria=Name&amp;SearchKeyword=O&amp;SearchType=StartWith&amp;Page=1&amp;SearchIsMarket=Yes&amp;Market=T&amp;Language=en"
+text = O
+
+tag = a
+slash = /
+param = 
+text = &nbsp;                
+
+tag = a
+slash = 
+param = href="/HttpController?GetPage=ListedCompaniesViewPage&amp;SearchCriteria=Name&amp;SearchKeyword=P&amp;SearchType=StartWith&amp;Page=1&amp;SearchIsMarket=Yes&amp;Market=T&amp;Language=en"
+text = P
+
+tag = a
+slash = /
+param = 
+text = &nbsp;                
+
+tag = a
+slash = 
+param = href="/HttpController?GetPage=ListedCompaniesViewPage&amp;SearchCriteria=Name&amp;SearchKeyword=Q&amp;SearchType=StartWith&amp;Page=1&amp;SearchIsMarket=Yes&amp;Market=T&amp;Language=en"
+text = Q
+
+tag = a
+slash = /
+param = 
+text = &nbsp;                
+
+tag = a
+slash = 
+param = href="/HttpController?GetPage=ListedCompaniesViewPage&amp;SearchCriteria=Name&amp;SearchKeyword=R&amp;SearchType=StartWith&amp;Page=1&amp;SearchIsMarket=Yes&amp;Market=T&amp;Language=en"
+text = R
+
+tag = a
+slash = /
+param = 
+text = &nbsp;                
+
+tag = a
+slash = 
+param = href="/HttpController?GetPage=ListedCompaniesViewPage&amp;SearchCriteria=Name&amp;SearchKeyword=S&amp;SearchType=StartWith&amp;Page=1&amp;SearchIsMarket=Yes&amp;Market=T&amp;Language=en"
+text = S
+
+tag = a
+slash = /
+param = 
+text = &nbsp;                
+
+tag = a
+slash = 
+param = href="/HttpController?GetPage=ListedCompaniesViewPage&amp;SearchCriteria=Name&amp;SearchKeyword=T&amp;SearchType=StartWith&amp;Page=1&amp;SearchIsMarket=Yes&amp;Market=T&amp;Language=en"
+text = T
+
+tag = a
+slash = /
+param = 
+text = &nbsp;                
+
+tag = a
+slash = 
+param = href="/HttpController?GetPage=ListedCompaniesViewPage&amp;SearchCriteria=Name&amp;SearchKeyword=U&amp;SearchType=StartWith&amp;Page=1&amp;SearchIsMarket=Yes&amp;Market=T&amp;Language=en"
+text = U
+
+tag = a
+slash = /
+param = 
+text = &nbsp;                
+
+tag = a
+slash = 
+param = href="/HttpController?GetPage=ListedCompaniesViewPage&amp;SearchCriteria=Name&amp;SearchKeyword=V&amp;SearchType=StartWith&amp;Page=1&amp;SearchIsMarket=Yes&amp;Market=T&amp;Language=en"
+text = V
+
+tag = a
+slash = /
+param = 
+text = &nbsp;                
+
+tag = a
+slash = 
+param = href="/HttpController?GetPage=ListedCompaniesViewPage&amp;SearchCriteria=Name&amp;SearchKeyword=W&amp;SearchType=StartWith&amp;Page=1&amp;SearchIsMarket=Yes&amp;Market=T&amp;Language=en"
+text = W
+
+tag = a
+slash = /
+param = 
+text = &nbsp;                
+
+tag = a
+slash = 
+param = href="/HttpController?GetPage=ListedCompaniesViewPage&amp;SearchCriteria=Name&amp;SearchKeyword=X&amp;SearchType=StartWith&amp;Page=1&amp;SearchIsMarket=Yes&amp;Market=T&amp;Language=en"
+text = X
+
+tag = a
+slash = /
+param = 
+text = &nbsp;                
+
+tag = a
+slash = 
+param = href="/HttpController?GetPage=ListedCompaniesViewPage&amp;SearchCriteria=Name&amp;SearchKeyword=Y&amp;SearchType=StartWith&amp;Page=1&amp;SearchIsMarket=Yes&amp;Market=T&amp;Language=en"
+text = Y
+
+tag = a
+slash = /
+param = 
+text = &nbsp;                
+
+tag = a
+slash = 
+param = href="/HttpController?GetPage=ListedCompaniesViewPage&amp;SearchCriteria=Name&amp;SearchKeyword=Z&amp;SearchType=StartWith&amp;Page=1&amp;SearchIsMarket=Yes&amp;Market=T&amp;Language=en"
+text = Z
+
+tag = a
+slash = /
+param = 
+text =                 &nbsp;&nbsp;                
+
+tag = a
+slash = 
+param = href="/HttpController?GetPage=ListedCompaniesViewPage&amp;SearchCriteria=Name&amp;SearchKeyword=0&amp;SearchType=StartWith&amp;Page=1&amp;SearchIsMarket=Yes&amp;Market=T&amp;Language=en"
+text = 0-9
+
+tag = a
+slash = /
+param = 
+text = 
+
+tag = h4
+slash = /
+param = 
+text =             
+
+tag = form
+slash = 
+param = method="get" action="/HttpController?"
+text =               
+
+tag = input
+slash = 
+param = type="hidden" name="GetPage" value="ListedCompaniesViewPage"
+text =               
+
+tag = input
+slash = 
+param = type="hidden" name="Page" value="1"
+text =               
+
+tag = input
+slash = 
+param = type="hidden" name="SearchIsMarket" value="Yes"
+text =               
+
+tag = input
+slash = 
+param = type="hidden" name="Market" value="T"
+text =               
+
+tag = input
+slash = 
+param = type="hidden" name="Language" value="en"
+text =               
+
+tag = table
+slash = 
+param = id="companyForm" class="layoutTable" cellspacing="0"
+text =               
+
+tag = tr
+slash = 
+param = 
+text =                 
+
+tag = td
+slash = 
+param = 
+text =                   
+
+tag = input
+slash = 
+param = type="radio" name="SearchCriteria" value="Name" class="formField" CHECKED="true"
+text = Name search
+
+tag = td
+slash = /
+param = 
+text =                 
+
+tag = td
+slash = 
+param = 
+text =                   
+
+tag = input
+slash = 
+param = type="radio" name="SearchCriteria" value="Symbol" class="formField"
+text = Symbol search
+
+tag = td
+slash = /
+param = 
+text =                 
+
+tag = td
+slash = 
+param = rowspan="2" id="search"
+text =                   
+
+tag = input
+slash = 
+param = type="text" id="SearchKeyword" name="SearchKeyword" maxlength="50" value="A"
+text =                         &nbsp;                                          
+
+tag = input
+slash = 
+param = type="image" id="searchSubmit" value="Search" src="http://tmx.com/en/images/search_button.gif" alt="Search" name="SUBMIT"
+text =                 
+
+tag = td
+slash = /
+param = 
+text =               
+
+tag = tr
+slash = /
+param = 
+text =               
+
+tag = tr
+slash = 
+param = 
+text =                 
+
+tag = td
+slash = 
+param = 
+text =                   
+
+tag = input
+slash = 
+param = type="radio" name="SearchType" value="StartWith" class="formField" checked="true"
+text = Starts With
+
+tag = td
+slash = /
+param = 
+text =                 
+
+tag = td
+slash = 
+param = 
+text =                   
+
+tag = input
+slash = 
+param = type="radio" name="SearchType" value="Contain" class="formField"
+text = Contains
+
+tag = td
+slash = /
+param = 
+text =               
+
+tag = tr
+slash = /
+param = 
+text =               
+
+tag = table
+slash = /
+param = 
+text =             
+
+tag = form
+slash = /
+param = 
+text =           
+
+tag = div
+slash = /
+param = 
+text =           
+
+tag = div
+slash = 
+param = class="fullTableWrapper"
+text =             
+
+tag = table
+slash = 
+param = class="layoutTable pagination" cellspacing="0"
+text =             
+
+tag = tr
+slash = 
+param = 
+text =               
+
+tag = td
+slash = 
+param = 
+text = &lt; Previous
+
+tag = td
+slash = /
+param = 
+text =               
+
+tag = td
+slash = 
+param = rowspan="2" style="text-align: center;"
+text = Page 1 of 11
+
+tag = td
+slash = /
+param = 
+text =               
+
+tag = td
+slash = 
+param = style="text-align: right;"
+text = 
+
+tag = a
+slash = 
+param = href="/HttpController?GetPage=ListedCompaniesViewPage&amp;SearchCriteria=Name&amp;SearchKeyword=A&amp;SearchType=StartWith&amp;SearchIsMarket=Yes&amp;Page=2&amp;Market=T&amp;Language=en"
+text = Next &gt;
+
+tag = a
+slash = /
+param = 
+text = 
+
+tag = td
+slash = /
+param = 
+text =             
+
+tag = tr
+slash = /
+param = 
+text =             
+
+tag = tr
+slash = 
+param = 
+text =               
+
+tag = td
+slash = 
+param = 
+text = |&lt; First Page
+
+tag = td
+slash = /
+param = 
+text =               
+
+tag = td
+slash = 
+param = style="text-align: right;"
+text = 
+
+tag = a
+slash = 
+param = href="/HttpController?GetPage=ListedCompaniesViewPage&amp;SearchCriteria=Name&amp;SearchKeyword=A&amp;SearchType=StartWith&amp;SearchIsMarket=Yes&amp;Page=11&amp;Market=T&amp;Language=en"
+text = Last Page &gt;|
+
+tag = a
+slash = /
+param = 
+text = 
+
+tag = td
+slash = /
+param = 
+text =             
+
+tag = tr
+slash = /
+param = 
+text =             
+
+tag = table
+slash = /
+param = 
+text =             
+
+tag = table
+slash = 
+param = cellspacing="0" class="detailStatsTable companyResults"
+text =             
+
+tag = caption
+slash = 
+param = 
+text = Search Results
+
+tag = caption
+slash = /
+param = 
+text =             
+
+tag = tr
+slash = 
+param = 
+text =               
+
+tag = th
+slash = 
+param = 
+text = Company Name
+
+tag = th
+slash = /
+param = 
+text =               
+
+tag = th
+slash = 
+param = 
+text = Symbol
+
+tag = th
+slash = /
+param = 
+text =               
+
+tag = th
+slash = 
+param = 
+text = Exchange*
+
+tag = th
+slash = /
+param = 
+text =             
+
+tag = tr
+slash = /
+param = 
+text =             
+
+tag = tr
+slash = 
+param = class="oddRow"
+text =               
+
+tag = th
+slash = 
+param = class="symbolGroup" colspan="3"
+text = 
+
+tag = a
+slash = 
+param = href="http://tmx.quotemedia.com/company.php?qm_symbol=AW.UN&amp;locale=EN" target="_blank"
+text = A&amp;W Revenue Royalties Income Fund
+
+tag = a
+slash = /
+param = 
+text = 
+
+tag = th
+slash = /
+param = 
+text =             
+
+tag = tr
+slash = /
+param = 
+text =             
+
+tag = tr
+slash = 
+param = 
+text =               
+
+tag = td
+slash = 
+param = 
+text = A&amp;W Revenue Rylty Un
+
+tag = td
+slash = /
+param = 
+text =               
+
+tag = td
+slash = 
+param = 
+text = 
+
+tag = a
+slash = 
+param = href="http://tmx.quotemedia.com/quote.php?qm_symbol=AW.UN&amp;locale=EN" target="_blank"
+text = AW.UN
+
+tag = a
+slash = /
+param = 
+text = 
+
+tag = td
+slash = /
+param = 
+text =               
+
+tag = td
+slash = 
+param = width="5%" style="text-align: center;"
+text = T
+
+tag = td
+slash = /
+param = 
+text =             
+
+tag = tr
+slash = /
+param = 
+text =             
+
+tag = tr
+slash = 
+param = class="oddRow"
+text =               
+
+tag = th
+slash = 
+param = class="symbolGroup" colspan="3"
+text = 
+
+tag = a
+slash = 
+param = href="http://tmx.quotemedia.com/company.php?qm_symbol=AAH&amp;locale=EN" target="_blank"
+text = Aastra Technologies Limited
+
+tag = a
+slash = /
+param = 
+text = 
+
+tag = th
+slash = /
+param = 
+text =             
+
+tag = tr
+slash = /
+param = 
+text =             
+
+tag = tr
+slash = 
+param = 
+text =               
+
+tag = td
+slash = 
+param = 
+text = Aastra Technologies
+
+tag = td
+slash = /
+param = 
+text =               
+
+tag = td
+slash = 
+param = 
+text = 
+
+tag = a
+slash = 
+param = href="http://tmx.quotemedia.com/quote.php?qm_symbol=AAH&amp;locale=EN" target="_blank"
+text = AAH
+
+tag = a
+slash = /
+param = 
+text = 
+
+tag = td
+slash = /
+param = 
+text =               
+
+tag = td
+slash = 
+param = width="5%" style="text-align: center;"
+text = T
+
+tag = td
+slash = /
+param = 
+text =             
+
+tag = tr
+slash = /
+param = 
+text =             
+
+tag = tr
+slash = 
+param = class="oddRow"
+text =               
+
+tag = th
+slash = 
+param = class="symbolGroup" colspan="3"
+text = 
+
+tag = a
+slash = 
+param = href="http://tmx.quotemedia.com/company.php?qm_symbol=FAP&amp;locale=EN" target="_blank"
+text = Aberdeen Asia-Pacific Income Investment Company Limited
+
+tag = a
+slash = /
+param = 
+text = 
+
+tag = th
+slash = /
+param = 
+text =             
+
+tag = tr
+slash = /
+param = 
+text =             
+
+tag = tr
+slash = 
+param = 
+text =               
+
+tag = td
+slash = 
+param = 
+text = Aberdeen Asia-Pacifc
+
+tag = td
+slash = /
+param = 
+text =               
+
+tag = td
+slash = 
+param = 
+text = 
+
+tag = a
+slash = 
+param = href="http://tmx.quotemedia.com/quote.php?qm_symbol=FAP&amp;locale=EN" target="_blank"
+text = FAP
+
+tag = a
+slash = /
+param = 
+text = 
+
+tag = td
+slash = /
+param = 
+text =               
+
+tag = td
+slash = 
+param = width="5%" style="text-align: center;"
+text = T
+
+tag = td
+slash = /
+param = 
+text =             
+
+tag = tr
+slash = /
+param = 
+text =             
+
+tag = tr
+slash = 
+param = class="oddRow"
+text =               
+
+tag = th
+slash = 
+param = class="symbolGroup" colspan="3"
+text = 
+
+tag = a
+slash = 
+param = href="http://tmx.quotemedia.com/company.php?qm_symbol=AAB&amp;locale=EN" target="_blank"
+text = Aberdeen International Inc.
+
+tag = a
+slash = /
+param = 
+text = 
+
+tag = th
+slash = /
+param = 
+text =             
+
+tag = tr
+slash = /
+param = 
+text =             
+
+tag = tr
+slash = 
+param = 
+text =               
+
+tag = td
+slash = 
+param = 
+text = Aberdeen Intl. J
+
+tag = td
+slash = /
+param = 
+text =               
+
+tag = td
+slash = 
+param = 
+text = 
+
+tag = a
+slash = 
+param = href="http://tmx.quotemedia.com/quote.php?qm_symbol=AAB&amp;locale=EN" target="_blank"
+text = AAB
+
+tag = a
+slash = /
+param = 
+text = 
+
+tag = td
+slash = /
+param = 
+text =               
+
+tag = td
+slash = 
+param = width="5%" style="text-align: center;"
+text = T
+
+tag = td
+slash = /
+param = 
+text =             
+
+tag = tr
+slash = /
+param = 
+text =             
+
+tag = tr
+slash = 
+param = 
+text =               
+
+tag = td
+slash = 
+param = 
+text = Aberdeen Intl. Wt J
+
+tag = td
+slash = /
+param = 
+text =               
+
+tag = td
+slash = 
+param = 
+text = 
+
+tag = a
+slash = 
+param = href="http://tmx.quotemedia.com/quote.php?qm_symbol=AAB.WT&amp;locale=EN" target="_blank"
+text = AAB.WT
+
+tag = a
+slash = /
+param = 
+text = 
+
+tag = td
+slash = /
+param = 
+text =               
+
+tag = td
+slash = 
+param = width="5%" style="text-align: center;"
+text = T
+
+tag = td
+slash = /
+param = 
+text =             
+
+tag = tr
+slash = /
+param = 
+text =             
+
+tag = tr
+slash = 
+param = class="oddRow"
+text =               
+
+tag = th
+slash = 
+param = class="symbolGroup" colspan="3"
+text = 
+
+tag = a
+slash = 
+param = href="http://tmx.quotemedia.com/company.php?qm_symbol=ABT&amp;locale=EN" target="_blank"
+text = Absolute Software Corporation
+
+tag = a
+slash = /
+param = 
+text = 
+
+tag = th
+slash = /
+param = 
+text =             
+
+tag = tr
+slash = /
+param = 
+text =             
+
+tag = tr
+slash = 
+param = 
+text =               
+
+tag = td
+slash = 
+param = 
+text = Absolute Software J
+
+tag = td
+slash = /
+param = 
+text =               
+
+tag = td
+slash = 
+param = 
+text = 
+
+tag = a
+slash = 
+param = href="http://tmx.quotemedia.com/quote.php?qm_symbol=ABT&amp;locale=EN" target="_blank"
+text = ABT
+
+tag = a
+slash = /
+param = 
+text = 
+
+tag = td
+slash = /
+param = 
+text =               
+
+tag = td
+slash = 
+param = width="5%" style="text-align: center;"
+text = T
+
+tag = td
+slash = /
+param = 
+text =             
+
+tag = tr
+slash = /
+param = 
+text =             
+
+tag = tr
+slash = 
+param = class="oddRow"
+text =               
+
+tag = th
+slash = 
+param = class="symbolGroup" colspan="3"
+text = 
+
+tag = a
+slash = 
+param = href="http://tmx.quotemedia.com/company.php?qm_symbol=ADA&amp;locale=EN" target="_blank"
+text = Acadian Mining Corporation
+
+tag = a
+slash = /
+param = 
+text = 
+
+tag = th
+slash = /
+param = 
+text =             
+
+tag = tr
+slash = /
+param = 
+text =             
+
+tag = tr
+slash = 
+param = 
+text =               
+
+tag = td
+slash = 
+param = 
+text = Acadian Mng Corp. J
+
+tag = td
+slash = /
+param = 
+text =               
+
+tag = td
+slash = 
+param = 
+text = 
+
+tag = a
+slash = 
+param = href="http://tmx.quotemedia.com/quote.php?qm_symbol=ADA&amp;locale=EN" target="_blank"
+text = ADA
+
+tag = a
+slash = /
+param = 
+text = 
+
+tag = td
+slash = /
+param = 
+text =               
+
+tag = td
+slash = 
+param = width="5%" style="text-align: center;"
+text = T
+
+tag = td
+slash = /
+param = 
+text =             
+
+tag = tr
+slash = /
+param = 
+text =             
+
+tag = tr
+slash = 
+param = class="oddRow"
+text =               
+
+tag = th
+slash = 
+param = class="symbolGroup" colspan="3"
+text = 
+
+tag = a
+slash = 
+param = href="http://tmx.quotemedia.com/company.php?qm_symbol=ADN&amp;locale=EN" target="_blank"
+text = Acadian Timber Corp.
+
+tag = a
+slash = /
+param = 
+text = 
+
+tag = th
+slash = /
+param = 
+text =             
+
+tag = tr
+slash = /
+param = 
+text =             
+
+tag = tr
+slash = 
+param = 
+text =               
+
+tag = td
+slash = 
+param = 
+text = Acadian Timber Corp.
+
+tag = td
+slash = /
+param = 
+text =               
+
+tag = td
+slash = 
+param = 
+text = 
+
+tag = a
+slash = 
+param = href="http://tmx.quotemedia.com/quote.php?qm_symbol=ADN&amp;locale=EN" target="_blank"
+text = ADN
+
+tag = a
+slash = /
+param = 
+text = 
+
+tag = td
+slash = /
+param = 
+text =               
+
+tag = td
+slash = 
+param = width="5%" style="text-align: center;"
+text = T
+
+tag = td
+slash = /
+param = 
+text =             
+
+tag = tr
+slash = /
+param = 
+text =             
+
+tag = tr
+slash = 
+param = class="oddRow"
+text =               
+
+tag = th
+slash = 
+param = class="symbolGroup" colspan="3"
+text = 
+
+tag = a
+slash = 
+param = href="http://tmx.quotemedia.com/company.php?qm_symbol=ACD&amp;locale=EN" target="_blank"
+text = Accord Financial Corp.
+
+tag = a
+slash = /
+param = 
+text = 
+
+tag = th
+slash = /
+param = 
+text =             
+
+tag = tr
+slash = /
+param = 
+text =             
+
+tag = tr
+slash = 
+param = 
+text =               
+
+tag = td
+slash = 
+param = 
+text = Accord Financial
+
+tag = td
+slash = /
+param = 
+text =               
+
+tag = td
+slash = 
+param = 
+text = 
+
+tag = a
+slash = 
+param = href="http://tmx.quotemedia.com/quote.php?qm_symbol=ACD&amp;locale=EN" target="_blank"
+text = ACD
+
+tag = a
+slash = /
+param = 
+text = 
+
+tag = td
+slash = /
+param = 
+text =               
+
+tag = td
+slash = 
+param = width="5%" style="text-align: center;"
+text = T
+
+tag = td
+slash = /
+param = 
+text =             
+
+tag = tr
+slash = /
+param = 
+text =             
+
+tag = tr
+slash = 
+param = class="oddRow"
+text =               
+
+tag = th
+slash = 
+param = class="symbolGroup" colspan="3"
+text = 
+
+tag = a
+slash = 
+param = href="http://tmx.quotemedia.com/company.php?qm_symbol=ACE.A&amp;locale=EN" target="_blank"
+text = ACE Aviation Holdings Inc.
+
+tag = a
+slash = /
+param = 
+text = 
+
+tag = th
+slash = /
+param = 
+text =             
+
+tag = tr
+slash = /
+param = 
+text =             
+
+tag = tr
+slash = 
+param = 
+text =               
+
+tag = td
+slash = 
+param = 
+text = ACE Aviation Hldg VV
+
+tag = td
+slash = /
+param = 
+text =               
+
+tag = td
+slash = 
+param = 
+text = 
+
+tag = a
+slash = 
+param = href="http://tmx.quotemedia.com/quote.php?qm_symbol=ACE.A&amp;locale=EN" target="_blank"
+text = ACE.A
+
+tag = a
+slash = /
+param = 
+text = 
+
+tag = td
+slash = /
+param = 
+text =               
+
+tag = td
+slash = 
+param = width="5%" style="text-align: center;"
+text = T
+
+tag = td
+slash = /
+param = 
+text =             
+
+tag = tr
+slash = /
+param = 
+text =             
+
+tag = tr
+slash = 
+param = 
+text =               
+
+tag = td
+slash = 
+param = 
+text = ACE Aviation Hldg V
+
+tag = td
+slash = /
+param = 
+text =               
+
+tag = td
+slash = 
+param = 
+text = 
+
+tag = a
+slash = 
+param = href="http://tmx.quotemedia.com/quote.php?qm_symbol=ACE.B&amp;locale=EN" target="_blank"
+text = ACE.B
+
+tag = a
+slash = /
+param = 
+text = 
+
+tag = td
+slash = /
+param = 
+text =               
+
+tag = td
+slash = 
+param = width="5%" style="text-align: center;"
+text = T
+
+tag = td
+slash = /
+param = 
+text =             
+
+tag = tr
+slash = /
+param = 
+text =             
+
+tag = tr
+slash = 
+param = class="oddRow"
+text =               
+
+tag = th
+slash = 
+param = class="symbolGroup" colspan="3"
+text = 
+
+tag = a
+slash = 
+param = href="http://tmx.quotemedia.com/company.php?qm_symbol=AEU.UN&amp;locale=EN" target="_blank"
+text = ACTIVEnergy Income Fund
+
+tag = a
+slash = /
+param = 
+text = 
+
+tag = th
+slash = /
+param = 
+text =             
+
+tag = tr
+slash = /
+param = 
+text =             
+
+tag = tr
+slash = 
+param = 
+text =               
+
+tag = td
+slash = 
+param = 
+text = ACTIVEnergy Incm Un               
+
+tag = td
+slash = /
+param = 
+text =               
+
+tag = td
+slash = 
+param = 
+text = 
+
+tag = a
+slash = 
+param = href="http://tmx.quotemedia.com/quote.php?qm_symbol=AEU.UN&amp;locale=EN" target="_blank"
+text = AEU.UN
+
+tag = a
+slash = /
+param = 
+text = 
+
+tag = td
+slash = /
+param = 
+text =               
+
+tag = td
+slash = 
+param = width="5%" style="text-align: center;"
+text = T
+
+tag = td
+slash = /
+param = 
+text =             
+
+tag = tr
+slash = /
+param = 
+text =             
+
+tag = table
+slash = /
+param = 
+text =           
+
+tag = div
+slash = /
+param = 
+text =         
+
+tag = div
+slash = /
+param = 
+text =         
+
+tag = table
+slash = 
+param = class="detailedLegend" cellspacing="0"
+text =         
+
+tag = tr
+slash = 
+param = 
+text =           
+
+tag = td
+slash = 
+param = 
+text = *T = Toronto Stock Exchange, V = TSX Venture Exchange
+
+tag = td
+slash = /
+param = 
+text =         
+
+tag = tr
+slash = /
+param = 
+text =         
+
+tag = table
+slash = /
+param = 
+text =         
+
+tag = div
+slash = 
+param = class="ad"
+text =           
+
+tag = script
+slash = 
+param = type="text/javascript" src="/en/scripts/centerAd.js"
+text = 
+
+tag = script
+slash = /
+param = 
+text =         
+
+tag = div
+slash = /
+param = 
+text =         
+
+tag = div
+slash = 
+param = id="googleBox"
+text =           
+
+tag = script
+slash = 
+param = type="text/javascript" src="/en/scripts/googleAd.js"
+text = 
+
+tag = script
+slash = /
+param = 
+text =         
+
+tag = div
+slash = /
+param = 
+text =       
+
+tag = div
+slash = /
+param = 
+text =       
+
+tag = div
+slash = 
+param = class="exchangeLogo"
+text = 
+
+tag = img
+slash = 
+param = src="http://tmx.com/en/images/skyscraper_logo_tsx.gif" alt="Toronto Stock Exchange"
+text = 
+
+tag = div
+slash = /
+param = 
+text =       
+
+tag = div
+slash = 
+param = id="verticalAd"
+text =         
+
+tag = script
+slash = 
+param = type="text/javascript" src="http://tmx.com/en/scripts/verticalAd.js"
+text = 
+
+tag = script
+slash = /
+param = 
+text =       
+
+tag = div
+slash = /
+param = 
+text =     
+
+tag = div
+slash = /
+param = 
+text =   
+
+tag = div
+slash = /
+param = 
+text =   
+
+tag = script
+slash = 
+param = type="text/javascript" src="http://tmx.com/en/scripts/footer.js"
+text = 
+
+tag = script
+slash = /
+param = 
+text =   
+
+tag = script
+slash = 
+param = type="text/javascript" src="http://tmx.com/en/scripts/disclaimer.js"
+text = 
+
+tag = script
+slash = /
+param = 
+text = 
+
+tag = div
+slash = /
+param = 
+text = 
+
+tag = SCRIPT
+slash = 
+param = type="text/javascript" src="http://www.tmx.com/en/scripts/WebTrends/include1.js"
+text = 
+
+tag = SCRIPT
+slash = /
+param = 
+text = 
+
+tag = SCRIPT
+slash = 
+param = type="text/javascript" src="http://www.tmx.com/en/scripts/WebTrends/include2.js"
+text = 
+
+tag = SCRIPT
+slash = /
+param = 
+text = 
+
+tag = NOSCRIPT
+slash = 
+param = 
+text = 
+
+tag = IMG
+slash = 
+param = ALT="" BORDER="0" NAME="DCSIMG" WIDTH="1" HEIGHT="1" SRC="http://statse.webtrendslive.com/dcsgjlxtw10000knrougozvea_4h1m/njs.gif?dcsuri=/nojavascript&amp;WT.js=No&amp;WT.tv=8.0.3"
+text = 
+
+tag = NOSCRIPT
+slash = /
+param = 
+text = 
+
+tag = body
+slash = /
+param = 
+text = 
+
+tag = html
+slash = /
+param = 
+text = 
+
+tag = hmstart
+slash = /
+param = 
+text = 
+

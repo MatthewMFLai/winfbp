@@ -1,0 +1,20 @@
+#Node section
+#Name process_proc
+BEGIN_STATE
+ONE company_fsm::process_generic
+END_STATE
+
+#Link section
+#from_state to_state eval_proc action_proc
+BEGIN_LINK
+END_LINK
+
+#Init section
+BEGIN_INIT
+proc = company_fsm::init
+END_INIT
+
+#Default state section
+BEGIN_DEFAULT_STATE
+state = ONE
+END_DEFAULT_STATE

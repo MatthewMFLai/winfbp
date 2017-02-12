@@ -1,0 +1,8 @@
+circuitname s0
+first_port 8000
+service_port 14000
+fcopy_port 14001
+info_port 14002
+ip_prefix 127.0.0
+ip_min 117
+ip_max 117

@@ -1,0 +1,36 @@
+proc filter {p_ip} {
+    global g_company_filter_header
+
+    set separator "\t"
+    set rc ""
+    array set data [byList::get_list $p_ip]
+    foreach idx $g_company_filter_header {
+	if {[info exists data($idx)]} {
+	    append rc $data($idx)
+	}
+	append rc $separator
+    }
+    return [list [string range $rc 0 end-1]]
+}
+
+proc filter_pre {filterdata} {
+    global g_company_filter_header
+
+    set g_company_filter_header ""
+    set headerstr ""
+    set separator "\t"
+
+    if {[file exists $filterdata]} {
+	set fd [open $filterdata "r"]
+	while {[gets $fd line] > -1} {
+	    lappend g_company_filter_header $line
+	    append headerstr $line$separator
+	}
+	close $fd
+	set headerstr [string range $headerstr 0 end-1]
+    }
+    return $headerstr
+}
+
+global env
+source $env(COMP_HOME)/ip2/byList.tcl

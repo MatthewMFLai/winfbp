@@ -1,0 +1,4 @@
+name forward2 
+filepath $env(DISK2)/component/basic/forward2
+inports {N E W S}
+outports {N E W S}

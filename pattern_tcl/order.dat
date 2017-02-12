@@ -1,0 +1,27 @@
+# tran_id - transaction id provided by the requester. Value must not
+#            be changed by the order component.
+tran_id
+# order_id - a unique order id provided by the order component.
+order_id
+# event - REQUEST if from the requester
+#      - RESPONSE if from the order, response to a request. 
+#      - UPDATE if from the order (partial completion)
+#      - FILLED if from the order (completion)
+#      - EXPIRED if from the order
+event
+# buy_sell - BUY or SELL or MOD or CANCEL
+buy_sell
+symbol
+exchange
+shares
+amount
+amount_left
+price
+commision
+expiredate
+# timestamp - time that the order was last changed
+timestamp
+spare1
+spare2
+# rc - ORDER_OK, ORDER_NOK (use only when type is REQUEST/RESPONSE)
+rc

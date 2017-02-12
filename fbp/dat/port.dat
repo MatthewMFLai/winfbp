@@ -1,0 +1,6 @@
+id
+socketport
+is_vport
+hostipaddr
+queuelen
+def_grp_status

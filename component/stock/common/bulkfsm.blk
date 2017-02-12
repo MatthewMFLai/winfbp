@@ -1,0 +1,5 @@
+name bulkfsm 
+filepath $env(DISK2)/component/stock/common
+init {5 logfile=B4_1.log bulkfsm}
+inports {1}
+outports {1 2}

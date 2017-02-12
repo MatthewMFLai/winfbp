@@ -1,0 +1,184 @@
+#!/bin/sh
+# \
+exec tclsh $0 $@
+
+package require tcltest 2.0
+namespace import ::tcltest::*
+
+proc all_connections_init {} {
+    global g_num_connections
+
+    set g_num_connections 0
+}
+
+proc all_connections_incr {} {
+    global g_num_connections
+
+    incr g_num_connections
+}
+
+proc all_connections_decr {} {
+    global g_num_connections
+
+    incr g_num_connections -1
+}
+
+proc all_connections_num {} {
+    global g_num_connections
+
+    return $g_num_connections
+}
+
+proc test_finish_init {} {
+    global g_num_finish
+
+    set g_num_finish 0
+}
+
+proc test_finish_incr {} {
+    global g_num_finish
+
+    incr g_num_finish
+}
+
+proc test_finish_num {} {
+    global g_num_finish
+
+    return $g_num_finish
+}
+
+proc sock_accept {cid addr port} {
+    fileevent $cid readable "sock_handle $cid"
+    fconfigure $cid -buffering line
+    all_connections_incr
+}
+
+proc sock_handle {cid} {
+
+    if {[gets $cid request] < 0} {
+	close $cid
+	all_connections_decr
+	if {[all_connections_num] == 0} {	
+    	    global g_main_loop
+	    set g_main_loop 1
+	}
+    } else {
+	if {$request == "TEST-DRIVER-FINISH"} {
+	    timer_stop
+	    test_finish_incr
+	    if {[test_finish_num] == [all_connections_num]} {
+		# Custom code to handle request
+		# Send the "x" to the launcher to terminate it!
+		puts "socket output: $request"
+		global g_conn_id
+		puts $g_conn_id(pipe) "x"
+		flush $g_conn_id(pipe)
+	    } else {
+		# Wait for response from other test drivers.
+		timer_start
+	    }
+	} else {
+	    puts $request
+	}
+    }
+}
+
+proc pipe_handle {cid} {
+ 
+    if {[gets $cid request] < 0} {
+	close $cid
+    } else {	
+	# Custom code to handle request
+	puts "pipe output: $request"
+    }
+}
+
+proc timer_init {timeout} {
+    global g_timeout
+    global g_timeout_occur
+    set g_timeout $timeout
+    set g_timeout_occur 0
+    return
+}
+
+proc timer_start {} {
+    global g_timer
+    global g_timeout
+    set g_timer [after $g_timeout timer_timeout] 
+    return
+}
+
+proc timer_stop {} {
+    global g_timer
+    after cancel $g_timer
+    set g_timer ""
+    return
+}
+
+proc timer_timeout {} {
+    global g_timeout_occur
+    set g_timeout_occur 1 
+    # Send the "x" to the launcher to terminate it!
+    global g_conn_id
+    puts $g_conn_id(pipe) "x"
+    flush $g_conn_id(pipe)
+    return
+}
+
+proc timer_check_timeout {} {
+    global g_timeout_occur
+    return $g_timeout_occur
+}
+
+test intro-1 {testcase for component geturl} -setup {
+
+    all_connections_init
+    test_finish_init
+
+    global env
+    set componentdir $env(PWD)
+    set idx [string last "/" $componentdir]
+    incr idx 1
+    set component [string range $componentdir $idx end]
+
+    # Look for the <component>_test.dat file.
+    if {[file exists $component\_test.dat] == 0} {
+	error "$component\_test.dat not found"	
+    }
+    array set data {}
+    set fd [open $component\_test.dat r]
+    while {[gets $fd line] > -1} {
+        array set data $line
+    }
+    close $fd
+	
+    # Create server socket to listen to response from test driver.
+    set g_conn_id(socket) [socket -server sock_accept $data(server_port)]
+    timer_init $data(timer)
+ 
+    set cmd [list exec $env(FBP_HOME)/fbp2_test.tcl $componentdir/$component.block $componentdir/$component.link $data(circuitname) $data(portnum)]
+    if {[catch $cmd res]} {
+	error "Failed to run command $cmd: $res"
+    }
+} -body {
+    set cmd [list $env(LAUNCHER_HOME)/launcher task.out]
+    set g_conn_id(pipe) [open "|$cmd" "r+"]
+    fileevent $g_conn_id(pipe) readable [list pipe_handle $g_conn_id(pipe)]
+
+    timer_start
+    vwait g_main_loop
+    
+    # Close and clear the socket/pipe server ports.
+    close $g_conn_id(socket)
+    unset g_conn_id(socket)
+    unset g_conn_id(pipe)
+
+    return 1
+} -cleanup {
+    catch {file delete task.out} rc
+    catch {file delete fbp2.dat} rc
+
+} -result 1
+
+cleanupTests
+exit 0

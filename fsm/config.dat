@@ -1,0 +1,28 @@
+BEGIN simple FSM_HOME
+  byNode node
+  byLink link
+  byFsm fsm
+END
+
+BEGIN complex PATTERN_HOME
+  byCurNode pointer
+  byTransition graph
+  byState assoc
+  byFSMs assoc
+END
+
+BEGIN dynamic_type
+  FsmMgr byFSMs init_whole
+
+  Fsm byFsm init
+  Fsm byFSMs init_part_new
+  Fsm byState init_whole
+  Fsm byCurNode init_entity
+
+  Node byTransition graph_init_vertex
+  Node byState init_part_new
+  Node byNode init
+
+  Link byTransition graph_init_edge
+  Link byLink init
+END

@@ -1,0 +1,28 @@
+#Node section
+#Name process_proc
+BEGIN_STATE 
+FIND_ANNUAL financial_fsm::process_generic
+FIND_TR_1 financial_fsm::process_generic
+FIND_HEADER financial_fsm::process_generic
+FIND_ROW_HEADER financial_fsm::process_row_header
+FIND_ROW_VALUE financial_fsm::process_generic
+
+END_STATE
+
+#Link section
+#from_state to_state eval_proc action_proc
+BEGIN_LINK
+FIND_ANNUAL FIND_TR_1 financial_fsm::eval_annual_to_tr_1 null 
+FIND_TR_1 FIND_HEADER financial_fsm::eval_tr_1_to_header null 
+FIND_HEADER FIND_HEADER financial_fsm::eval_header_to_header financial_fsm::act_header_to_header
+FIND_HEADER FIND_ROW_HEADER financial_fsm::eval_header_to_row_header financial_fsm::act_header_to_row_header
+FIND_ROW_HEADER FIND_ROW_VALUE financial_fsm::eval_row_header_to_row_value financial_fsm::act_row_header_to_row_value
+FIND_ROW_VALUE FIND_ROW_HEADER financial_fsm::eval_row_value_to_row_header financial_fsm::act_row_value_to_row_header
+FIND_ROW_VALUE FIND_ROW_VALUE financial_fsm::eval_row_value_to_row_value financial_fsm::act_row_value_to_row_value
+
+END_LINK
+
+#Init section
+BEGIN_INIT
+proc = financial_fsm::init
+END_INIT

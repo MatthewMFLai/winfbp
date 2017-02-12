@@ -1,0 +1,4 @@
+name filter
+filepath $env(DISK2)/component/basic/filter
+inports {1 2 3}
+outports {1 2}

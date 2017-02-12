@@ -1,0 +1,17 @@
+proc filter {p_ip} {
+    set rc ""
+    set colon ":"
+    array set data [byList::get_list $p_ip]
+    foreach idx [lsort [array names data]] {
+	lappend rc "$idx$colon $data($idx)"
+    }
+    lappend rc " "
+    return $rc
+}
+
+proc filter_pre {filterdata} {
+    return
+}
+
+global env
+source $env(COMP_HOME)/ip2/byList.tcl

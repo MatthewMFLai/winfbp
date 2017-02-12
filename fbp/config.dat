@@ -1,0 +1,39 @@
+BEGIN simple FBP_HOME
+  byBlock block
+  byPort port
+  byPortgrp portgrp
+END
+
+BEGIN complex PATTERN_HOME
+  byInPort_OutPort lattice
+  byBlock_InPort assoc
+  byBlock_OutPort assoc
+  byMain_Block assoc
+  byBlock_Subcircuit assoc
+  byVport_Port pointer
+  byBlock_Portgrp assoc
+  byPortgrp_Port assoc
+END
+
+BEGIN dynamic_type 
+  Main byMain_Block init_whole
+
+  Block byBlock init
+  Block byMain_Block init_part_new
+  Block byBlock_InPort init_whole
+  Block byBlock_OutPort init_whole
+  Block byBlock_Subcircuit init_whole
+  Block byBlock_Subcircuit init_part_new
+  Block byBlock_Portgrp init_whole
+
+  Port byPort init
+  Port byInPort_OutPort init_entity
+  Port byBlock_InPort init_part_new
+  Port byBlock_OutPort init_part_new
+  Port byVport_Port init_entity
+  Port byPortgrp_Port init_part_new
+
+  Portgrp byPortgrp init
+  Portgrp byBlock_Portgrp init_part_new
+  Portgrp byPortgrp_Port init_whole
+END

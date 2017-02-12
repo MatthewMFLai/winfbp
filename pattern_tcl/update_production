@@ -1,0 +1,11 @@
+#!/bin/sh 
+# \
+exec tclsh $0 $@
+
+# eg.
+# Update_Production /tmp/node/ /tmp/factory/
+
+source $env(PATTERN_HOME)/update_production_nodes.tcl
+Updater::Init [lindex $argv 0] [lindex $argv 1]
+Updater::Update_All
+exit 0

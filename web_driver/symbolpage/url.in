@@ -1,0 +1,73 @@
+var page = require('webpage').create();
+var system = require('system');
+var group = system.args[1];
+var url = 'http://www.tmxmoney.com/en/research/listed_company_directory.html#B';
+
+var page2 = require('webpage').create();
+page2.onLoadFinished = function(status) {
+    //console.log('Load2 Finished: ' + status);
+    console.log(page2.plainText);
+
+    phantom.exit();
+};
+
+page.onResourceReceived = function(response) {
+    if (response.stage !== "end") return;
+    //console.log('Response (#' + response.id + ', stage "' + response.stage + '"): ' + response.url);
+    if (response.url.indexOf("company-directory") > 0) 
+    {
+	page2.open(response.url, function (status) {
+	});
+    }
+};
+page.onResourceRequested = function(requestData, networkRequest) {
+    //console.log('Request (#' + requestData.id + '): ' + requestData.url);
+};
+page.onUrlChanged = function(targetUrl) {
+    //console.log('New URL: ' + targetUrl);
+};
+page.onLoadFinished = function(status) {
+    //console.log('Load Finished: ' + status);
+};
+page.onLoadStarted = function() {
+    //console.log('Load Started');
+};
+page.onNavigationRequested = function(url, type, willNavigate, main) {
+    //console.log('Trying to navigate to: ' + url);
+};
+
+	
+function callback2() {
+
+    function eventFire(el, etype) {
+        if (el.fireEvent) {
+    	    el.fireEvent('on' + etype);
+		} else {
+				var evObj = document.createEvent('Events');
+				evObj.initEvent(etype, true, false);
+				el.dispatchEvent(evObj);
+		}
+    }
+
+    var x = document.getElementsByTagName("a");
+	var i;
+	for (i = 0; i < x.length; i++) {
+		if (x[i].getAttribute('href') == "#B") {
+		//if (x[i].getAttribute('href') == group) {
+			eventFire(x[i], 'click');
+			break;	
+		}
+	}
+	return document;
+}
+
+function callback(status) {
+    var js = page.evaluate(callback2);
+	
+    setTimeout(function(){
+        phantom.exit();
+    }, 30000);
+}
+
+page.open(url, callback);
+

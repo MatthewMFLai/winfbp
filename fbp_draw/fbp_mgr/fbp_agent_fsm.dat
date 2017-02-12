@@ -1,0 +1,39 @@
+#Node section
+#Name process_proc
+BEGIN_STATE
+READY fbp_agent_fsm::process_ready
+CREATE fbp_agent_fsm::process_generic
+ENABLE fbp_agent_fsm::process_generic
+PID fbp_agent_fsm::process_generic
+KICK fbp_agent_fsm::process_generic
+RUNNING fbp_agent_fsm::process_running
+DRAIN fbp_agent_fsm::process_generic
+DISABLE fbp_agent_fsm::process_generic
+CLOSE fbp_agent_fsm::process_generic
+END_STATE
+
+#Link section
+#from_state to_state eval_proc act_proc
+BEGIN_LINK
+READY CREATE fbp_agent_fsm::eval_ready_to_create fbp_agent_fsm::act_ready_to_create 
+READY RUNNING fbp_agent_fsm::eval_ready_to_running null
+CREATE ENABLE fbp_agent_fsm::eval_all_ipaddr_rx  fbp_agent_fsm::act_create_to_enable
+ENABLE PID fbp_agent_fsm::eval_all_ipaddr_rx fbp_agent_fsm::act_enable_to_pid
+PID KICK fbp_agent_fsm::eval_all_ipaddr_rx fbp_agent_fsm::act_pid_to_kick
+KICK RUNNING fbp_agent_fsm::eval_all_ipaddr_rx null 
+RUNNING DRAIN fbp_agent_fsm::eval_running_to_drain fbp_agent_fsm::act_running_to_drain
+RUNNING READY fbp_agent_fsm::eval_running_to_ready fbp_agent_fsm::act_to_ready
+DRAIN DISABLE fbp_agent_fsm::eval_all_ipaddr_rx fbp_agent_fsm::act_drain_to_disable
+DISABLE CLOSE fbp_agent_fsm::eval_all_ipaddr_rx fbp_agent_fsm::act_disable_to_close
+CLOSE READY fbp_agent_fsm::eval_all_ipaddr_rx fbp_agent_fsm::act_to_ready 
+END_LINK
+
+#Init section
+BEGIN_INIT
+proc = fbp_agent_fsm::init
+END_INIT
+
+#Default state section
+BEGIN_DEFAULT_STATE
+state = READY 
+END_DEFAULT_STATE

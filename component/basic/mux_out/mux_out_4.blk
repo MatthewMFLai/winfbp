@@ -1,0 +1,5 @@
+name mux_out
+filepath $env(DISK2)/component/basic/mux_out
+init {NODISPLAY mux_1}
+outports {0 1 2 3}
+inports {0}

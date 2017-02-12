@@ -1,0 +1,6 @@
+name seq5sec 
+filepath $env(DISK2)/component/basic/sequencer
+inports {1 2 3}
+portset {PG1 1 ON}
+portset {PG1 2 OFF}
+portset {PG1 3 OFF}

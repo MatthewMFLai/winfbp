@@ -1,0 +1,4 @@
+name delay 
+filepath $env(DISK2)/component/basic/delay
+init {5000}
+inports {1}

@@ -45,3 +45,11 @@ $RECYCLE.BIN/
 Network Trash Folder
 Temporary Items
 .apdisk
+
+# Local directories to ignore
+Factory/
+web_driver/cache/
+web_driver/common/company_*
+web_driver/common/dividend_*
+web_driver/common/stock_T
+web_driver/common/stock_V

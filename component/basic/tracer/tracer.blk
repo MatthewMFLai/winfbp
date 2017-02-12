@@ -1,0 +1,4 @@
+name tracer 
+filepath $env(DISK2)/component/basic/tracer
+inports {1}
+outports {1}

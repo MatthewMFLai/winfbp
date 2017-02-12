@@ -1,0 +1,4 @@
+server_port 7999
+timer 300000
+circuitname S0
+portnum 8000

@@ -1,0 +1,6 @@
+Block B1 /disk2/component/basic/cloner/cloner_test.tcl {7999} {red-ball}
+InPort 1 2 3 4 5 6 7 8 9 10
+OutPort 1
+Block B2 /disk2/component/basic/cloner/cloner.tcl
+InPort 1
+OutPort 1 2 3 4 5 6 7 8 9 10

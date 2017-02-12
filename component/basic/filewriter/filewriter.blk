@@ -1,0 +1,6 @@
+name filewriter
+filepath $env(DISK2)/component/basic/filewriter
+init {$env(DISK2)/web_driver/common/fundamental_V $env(DISK2)/component/basic/filewriter/fundamental_filter}
+kicker
+inports {1}
+outports {}

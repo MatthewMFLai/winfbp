@@ -1,0 +1,205 @@
+For example if I have
+ 
+  process A outport1 ----> process B inport1
+
+then a kludgy process is inserted in between
+
+  process A outport1 ----> kludgy process inport1-A 
+  kludgy process outport1-B ----> process B inport1
+
+The following pseudo code logic is what I have for my Tcl implemenation.
+- process A and B are what the user sees and stitches together using the Tk GUI.
+- kludgy process handles the buffer logic. It runs in a non-blocking async processing event
+  loop, always listening to (a) inport1-A, IPs from process A,
+  and (b) outport1-B, ACK/NACK from process B.
+  [Yes in Tcl event processing it is possible to listen to response from the
+   socket that sends data out.]
+- Each process runs in a single-thread mode. Kludgy always runs to completion.
+  Process A can block while waiting for ACK/NACK from kludgy. Process B can take a
+  long time to process IP and thus not send ACK/NACK back to kludgy right away.
+- I don't use semaphore explicitly in my implementation, just call the Tcl socket api.
+  Underneath the socket api hood I don't know whether semaphore is used or not.
+
+  proess A:
+
+  - send IP to kludgy process
+  - wait for ACK or NACK from kludgy process
+
+  kludgy process:
+
+  on receiving IP from process A
+  - check buffer size.
+  - If buffer not full
+    {
+     - add IP to end of queue.
+     - send ACK back to process A.
+     - if !outport_busy
+         - remove IP from head of queue.
+          - send IP to process B.
+          - set outport_busy TRUE
+    }
+    else
+     - store IP into IP_extra_var /* and not send ACK back. So process A just keeps waiting... blocking send, that is.*/
+  -  back to listening to sockets
+
+  on receiving ACK from process B
+  - set outport_busy FALSE
+  - if IP_extra_var
+    {
+     - add IP_extra_var to end of queue.
+     - send ACK back to process A.
+     - clear IP_extra_var
+    }
+    if queue not empty
+    {
+         - remove IP from head of queue.
+          - send IP to process B.
+          - set outport_busy TRUE
+    }
+   -  back to listening to sockets
+
+  proess B:
+
+  - gets IP from kludgy process
+  - process IP, do whatever work, send IPs to other processes too (yeah, blocking-send!) 
+  - send ACK back to  kludgy process       
+
+=======================================================================================
+
+How to handle collate type of component
+
+For a component with multiple inports the application code is invoked when an IP arrives
+at any one of the inports i.e. the application code cannot selectively listen to a 
+particular inport at any given moment of time. However collate type of component dictates
+that the application code should be able to select which inport to "receive" from. To 
+implement this collate type of component requires making the following changes to the
+above protocol description. The changes are awkward and not efficient in terms of
+cpu utilization.
+
+
+  proess B:
+
+  - gets IP from kludgy process
+  - process IP, finds out the IP is not from an inport the application code really
+    wants to receive from. 
+  - send NACK back to  kludgy process outport1-B
+       
+  kludgy process:
+
+  on receiving NACK (outport1-B) from process B
+  - sends current IP to process B again through outport1-B
+  - back to listening to sockets
+
+Thus the kludgy keeps resending the same IP, the one at the head of the queue, to 
+process B until process B sends back an ACK. This happens when process B somehow changes
+state and decides that IP from inport1 should be processed properly.
+
+=======================================================================================
+
+How to handle collate type of component (II)
+
+There is another way to implement the selective port listening in a reactive system
+like my Tcl implemenation. As usual these are just non proven ideas and I don't want
+to bother other folks with long example flow sequence, so I just send this to you.
+
+Suppose there is a component B with inports 1, 57 and 3, and the component logic dictates receiving IPs in the
+following order (yeah, I stole your previous example...)
+
+   -  receive from port 1 
+   -  receive from port 57 
+   -  receive from port 3
+
+In my Tk GUI, I need to configure this component as type SELECTIVE. All other components have the default
+type REACTIVE.
+
+The kludgy process, which is auto-generated from the FBP graph, already has outports 1, 57 and 3. Since
+they are connected to a SELECTIVE component, these outports are included in a special group, say, selective_B
+group. Each outport in the group has a OK/SUSPEND status. Initialize all outports to have OK status in the group.
+
+Example IP and ACK/NACK flows between the kludgy and component B are shown below.
+
+Yours,
+
+Matt
+kludgy outport 3 ---> B inport 3 // send IP
+B inport 3 ---> kludgy outport 3 // return NACK
+kludgy changes outport3 status to SUSPEND.
+kludgy will not send IP out from outport3. Any IPs comming in from upstream process are
+queued up until the queue is full. Then upstream process blocks (yes, blocking-send).
+
+kludgy outport 1 ---> B inport 1 // send IP
+B inport 1 ---> kludgy outport 1 // return ACK
+
+kludgy outport 57 ---> B inport 57 // send IP
+B inport 57 ---> kludgy outport 57 // return NACK
+kludgy changes outport57 status to SUSPEND.
+kludgy will not send IP out from outport57. Any IPs comming in from upstream process are
+queued up until the queue is full. Then upstream process blocks (yes, blocking-send).
+
+
+kludgy outport 1 ---> B inport 1 // send IP
+B inport 1 ---> kludgy outport 1 // return ACK
+
+kludgy outport 1 ---> B inport 1 // send IP
+B inport 1 ---> kludgy outport 1 // return ACK
+.
+.
+.
+
+kludgy outport 1 ---> B inport 1 // send IP
+B inport 1 ---> kludgy outport 1 // return NACK. Application logic in B changes state
+                                                       // and now receives only from inport 57.
+kludgy changes outport1 status to SUSPEND.
+kludgy checks the selective_B group. All outports in the group are in SUSPEND.
+kludgy sets all outports in the group to OK status.
+kludgy sends the IP at the head of queue for each outport to process B.
+
+kludgy outport 3 ---> B inport 3 // send IP
+B inport 3 ---> kludgy outport 3 // return NACK
+kludgy changes outport3 status to SUSPEND.
+kludgy will not send IP out from outport3. Any IPs comming in from upstream process are
+queued up until the queue is full. Then upstream process blocks (yes, blocking-send).
+
+kludgy outport 1 ---> B inport 1 // send IP
+B inport 1 ---> kludgy outport 1 // return NACK
+kludgy changes outport1 status to SUSPEND.
+kludgy will not send IP out from outport1. Any IPs comming in from upstream process are
+queued up until the queue is full. Then upstream process blocks (yes, blocking-send).
+
+kludgy outport 57 ---> B inport 57 // send IP
+B inport 57 ---> kludgy outport 57 // return ACK
+
+kludgy outport 57 ---> B inport 57 // send IP
+B inport 57 ---> kludgy outport 57 // return ACK
+.
+.
+.
+kludgy outport 57 ---> B inport 57 // send IP
+B inport 57 ---> kludgy outport 57 // return NACK. Application logic in B changes state
+                                                       // and now receives only from inport3.
+kludgy changes outport57 status to SUSPEND.
+kludgy checks the selective_B group. All outports in the group are in SUSPEND.
+kludgy sets all outports in the group to OK status.
+kludgy sends the IP at the head of queue for each outport to process B.
+
+kludgy outport 57 ---> B inport 57 // send IP
+B inport 57 ---> kludgy outport 57 // return NACK
+kludgy changes outport57 status to SUSPEND.
+kludgy will not send IP out from outport57. Any IPs comming in from upstream process are
+queued up until the queue is full. Then upstream process blocks (yes, blocking-send).
+
+kludgy outport 1 ---> B inport 1 // send IP
+B inport 1 ---> kludgy outport 1 // return NACK
+kludgy changes outport1 status to SUSPEND.
+kludgy will not send IP out from outport1. Any IPs comming in from upstream process are
+queued up until the queue is full. Then upstream process blocks (yes, blocking-send).
+
+kludgy outport 3 ---> B inport 3 // send IP
+B inport 3 ---> kludgy outport 3 // return ACK
+
+kludgy outport 3 ---> B inport 3 // send IP
+B inport 3 ---> kludgy outport 3 // return ACK
+.
+.
+.
+

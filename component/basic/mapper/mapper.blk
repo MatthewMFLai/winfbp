@@ -1,0 +1,5 @@
+name mapper
+filepath $env(DISK2)/component/basic/mapper
+init {/tmp/mapper.txt}
+inports {1}
+outports {1}

@@ -1,0 +1,264 @@
+# Copyright (C) 2016 by Matthew Lai, email : mmlai@sympatico.ca
+#
+# The author  hereby grants permission to use,  copy, modify, distribute,
+# and  license this  software  and its  documentation  for any  purpose,
+# provided that  existing copyright notices  are retained in  all copies
+# and that  this notice  is included verbatim  in any  distributions. No
+# written agreement, license, or royalty  fee is required for any of the
+# authorized uses.  Modifications to this software may be copyrighted by
+# their authors and need not  follow the licensing terms described here,
+# provided that the new terms are clearly indicated on the first page of
+# each file where they apply.
+#
+# IN NO  EVENT SHALL THE AUTHOR  OR DISTRIBUTORS BE LIABLE  TO ANY PARTY
+# FOR  DIRECT, INDIRECT, SPECIAL,  INCIDENTAL, OR  CONSEQUENTIAL DAMAGES
+# ARISING OUT  OF THE  USE OF THIS  SOFTWARE, ITS DOCUMENTATION,  OR ANY
+# DERIVATIVES  THEREOF, EVEN  IF THE  AUTHOR  HAVE BEEN  ADVISED OF  THE
+# POSSIBILITY OF SUCH DAMAGE.
+#
+# THE  AUTHOR  AND DISTRIBUTORS  SPECIFICALLY  DISCLAIM ANY  WARRANTIES,
+# INCLUDING,   BUT   NOT  LIMITED   TO,   THE   IMPLIED  WARRANTIES   OF
+# MERCHANTABILITY,  FITNESS   FOR  A  PARTICULAR   PURPOSE,  AND
+# NON-INFRINGEMENT.  THIS  SOFTWARE IS PROVIDED  ON AN "AS  IS" BASIS,
+# AND  THE  AUTHOR  AND  DISTRIBUTORS  HAVE  NO  OBLIGATION  TO  PROVIDE
+# MAINTENANCE, SUPPORT, UPDATES, ENHANCEMENTS, OR MODIFICATIONS.
+#!/bin/sh
+# \
+exec tclsh $0 $@
+#exec tclsh "$0" ${1+"$@"}
+
+proc get_port {token} {
+    return [lindex [split $token ":"] 1]
+}
+
+proc get_ipaddr {token} {
+    return [lindex [split $token ":"] 0]
+}
+
+proc server_init {cid addr port} {
+    fileevent $cid readable "server_handle_init $cid"
+    fconfigure $cid -buffering line -translation binary
+}
+
+proc server_handle_init {cid} {
+    if {[gets $cid request] < 0} {
+	global main-loop
+        close $cid
+	set main-loop 1
+    } else {
+        # Custom code to handle initialization. 
+        #
+	set response ""
+        if {[initialize $request response]} {
+	    puts $cid $response
+	    flush $cid
+	}
+    }
+}
+
+proc initialize {request p_response} {
+    global g_channels
+    global g_ports
+    global g_logfile
+    global g_state
+    global g_timeout
+
+    upvar $p_response response
+    set response ""
+    set rc 0
+
+    switch -- [lindex $request 0] {
+        ENABLE {
+	    foreach outport [get_outports] {
+    	    	set g_channels($outport) [socket [get_ipaddr $g_ports($outport)]\
+                     [get_port $g_ports($outport)]]
+    		fileevent $g_channels($outport) readable "server_async_send $g_channels($outport)"
+		fconfigure $g_channels($outport) -buffering line -translation binary
+		puts "Initialized out port $outport"
+	    }
+	    # Set up log file. Check for custom log file name.
+	    if {[string first "logfile=" [lindex $request 2]] == 0} {
+		set g_logfile [lindex [split [lindex $request 2] "="] 1]
+	    } else {
+		set g_logfile $g_ports(BLOCK)
+	    	append g_logfile ".log"
+	    }
+
+	    # Pass the list of data to component for initialization.
+	    init [lrange $request 1 end] 
+	    ready_file [get_port $g_ports(INIT)]
+        }
+	DRAIN {
+	    set g_state "STATE_DRAIN"
+	    ready_file [get_port $g_ports(INIT)]
+        }
+        DISABLE {
+	    foreach cid [array names g_channels] {
+		if {[string first "OUT-" $g_channels($cid)] == 0} {
+		    close $cid
+		}
+	    }
+	    shutdown
+	    ready_file [get_port $g_ports(INIT)]
+        }
+	TEST {
+	    set outports [array names g_channels "OUT-*"]
+	    if {[info commands kicker] == "kicker"} {
+		kicker [lrange $request 1 end]
+		server_async_send ""
+	    } else {
+		puts "component $g_ports(PROGRAM) does not support kicker!"
+	    }
+	}
+	PID {
+	    set response [pid]
+	    set rc 1
+	}
+	default {
+
+	}
+    }
+    return $rc
+}
+
+proc server_send {p_ip portid} {
+    global g_async_send
+
+    if {$portid != ""} {
+	lappend g_async_send [list $portid [ip::serialize $p_ip]]
+    }
+    return
+}
+
+proc server_async_send {cid} {
+    global g_ports
+    global g_channels
+    global g_async_send
+    global g_process_rc
+
+    if {$cid != ""} {
+    	gets $cid rc
+    	if {$rc != "ACK"} {
+    	    # debug print?
+    	}
+    }
+
+    if {$g_async_send != ""} {
+    	set tokens [lindex $g_async_send 0]
+    	set g_async_send [lreplace $g_async_send 0 0]
+    	set portid [lindex $tokens 0]
+    	if {[catch {puts $g_channels($portid) [lindex $tokens 1]} rc]} {
+	    puts "send to $portid error: $rc"
+    	} else {
+    	    catch {flush $g_channels($portid)} rc
+	}
+    } else {
+	if {$g_process_rc != ""} {
+    	    if {[catch {process} rc]} {
+    	    	puts "[get_port $g_ports(INIT)] rc = $rc"
+    	    } else {
+		if {$g_async_send != ""} {
+		    server_async_send ""
+	    	    set g_process_rc $rc
+		}
+    	    }
+	}
+    }
+    return
+}
+
+proc server_log {mode data} {
+    global g_logfile
+    set fd [open $g_logfile a]
+    puts $fd "[clock format [clock seconds]] $mode $data"
+    flush $fd
+    close $fd
+}
+
+proc get_server_id {} {
+    global g_ports
+    return [get_port $g_ports(INIT)]
+}
+
+proc get_outports {} {
+    global g_ports
+    return [array names g_ports "OUT-*"]
+}
+
+proc ready_file {initport} {
+    # Put a marker file to let the launcher know that
+    # the sockets have been set up.
+    set fd [open data_$initport.ready w]
+    puts $fd ""
+    close $fd
+}
+
+# For the stand-alone single folder windows install
+# This points to the htmlparse package.
+if {[string first "Windows" $tcl_platform(os)] > -1} {
+    lappend auto_path $env(DISK2)/tclkit/modules
+}
+# end
+
+variable g_ports
+variable g_channels
+variable g_logfile
+variable g_outport_status
+variable g_state
+variable g_timeout
+
+# Data arrays to support the async send feature.
+# All IPs passed into server_send() will be buffered up and
+# sent to outports in async mode. During the async send the
+# component will not respond to any IPs received in any
+# inports. Once all the IPs are sent any IPs received in
+# any inports are returned with the NAK rc.
+variable g_async_send
+variable g_process_rc
+set g_async_send ""
+set g_process_rc 1 
+
+array set g_channels {}
+array set g_outportt_status {}
+set g_state "STATE_RUNNING"
+
+variable g_cur_request
+array set g_cur_request {}
+
+source $env(LAUNCHER_HOME)/config.dat
+
+# Passed in arguments should be of format
+# "IN-<port number> <os port number> OUT-<port number> <os port number>
+# eg.
+# IN-1 9000 IN-2 9001 OUT-1 9002 OUT-2 9003 INIT 9004
+set datalist $argv
+# Why do we need to substitute the slash below?
+if {$tcl_platform(os) == "Linux"} {
+    regsub -all {\\} $datalist "" datalist
+}
+array set g_ports $datalist
+if {[info exists g_ports(TIMEOUT)]} {
+    if {$g_ports(TIMEOUT) >= 0} {
+    	set g_timeout [expr $g_ports(TIMEOUT) * 1000]
+    } else {
+	set g_timeout "idle"
+    }
+} else {
+    set g_timeout "idle"
+}
+
+#source $g_ports(PROGRAM)
+
+# Source in pattern classes to handle ip and memory allocation.
+source $env(PATTERN_HOME)/malloc.tcl
+source $env(COMP_HOME)/ip/ip.tcl
+ip::init malloc
+source $g_ports(PROGRAM)
+
+socket -server server_init [get_port $g_ports(INIT)]
+
+ready_file [get_port $g_ports(INIT)]
+
+vwait main-loop
+
+exit 0

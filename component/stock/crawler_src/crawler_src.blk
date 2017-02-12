@@ -1,0 +1,5 @@
+name crawler_src
+filepath $env(DISK2)/component/stock/crawler_src
+init {T dividend}
+inports {1}
+outports {1}

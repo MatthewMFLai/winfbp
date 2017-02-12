@@ -1,0 +1,5 @@
+name pricewriter
+filepath $env(DISK2)/component/basic/pricewriter
+init {$env(DISK2)/fbp_draw/hp_V.dat}
+inports {1}
+outports {}

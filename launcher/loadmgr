@@ -1,0 +1,411 @@
+# Copyright (C) 2016 by Matthew Lai, email : mmlai@sympatico.ca
+#
+# The author  hereby grants permission to use,  copy, modify, distribute,
+# and  license this  software  and its  documentation  for any  purpose,
+# provided that  existing copyright notices  are retained in  all copies
+# and that  this notice  is included verbatim  in any  distributions. No
+# written agreement, license, or royalty  fee is required for any of the
+# authorized uses.  Modifications to this software may be copyrighted by
+# their authors and need not  follow the licensing terms described here,
+# provided that the new terms are clearly indicated on the first page of
+# each file where they apply.
+#
+# IN NO  EVENT SHALL THE AUTHOR  OR DISTRIBUTORS BE LIABLE  TO ANY PARTY
+# FOR  DIRECT, INDIRECT, SPECIAL,  INCIDENTAL, OR  CONSEQUENTIAL DAMAGES
+# ARISING OUT  OF THE  USE OF THIS  SOFTWARE, ITS DOCUMENTATION,  OR ANY
+# DERIVATIVES  THEREOF, EVEN  IF THE  AUTHOR  HAVE BEEN  ADVISED OF  THE
+# POSSIBILITY OF SUCH DAMAGE.
+#
+# THE  AUTHOR  AND DISTRIBUTORS  SPECIFICALLY  DISCLAIM ANY  WARRANTIES,
+# INCLUDING,   BUT   NOT  LIMITED   TO,   THE   IMPLIED  WARRANTIES   OF
+# MERCHANTABILITY,  FITNESS   FOR  A  PARTICULAR   PURPOSE,  AND
+# NON-INFRINGEMENT.  THIS  SOFTWARE IS PROVIDED  ON AN "AS  IS" BASIS,
+# AND  THE  AUTHOR  AND  DISTRIBUTORS  HAVE  NO  OBLIGATION  TO  PROVIDE
+# MAINTENANCE, SUPPORT, UPDATES, ENHANCEMENTS, OR MODIFICATIONS.
+#!/bin/sh
+# \
+exec tclsh $0 $@
+#exec tclsh "$0" ${1+"$@"}
+
+proc get_port {token} {
+    return [lindex [split $token ":"] 1]
+}
+
+proc get_ipaddr {token} {
+    return [lindex [split $token ":"] 0]
+}
+
+set server_accept_template {
+proc server_accept_xxx {cid addr port} {
+    global g_ports
+    global g_channels
+
+    fileevent $cid readable "server_handle $cid"
+    fconfigure $cid -buffering line -translation binary
+    set g_channels($cid) xxx 
+}}
+
+proc get_idle_outport {} {
+    global g_outport_status
+
+    set rc ""
+    set portlist "" 
+    foreach outport [get_outports] {
+    	if {$g_outport_status($outport) == "OUTPORT_IDLE"} {
+	    lappend portlist $outport
+	    continue 
+    	}
+    }
+    if {$portlist == ""} {
+	return $rc
+    }
+ 
+    set n [llength $portlist]
+    set j [expr {int(rand()*$n)}]
+    set rc [lindex $portlist $j]
+    return $rc
+}
+
+proc check_blocking_send {} {
+    if {[get_idle_outport] != ""} {
+	return 0
+    } else {
+    	return 1
+    } 
+}
+
+proc process_queued_request {port} {
+    global g_inport_queue
+    global g_channels
+    global g_outport_status
+    global g_outport_data
+
+    # Now dequeue request from inport queue.
+    set token [lindex $g_inport_queue($port) 0]
+    set request [lindex $token 0]
+    set g_inport_queue($port) [lrange $g_inport_queue($port) 1 end]
+
+    set outport [get_idle_outport]
+    set cid $g_channels($outport)
+    catch {puts $cid $request}
+    catch {flush $cid}
+    set g_outport_status($outport) "OUTPORT_WAIT"
+
+    # Just in case we need to resend if the downstream component
+    # returns a NACK
+    set g_outport_data($outport) $request
+
+    return
+}
+
+proc process_resend {outport} {
+    global g_channels
+    global g_outport_data
+
+    #puts "resend to $outport"
+    set cid $g_channels($outport)
+    catch {puts $cid $g_outport_data($outport)}
+    catch {flush $cid}
+
+    return
+}
+
+proc server_handle {cid} {
+    global g_channels
+    global g_inport_queue
+    global g_inport_queue_max
+    global g_outport_status
+    global g_outport_data
+    global g_cur_request
+    global g_waitlist
+    global g_state
+
+    if {[gets $cid request] < 0} {
+        close $cid
+	#set port $g_channels($cid)
+	#unset g_channels($port)
+	unset g_channels($cid)
+    } else {
+	append g_cur_request($cid) $request
+	if {[info complete $g_cur_request($cid)]} {
+	    set request $g_cur_request($cid)
+	    set g_cur_request($cid) ""
+	} else {
+	    return
+	}
+        # Custom code to handle request
+        #
+	set port $g_channels($cid)
+	if {[string first "IN" $port] == 0} {
+	    if {$g_state == "STATE_DRAIN"} {
+	    	# Send ack back to rxmgr.
+	    	catch {puts $cid "ACK"} rc
+	    	catch {flush $cid} rc
+	    	return
+	    }
+	    if {[llength $g_inport_queue($port)] < $g_inport_queue_max($port)} {
+		# Queue the request.
+		lappend g_inport_queue($port) [list $request [clock second]]
+		#puts "rx send ACK"
+		puts $cid "ACK"
+		flush $cid
+
+		if {[check_blocking_send] == 0} {  
+            	    process_queued_request $port
+		}
+
+	    } else {
+		# Queue full. Send nack back.
+		#puts "rx send NACK"
+		#puts $cid "NACK"
+		#flush $cid
+		lappend g_waitlist [list $port $request $cid]
+	    }
+
+	} else {
+	    # Handle outport ack/nack.
+	    if {$request == "ACK"} { 
+		set g_outport_status($port) "OUTPORT_IDLE"
+		set g_outport_data($port) ""
+		#puts "rx gets ACK from tx"
+		# Check which inport has data.
+		set port_oldest -1 
+		set timestamp_oldest 9999999999 
+		foreach port [get_inports] { 
+                    if {[llength $g_inport_queue($port)] > 0} {
+			set token [lindex $g_inport_queue($port) 0]
+			set timestamp [lindex $token 1]
+			if {$timestamp < $timestamp_oldest} {
+			    set port_oldest $port
+			    set timestamp_oldest $timestamp
+			}
+		    }
+		}
+		if {$port_oldest > -1} {
+            	    process_queued_request $port_oldest
+		    if {[llength $g_waitlist]} {
+		    	set token [lindex $g_waitlist 0]
+		    	set g_waitlist [lrange $g_waitlist 1 end]
+		    	set port [lindex $token 0]
+		    	set request [lindex $token 1]
+		    	set cid [lindex $token 2]
+			lappend g_inport_queue($port) [list $request [clock second]]
+		    	catch {puts $cid "ACK"}
+		    	catch {flush $cid}
+	 	    }
+		}
+	    } elseif {$request == "NACK"} {
+		    # We should not reach the elseif portion!	
+		    #after 500 [list process_resend $port]
+		    #process_resend $port
+	    } else {
+		# Generate server log.
+		server_log "ERROR" "Unknown $request"
+		puts "ERROR: Unknown $request"
+	    }
+	}
+    }
+}
+
+proc server_init {cid addr port} {
+    fileevent $cid readable "server_handle_init $cid"
+    fconfigure $cid -buffering line -translation binary
+}
+
+proc server_handle_init {cid} {
+    if {[gets $cid request] < 0} {
+	global main-loop
+        close $cid
+	set main-loop 1
+    } else {
+        # Custom code to handle initialization. 
+        #
+	set response ""
+        if {[initialize $request response]} {
+	    puts $cid $response
+	    flush $cid
+	}
+    }
+}
+
+proc shutdown {} {
+    global g_inport_queue
+
+    # Flush all inport queues.
+    foreach port [array names g_inport_queue] {
+    	set g_inport_queue($port) ""
+    } 
+}
+
+proc initialize {request p_response} {
+    global g_channels
+    global g_ports
+    global g_logfile
+    global g_state
+
+    upvar $p_response response
+    set response ""
+    set rc 0
+
+    switch -- [lindex $request 0] {
+        ENABLE {
+	    foreach outport [get_outports] {
+            	set cid [socket [get_ipaddr $g_ports($outport)]\
+                                [get_port $g_ports($outport)]]
+            	set g_channels($cid) $outport
+            	set g_channels($outport) $cid
+	    	fileevent $cid readable "server_handle $cid"
+            	fconfigure $cid -buffering line -translation binary
+            	puts "Initialized out port $outport"
+	    } 
+
+            # Set up log file. Check for custom log file name.
+            if {[string first "logfile=" [lindex $request end]] == 0} {
+                set g_logfile [lindex [split [lindex $request end] "="] 1]
+            } else {
+                set g_logfile $g_ports(BLOCK)
+                append g_logfile ".log"
+            }
+
+            # Pass the list of data to component for initialization.
+            #init [lrange $request 1 end]
+            ready_file [get_port $g_ports(INIT)]
+        }
+	DRAIN {
+	    set g_state "STATE_DRAIN"
+            ready_file [get_port $g_ports(INIT)]
+        }
+        DISABLE {
+	    foreach outport [get_outports] {
+            	set fd $g_channels($outport)
+            	close $fd
+	    }
+            shutdown
+            ready_file [get_port $g_ports(INIT)]
+        }
+	PID {
+	    set response [pid]
+	    #after 30000 alive_alert
+	    set rc 1
+	}
+        default {
+
+        }
+    }
+    return $rc
+}
+
+proc alive_alert {} {
+    global g_logfile
+
+    set idx [string first ":" $g_logfile]
+    incr idx
+    set idx2 [string first "." $g_logfile]
+    incr idx2 -1
+    puts "[string range $g_logfile $idx $idx2] is alive..."
+    after 30000 alive_alert
+}
+
+proc server_log {mode data} {
+    global g_logfile
+    set fd [open $g_logfile a]
+    puts $fd "[clock format [clock seconds]] $mode $data"
+    flush $fd
+    close $fd
+}
+
+proc get_server_id {} {
+    global g_ports
+    return [get_port $g_ports(INIT)]
+}
+
+proc get_inports {} {
+    global g_ports
+    return [array names g_ports "IN-*"]
+}
+
+proc get_outports {} {
+    global g_ports
+    return [array names g_ports "OUT-*"]
+}
+
+proc ready_file {initport} {
+    # Put a marker file to let the launcher know that
+    # the sockets have been set up.
+    set fd [open data_$initport.ready w]
+    puts $fd ""
+    close $fd
+}
+
+variable g_ports
+variable g_channels
+variable g_logfile
+variable g_inport_queue
+variable g_inport_queue_limit
+variable g_outport_status
+variable g_outport_data
+variable g_inport_queue_max 
+variable g_waitlist
+variable g_state
+array set g_channels {}
+array set g_inport_queue {}
+array set g_inport_queue_max {} 
+array set g_outport_status {}
+array set g_outport_data {}
+set g_waitlist ""
+set g_state "STATE_RUNNING"
+variable g_cur_request
+array set g_cur_request {} 
+
+source $env(LAUNCHER_HOME)/config.dat
+
+# Passed in arguments should be of format
+# "IN-<port number> <os port number> OUT-<port number> <os port number>
+# eg.
+# IN-1 9000 IN-2 9001 OUT-1 9002 OUT-2 9003 INIT 9004
+set datalist $argv
+regsub -all {\\} $datalist "" datalist
+array set g_ports $datalist
+
+# Source in pattern classes to handle ip and memory allocation.
+source $env(PATTERN_HOME)//malloc.tcl
+source $env(COMP_HOME)/ip/ip.tcl
+ip::init malloc
+
+foreach inport [array names g_ports "IN-*"] {
+    # Need to bind the in port number to the handler procedure.
+    # Create a handler procedure on the fly, with the name
+    # server_accept_<inport>
+    regsub -all "xxx" $server_accept_template $inport server_proc
+    eval $server_proc
+
+    socket -server server_accept_$inport [get_port $g_ports($inport)]
+
+    set g_inport_queue($inport) ""
+
+    # Initialize the queue length for each in port.
+    regsub "IN-" $inport "" port
+    set port Queue-$port
+    if {[info exists g_ports($port)]} {
+	set g_inport_queue_max($inport) [get_port $g_ports($port)]
+    } else {
+	set g_inport_queue_max($inport) $g_inport_queue_max_default
+    }
+}
+
+foreach outport [get_outports] { 
+    # Need to bind the in port number to the handler procedure.
+    # Create a handler procedure on the fly, with the name
+    # server_accept_<inport>
+    regsub -all "xxx" $server_accept_template $outport server_proc
+    eval $server_proc
+    set g_outport_status($outport) "OUTPORT_IDLE" 
+}
+
+socket -server server_init [get_port $g_ports(INIT)]
+
+ready_file [get_port $g_ports(INIT)]
+
+vwait main-loop
+
+exit 0

@@ -1,0 +1,210 @@
+# contents of .c
+draw rectangle 754.9999999999997 165.0 803.9999999999999 196.99999999999997 -fill {light cyan} -tags {system1875 mv}
+draw rectangle 753.9999999999997 21.0 802.9999999999998 52.99999999999999 -fill {light cyan} -tags {system1352 mv}
+draw rectangle 835.9999999999999 165.0 903.9999999999997 194.99999999999997 -fill {light cyan} -tags {system884 mv}
+draw rectangle 832.9999999999998 21.0 900.9999999999995 51.0 -fill {light cyan} -tags {system5099 mv}
+draw rectangle 90.0 162.0 172.0 194.0 -fill {light cyan} -tags {system4543 mv}
+draw rectangle 89.0 18.0 170.99999999999997 49.99999999999998 -fill {light cyan} -tags {system5777 mv}
+draw rectangle -44.0 141.99999999999997 61.99999999999999 214.0 -fill {light cyan} -tags {system6694 mv}
+draw rectangle 111.0 90.0 139.99999999999977 116.0 -fill {light cyan} -tags {system4268 mv}
+draw rectangle 206.0 6.0 274.0 206.0 -fill {light cyan} -tags {system5568 mv}
+draw rectangle 645.0 9.0 713.0 208.99999999999997 -fill {light cyan} -tags {system400 mv}
+draw rectangle 415.0 178.0 475.99999999999994 218.0 -fill {light cyan} -tags {system9895 mv}
+draw rectangle 415.0 123.99999999999999 475.99999999999994 164.0 -fill {light cyan} -tags {system6757 mv}
+draw rectangle 413.0 61.0 474.0 101.0 -fill {light cyan} -tags {system5727 mv}
+draw rectangle 412.0 7.0 473.00000000000006 47.0 -fill {light cyan} -tags {system4173 mv}
+draw rectangle 554.9999999999999 163.0 594.0 190.99999999999997 -fill {light cyan} -tags {system1856 mv}
+draw rectangle 316.0 41.0 365.99999999999994 123.0 -fill {light cyan} -tags {system9097 mv}
+draw rectangle -38.0 2.0 51.0 66.0 -fill {light cyan} -tags {system9191 mv}
+draw text -35.0 2.0 -anchor nw -font fontBold -tags {system9191 BLOCK mv} -text B1
+draw text -35.0 15.0 -anchor nw -fill red -font fontNormal -tags {system9191 system9191:INPORT:1 PORT mv} -text 1
+draw text -8.0 15.0 -anchor nw -fill blue -font fontNormal -justify right -tags {system9191 system9191:OUTPORT:0 PORT mv} -text 0
+draw text -8.0 33.0 -anchor nw -fill blue -font fontNormal -justify right -tags {system9191 system9191:OUTPORT:1 PORT mv} -text 1
+draw text -8.0 51.0 -anchor nw -fill blue -font fontNormal -justify right -tags {system9191 system9191:OUTPORT:2 PORT mv} -text 2
+draw line -38.0 15.0 51.0 15.0 -tags {system9191 mv}
+draw text 319.0 41.0 -anchor nw -font fontBold -tags {system9097 BLOCK mv} -text B3
+draw text 319.0 54.0 -anchor nw -fill red -font fontNormal -tags {system9097 system9097:INPORT:1 PORT mv} -text {1     }
+draw text 345.99999999999994 54.0 -anchor nw -fill blue -font fontNormal -justify right -tags {system9097 system9097:OUTPORT:1 PORT mv} -text 1
+draw text 345.99999999999994 72.0 -anchor nw -fill blue -font fontNormal -justify right -tags {system9097 system9097:OUTPORT:2 PORT mv} -text 2
+draw text 345.99999999999994 90.0 -anchor nw -fill blue -font fontNormal -justify right -tags {system9097 system9097:OUTPORT:3 PORT mv} -text 3
+draw text 345.99999999999994 108.0 -anchor nw -fill blue -font fontNormal -justify right -tags {system9097 system9097:OUTPORT:4 PORT mv} -text 4
+draw line 316.0 54.0 365.99999999999994 54.0 -tags {system9097 mv}
+draw text 558.0 163.0 -anchor nw -font fontBold -tags {system1856 BLOCK mv} -text B13
+draw text 558.0 176.0 -anchor nw -fill red -font fontNormal -tags {system1856 system1856:INPORT:1 PORT mv} -text 1
+draw text 585.0000000000001 176.0 -anchor nw -fill blue -font fontNormal -justify right -tags {system1856 system1856:OUTPORT:1 PORT mv} -text 1
+draw line 554.9999999999999 176.0 594.0 176.0 -tags {system1856 mv}
+draw text 415.0 7.0 -anchor nw -font fontBold -tags {system4173 BLOCK mv} -text B4_1
+draw text 415.0 18.0 -anchor nw -fill red -font fontNormal -tags {system4173 system4173:INPORT:1 PORT mv} -text 1
+draw text 462.9999999999999 18.0 -anchor nw -fill blue -font fontNormal -justify right -tags {system4173 system4173:OUTPORT:1 PORT mv} -text 1
+draw text 462.9999999999999 34.0 -anchor nw -fill blue -font fontNormal -justify right -tags {system4173 system4173:OUTPORT:2 PORT mv} -text 2
+draw line 412.0 18.0 473.00000000000006 18.0 -tags {system4173 mv}
+draw text 416.0 61.0 -anchor nw -font fontBold -tags {system5727 BLOCK mv} -text B4_2
+draw text 416.0 72.0 -anchor nw -fill red -font fontNormal -tags {system5727 system5727:INPORT:1 PORT mv} -text 1
+draw text 464.0 72.0 -anchor nw -fill blue -font fontNormal -justify right -tags {system5727 system5727:OUTPORT:1 PORT mv} -text 1
+draw text 464.0 88.0 -anchor nw -fill blue -font fontNormal -justify right -tags {system5727 system5727:OUTPORT:2 PORT mv} -text 2
+draw line 413.0 72.0 474.0 72.0 -tags {system5727 mv}
+draw text 417.99999999999994 123.99999999999999 -anchor nw -font fontBold -tags {system6757 BLOCK mv} -text B4_3
+draw text 417.99999999999994 135.0 -anchor nw -fill red -font fontNormal -tags {system6757 system6757:INPORT:1 PORT mv} -text 1
+draw text 465.99999999999994 135.0 -anchor nw -fill blue -font fontNormal -justify right -tags {system6757 system6757:OUTPORT:1 PORT mv} -text 1
+draw text 465.99999999999994 151.0 -anchor nw -fill blue -font fontNormal -justify right -tags {system6757 system6757:OUTPORT:2 PORT mv} -text 2
+draw line 415.0 135.0 475.99999999999994 135.0 -tags {system6757 mv}
+draw text 417.99999999999994 178.0 -anchor nw -font fontBold -tags {system9895 BLOCK mv} -text B4_4
+draw text 417.99999999999994 188.99999999999997 -anchor nw -fill red -font fontNormal -tags {system9895 system9895:INPORT:1 PORT mv} -text 1
+draw text 465.99999999999994 188.99999999999997 -anchor nw -fill blue -font fontNormal -justify right -tags {system9895 system9895:OUTPORT:1 PORT mv} -text 1
+draw text 465.99999999999994 204.99999999999997 -anchor nw -fill blue -font fontNormal -justify right -tags {system9895 system9895:OUTPORT:2 PORT mv} -text 2
+draw line 415.0 188.99999999999997 475.99999999999994 188.99999999999997 -tags {system9895 mv}
+draw text 648.0 9.0 -anchor nw -font fontBold -tags {system400 BLOCK mv} -text B2_1
+draw text 648.0 20.0 -anchor nw -fill red -font fontNormal -tags {system400 system400:INPORT:0 PORT mv} -text 0
+draw text 696.0 20.0 -anchor nw -fill blue -font fontNormal -justify right -tags {system400 system400:OUTPORT:0 PORT mv} -text 0
+draw text 696.0 36.0 -anchor nw -fill blue -font fontNormal -justify right -tags {system400 system400:OUTPORT:1 PORT mv} -text 1
+draw text 696.0 52.0 -anchor nw -fill blue -font fontNormal -justify right -tags {system400 system400:OUTPORT:2 PORT mv} -text 2
+draw text 696.0 68.0 -anchor nw -fill blue -font fontNormal -justify right -tags {system400 system400:OUTPORT:3 PORT mv} -text 3
+draw text 696.0 84.0 -anchor nw -fill blue -font fontNormal -justify right -tags {system400 system400:OUTPORT:4 PORT mv} -text 4
+draw text 696.0 100.0 -anchor nw -fill blue -font fontNormal -justify right -tags {system400 system400:OUTPORT:5 PORT mv} -text 5
+draw text 696.0 116.0 -anchor nw -fill blue -font fontNormal -justify right -tags {system400 system400:OUTPORT:6 PORT mv} -text 6
+draw text 696.0 132.0 -anchor nw -fill blue -font fontNormal -justify right -tags {system400 system400:OUTPORT:7 PORT mv} -text 7
+draw text 696.0 148.0 -anchor nw -fill blue -font fontNormal -justify right -tags {system400 system400:OUTPORT:8 PORT mv} -text 8
+draw text 696.0 164.0 -anchor nw -fill blue -font fontNormal -justify right -tags {system400 system400:OUTPORT:9 PORT mv} -text 9
+draw text 696.0 180.0 -anchor nw -fill blue -font fontNormal -justify right -tags {system400 system400:OUTPORT:10 PORT mv} -text 10
+draw text 696.0 196.0 -anchor nw -fill blue -font fontNormal -justify right -tags {system400 system400:OUTPORT:11 PORT mv} -text 11
+draw line 645.0 20.0 713.0 20.0 -tags {system400 mv}
+draw text 208.99999999999997 6.0 -anchor nw -font fontBold -tags {system5568 BLOCK mv} -text B2
+draw text 208.99999999999997 17.0 -anchor nw -fill red -font fontNormal -tags {system5568 system5568:INPORT:0 PORT mv} -text 0
+draw text 208.99999999999997 33.0 -anchor nw -fill red -font fontNormal -tags {system5568 system5568:INPORT:1 PORT mv} -text 1
+draw text 208.99999999999997 49.0 -anchor nw -fill red -font fontNormal -tags {system5568 system5568:INPORT:2 PORT mv} -text 2
+draw text 208.99999999999997 65.0 -anchor nw -fill red -font fontNormal -tags {system5568 system5568:INPORT:3 PORT mv} -text 3
+draw text 208.99999999999997 81.0 -anchor nw -fill red -font fontNormal -tags {system5568 system5568:INPORT:4 PORT mv} -text 4
+draw text 208.99999999999997 97.0 -anchor nw -fill red -font fontNormal -tags {system5568 system5568:INPORT:5 PORT mv} -text 5
+draw text 208.99999999999997 113.0 -anchor nw -fill red -font fontNormal -tags {system5568 system5568:INPORT:6 PORT mv} -text 6
+draw text 208.99999999999997 129.0 -anchor nw -fill red -font fontNormal -tags {system5568 system5568:INPORT:7 PORT mv} -text 7
+draw text 208.99999999999997 145.0 -anchor nw -fill red -font fontNormal -tags {system5568 system5568:INPORT:8 PORT mv} -text {8     }
+draw text 208.99999999999997 161.0 -anchor nw -fill red -font fontNormal -tags {system5568 system5568:INPORT:9 PORT mv} -text 9
+draw text 208.99999999999997 177.0 -anchor nw -fill red -font fontNormal -tags {system5568 system5568:INPORT:10 PORT mv} -text 10
+draw text 208.99999999999997 193.0 -anchor nw -fill red -font fontNormal -tags {system5568 system5568:INPORT:11 PORT mv} -text 11
+draw text 264.0 17.0 -anchor nw -fill blue -font fontNormal -justify right -tags {system5568 system5568:OUTPORT:0 PORT mv} -text 0
+draw line 206.0 17.0 274.0 17.0 -tags {system5568 mv}
+draw text 113.99999999999989 90.0 -anchor nw -font fontBold -tags {system4268 BLOCK mv} -text sink
+draw text 113.99999999999989 103.0 -anchor nw -fill red -font fontNormal -tags {system4268 system4268:INPORT:1 PORT mv} -text 1
+draw line 111.0 103.0 139.99999999999977 103.0 -tags {system4268 mv}
+draw text -41.0 141.99999999999997 -anchor nw -font fontBold -tags {system6694 BLOCK mv} -text B1_V
+draw text -41.0 157.0 -anchor nw -fill red -font fontNormal -tags {system6694 system6694:INPORT:1 PORT mv} -text 1
+draw text -7.0 157.0 -anchor nw -fill blue -font fontNormal -justify right -tags {system6694 system6694:OUTPORT:0 PORT mv} -text 0
+draw text -7.0 177.0 -anchor nw -fill blue -font fontNormal -justify right -tags {system6694 system6694:OUTPORT:1 PORT mv} -text 1
+draw text -7.0 196.99999999999994 -anchor nw -fill blue -font fontNormal -justify right -tags {system6694 system6694:OUTPORT:2 PORT mv} -text 2
+draw line -44.0 157.0 61.99999999999999 157.0 -tags {system6694 mv}
+draw line 594.0 183.5 611.0 184.0 611.0 224.99999999999997 297.0 226.0 297.0 79.0 318.0 61.5 -tags {edge system1856:OUTPORT:1%system9097:INPORT:1}
+draw line 317.0 73.0 318.0 61.5 306.0 60.0 -tags {deco edge system1856:OUTPORT:1%system9097:INPORT:1}
+draw text 92.0 18.0 -anchor nw -font fontBold -tags {system5777 BLOCK mv} -text crawler_src
+draw text 92.0 33.0 -anchor nw -fill red -font fontNormal -tags {system5777 system5777:INPORT:1 PORT mv} -text 1
+draw text 126.00000000000001 33.0 -anchor nw -fill blue -font fontNormal -justify right -tags {system5777 system5777:OUTPORT:1 PORT mv} -text 1
+draw line 89.0 33.0 170.99999999999997 33.0 -tags {system5777 mv}
+draw text 92.99999999999999 162.0 -anchor nw -font fontBold -tags {system4543 BLOCK mv} -text crawler_src_v
+draw text 92.99999999999999 177.0 -anchor nw -fill red -font fontNormal -tags {system4543 system4543:INPORT:1 PORT mv} -text 1
+draw text 127.00000000000001 177.0 -anchor nw -fill blue -font fontNormal -justify right -tags {system4543 system4543:OUTPORT:1 PORT mv} -text 1
+draw line 90.0 177.0 172.0 177.0 -tags {system4543 mv}
+draw text 835.9999999999999 21.0 -anchor nw -font fontBold -tags {system5099 BLOCK mv} -text filewriter
+draw text 835.9999999999999 36.0 -anchor nw -fill red -font fontNormal -tags {system5099 system5099:INPORT:1 PORT mv} -text {1     }
+draw line 832.9999999999998 36.0 900.9999999999995 36.0 -tags {system5099 mv}
+draw text 838.9999999999999 165.0 -anchor nw -font fontBold -tags {system884 BLOCK mv} -text filewriter_V
+draw text 838.9999999999999 180.0 -anchor nw -fill red -font fontNormal -tags {system884 system884:INPORT:1 PORT mv} -text {1     }
+draw line 835.9999999999999 180.0 903.9999999999997 180.0 -tags {system884 mv}
+draw line 353.00000000000006 61.5 388.0 61.99999999999999 413.99999999999994 25.5 -tags {edge system9097:OUTPORT:1%system4173:INPORT:1}
+draw line 416.0 37.0 413.99999999999994 25.5 401.99999999999994 27.0 -tags {deco edge system9097:OUTPORT:1%system4173:INPORT:1}
+draw line 469.99999999999994 41.5 507.0 42.0 557.0 183.5 -tags {edge system4173:OUTPORT:2%system1856:INPORT:1}
+draw line 545.9999999999999 178.0 557.0 183.5 562.0 172.99999999999997 -tags {deco edge system4173:OUTPORT:2%system1856:INPORT:1}
+draw text 757.0 21.0 -anchor nw -font fontBold -tags {system1352 BLOCK mv} -text mapper
+draw text 757.0 36.0 -anchor nw -fill red -font fontNormal -tags {system1352 system1352:INPORT:1 PORT mv} -text {1     }
+draw text 784.0 36.0 -anchor nw -fill blue -font fontNormal -justify right -tags {system1352 system1352:OUTPORT:1 PORT mv} -text 1
+draw line 753.9999999999997 36.0 802.9999999999998 36.0 -tags {system1352 mv}
+draw text 757.9999999999999 165.0 -anchor nw -font fontBold -tags {system1875 BLOCK mv} -text mapper2
+draw text 757.9999999999999 180.0 -anchor nw -fill red -font fontNormal -tags {system1875 system1875:INPORT:1 PORT mv} -text {1     }
+draw text 785.0 180.0 -anchor nw -fill blue -font fontNormal -justify right -tags {system1875 system1875:OUTPORT:1 PORT mv} -text 1
+draw line 754.9999999999997 180.0 803.9999999999999 180.0 -tags {system1875 mv}
+draw line 270.99999999999994 24.5 299.0 25.0 318.0 61.5 -tags {edge system5568:OUTPORT:0%system9097:INPORT:1}
+draw line 306.99999999999994 58.0 318.0 61.5 322.0 50.0 -tags {deco edge system5568:OUTPORT:0%system9097:INPORT:1}
+draw line 133.0 40.5 208.0 40.5 -tags {edge system5777:OUTPORT:1%system5568:INPORT:1}
+draw line 200.0 49.0 208.0 40.5 200.0 32.0 -tags {deco edge system5777:OUTPORT:1%system5568:INPORT:1}
+draw line 134.0 184.50000000000003 208.0 184.50000000000003 -tags {edge system4543:OUTPORT:1%system5568:INPORT:10}
+draw line 200.0 193.0 208.0 184.50000000000003 200.0 176.0 -tags {deco edge system4543:OUTPORT:1%system5568:INPORT:10}
+draw line -1.0 22.5 74.0 23.0 74.0 -6.0 186.99999999999997 -6.0 186.99999999999997 25.0 208.0 24.5 -tags {edge system9191:OUTPORT:0%system5568:INPORT:0}
+draw line 200.0 33.0 208.0 24.5 198.99999999999997 16.0 -tags {deco edge system9191:OUTPORT:0%system5568:INPORT:0}
+draw line -1.0 40.5 91.0 40.5 -tags {edge system9191:OUTPORT:1%system5777:INPORT:1}
+draw line 83.0 49.0 91.0 40.5 83.0 32.0 -tags {deco edge system9191:OUTPORT:1%system5777:INPORT:1}
+draw line -1.0 58.5 76.0 59.0 76.0 95.0 113.0 110.49999999999999 -tags {edge system9191:OUTPORT:2%system4268:INPORT:1}
+draw line 102.0 115.0 113.0 110.49999999999999 108.0 99.0 -tags {deco edge system9191:OUTPORT:2%system4268:INPORT:1}
+draw line 790.9999999999999 43.5 834.9999999999998 43.5 -tags {edge system1352:OUTPORT:1%system5099:INPORT:1}
+draw line 827.0 52.0 834.9999999999998 43.5 827.0 35.0 -tags {deco edge system1352:OUTPORT:1%system5099:INPORT:1}
+draw line 792.0 187.49999999999994 838.0 187.49999999999994 -tags {edge system1875:OUTPORT:1%system884:INPORT:1}
+draw line 830.0 196.0 838.0 187.49999999999994 830.0 178.99999999999997 -tags {deco edge system1875:OUTPORT:1%system884:INPORT:1}
+draw line 0.0 204.5 74.0 204.99999999999997 74.0 123.99999999999999 113.0 110.49999999999999 -tags {edge system6694:OUTPORT:2%system4268:INPORT:1}
+draw line 108.0 121.0 113.0 110.49999999999999 102.0 105.0 -tags {deco edge system6694:OUTPORT:2%system4268:INPORT:1}
+draw line 0.0 164.5 85.0 165.0 85.0 139.0 185.0 139.0 185.0 200.99999999999997 208.0 200.5 -tags {edge system6694:OUTPORT:0%system5568:INPORT:11}
+draw line 200.0 208.99999999999997 208.0 200.5 198.99999999999997 192.0 -tags {deco edge system6694:OUTPORT:0%system5568:INPORT:11}
+draw line 0.0 184.50000000000003 92.0 184.50000000000003 -tags {edge system6694:OUTPORT:1%system4543:INPORT:1}
+draw line 84.0 193.0 92.0 184.50000000000003 84.0 176.0 -tags {deco edge system6694:OUTPORT:1%system4543:INPORT:1}
+draw line 469.99999999999994 25.5 647.0 27.5 -tags {edge system4173:OUTPORT:1%system400:INPORT:0}
+draw line 638.0 36.0 647.0 27.5 639.0 19.0 -tags {deco edge system4173:OUTPORT:1%system400:INPORT:0}
+draw line 709.0 187.49999999999994 757.0 187.49999999999994 -tags {edge system400:OUTPORT:10%system1875:INPORT:1}
+draw line 749.0 196.0 757.0 187.49999999999994 749.0 178.99999999999997 -tags {deco edge system400:OUTPORT:10%system1875:INPORT:1}
+draw line 702.9999999999999 43.5 755.9999999999999 43.5 -tags {edge system400:OUTPORT:1%system1352:INPORT:1}
+draw line 747.9999999999999 52.0 755.9999999999999 43.5 747.9999999999999 35.0 -tags {deco edge system400:OUTPORT:1%system1352:INPORT:1}
+draw line 702.9999999999999 27.5 730.0 28.0 730.0 -16.0 -55.0 -16.0 -55.0 23.0 -36.0 22.5 -tags {edge system400:OUTPORT:0%system9191:INPORT:1}
+draw line -44.0 30.999999999999996 -36.0 22.5 -45.0 14.0 -tags {deco edge system400:OUTPORT:0%system9191:INPORT:1}
+draw line 709.0 203.49999999999997 725.0 203.0 725.0 236.0 -59.0 234.0 -59.0 165.0 -42.0 164.5 -tags {edge system400:OUTPORT:11%system6694:INPORT:1}
+draw line -50.0 172.99999999999997 -42.0 164.5 -51.0 156.0 -tags {deco edge system400:OUTPORT:11%system6694:INPORT:1}
+draw polygon 613.9999999999999 184.0 611.0 180.99999999999997 608.0 184.0 611.0 186.99999999999997 -fill {} -tags bendtag
+draw polygon 613.9999999999999 224.99999999999997 611.0 221.99999999999994 608.0 224.99999999999997 611.0 227.99999999999997 -fill {} -tags bendtag
+draw polygon 300.0 226.0 297.0 222.99999999999997 294.0 226.0 297.0 229.0 -fill {} -tags bendtag
+draw polygon 300.0 79.0 297.0 76.0 294.0 79.0 297.0 82.0 -fill {} -tags bendtag
+draw polygon 390.99999999999994 61.99999999999999 388.0 58.99999999999999 385.00000000000006 61.99999999999999 388.0 65.0 -fill {} -tags bendtag
+draw polygon 509.99999999999994 42.0 507.0 39.0 504.00000000000006 42.0 507.0 45.0 -fill {} -tags bendtag
+draw polygon 302.0 25.0 299.0 22.0 296.0 25.0 299.0 28.0 -fill {} -tags bendtag
+draw polygon 77.0 23.0 74.0 20.0 71.0 23.0 74.0 26.0 -fill {} -tags bendtag
+draw polygon 77.0 -6.0 74.0 -9.0 71.0 -6.0 74.0 -3.0 -fill {} -tags bendtag
+draw polygon 189.99999999999994 -6.0 186.99999999999997 -9.0 183.99999999999997 -6.0 186.99999999999997 -3.0 -fill {} -tags bendtag
+draw polygon 189.99999999999994 25.0 186.99999999999997 22.0 183.99999999999997 25.0 186.99999999999997 28.0 -fill {} -tags bendtag
+draw polygon 79.0 59.0 76.0 56.0 73.0 59.0 76.0 61.99999999999999 -fill {} -tags bendtag
+draw polygon 79.0 95.0 76.0 92.0 73.0 95.0 76.0 98.0 -fill {} -tags bendtag
+draw polygon 77.0 204.99999999999997 74.0 201.99999999999997 71.0 204.99999999999997 74.0 207.99999999999997 -fill {} -tags bendtag
+draw polygon 77.0 123.99999999999999 74.0 120.99999999999997 71.0 123.99999999999999 74.0 126.99999999999999 -fill {} -tags bendtag
+draw polygon 88.0 165.0 85.0 162.0 82.0 165.0 85.0 168.0 -fill {} -tags bendtag
+draw polygon 88.0 139.0 85.0 136.0 82.0 139.0 85.0 142.0 -fill {} -tags bendtag
+draw polygon 188.0 139.0 185.0 136.0 182.0 139.0 185.0 142.0 -fill {} -tags bendtag
+draw polygon 188.0 200.99999999999997 185.0 197.99999999999994 182.0 200.99999999999997 185.0 203.99999999999994 -fill {} -tags bendtag
+draw polygon 733.0 28.0 730.0 25.0 726.9999999999999 28.0 730.0 30.999999999999996 -fill {} -tags bendtag
+draw polygon 733.0 -16.0 730.0 -19.0 726.9999999999999 -16.0 730.0 -13.0 -fill {} -tags bendtag
+draw polygon -52.0 -16.0 -55.0 -19.0 -58.0 -16.0 -55.0 -13.0 -fill {} -tags bendtag
+draw polygon -52.0 23.0 -55.0 20.0 -58.0 23.0 -55.0 26.0 -fill {} -tags bendtag
+draw polygon 728.0 203.0 725.0 200.0 722.0 203.0 725.0 206.0 -fill {} -tags bendtag
+draw polygon 728.0 236.0 725.0 232.99999999999997 722.0 236.0 725.0 238.99999999999997 -fill {} -tags bendtag
+draw polygon -56.0 234.0 -59.0 230.99999999999997 -61.99999999999999 234.0 -59.0 237.0 -fill {} -tags bendtag
+draw polygon -56.0 165.0 -59.0 162.0 -61.99999999999999 165.0 -59.0 168.0 -fill {} -tags bendtag
+draw line 353.00000000000006 79.5 415.0 79.5 -tags {edge system9097:OUTPORT:2%system5727:INPORT:1}
+draw line 406.99999999999994 88.0 415.0 79.5 406.99999999999994 71.0 -tags {deco edge system9097:OUTPORT:2%system5727:INPORT:1}
+draw line 471.0 95.49999999999999 510.9999999999999 96.0 557.0 183.5 -tags {edge system5727:OUTPORT:2%system1856:INPORT:1}
+draw polygon 513.9999999999999 96.0 510.9999999999999 92.99999999999999 507.99999999999983 96.0 510.9999999999999 99.0 -fill {} -tags bendtag
+draw line 545.9999999999999 180.0 557.0 183.5 561.0 172.0 -tags {deco edge system5727:OUTPORT:2%system1856:INPORT:1}
+draw line 471.0 79.5 509.0 80.0 647.0 27.5 -tags {edge system5727:OUTPORT:1%system400:INPORT:0}
+draw polygon 512.0 80.0 509.0 77.0 505.99999999999994 80.0 509.0 83.0 -fill {} -tags bendtag
+draw line 641.9999999999999 38.0 647.0 27.5 636.0 23.0 -tags {deco edge system5727:OUTPORT:1%system400:INPORT:0}
+draw line 353.00000000000006 97.49999999999999 389.0 98.0 417.0 142.5 -tags {edge system9097:OUTPORT:3%system6757:INPORT:1}
+draw polygon 392.0 98.0 389.0 95.0 386.0 98.0 389.0 101.0 -fill {} -tags bendtag
+draw line 405.00000000000006 140.0 417.0 142.5 420.0 131.0 -tags {deco edge system9097:OUTPORT:3%system6757:INPORT:1}
+draw line 473.00000000000006 158.5 512.0 159.0 557.0 183.5 -tags {edge system6757:OUTPORT:2%system1856:INPORT:1}
+draw polygon 515.0 159.0 512.0 156.0 509.0 159.0 512.0 162.0 -fill {} -tags bendtag
+draw line 545.0 186.99999999999997 557.0 183.5 554.0 172.0 -tags {deco edge system6757:OUTPORT:2%system1856:INPORT:1}
+draw line 473.00000000000006 142.5 512.0 142.99999999999997 647.0 27.5 -tags {edge system6757:OUTPORT:1%system400:INPORT:0}
+draw polygon 515.0 142.99999999999997 512.0 139.99999999999997 509.0 142.99999999999997 512.0 145.99999999999994 -fill {} -tags bendtag
+draw line 645.9999999999999 39.0 647.0 27.5 635.0 27.0 -tags {deco edge system6757:OUTPORT:1%system400:INPORT:0}
+draw line 353.00000000000006 115.49999999999999 388.0 116.0 417.0 196.5 -tags {edge system9097:OUTPORT:4%system9895:INPORT:1}
+draw polygon 390.99999999999994 116.0 388.0 113.0 385.00000000000006 116.0 388.0 118.99999999999999 -fill {} -tags bendtag
+draw line 406.0 190.99999999999997 417.0 196.5 422.0 185.99999999999997 -tags {deco edge system9097:OUTPORT:4%system9895:INPORT:1}
+draw line 473.00000000000006 212.5 513.9999999999999 212.99999999999997 557.0 183.5 -tags {edge system9895:OUTPORT:2%system1856:INPORT:1}
+draw polygon 516.9999999999999 212.99999999999997 513.9999999999999 209.99999999999997 510.9999999999999 212.99999999999997 513.9999999999999 215.99999999999994 -fill {} -tags bendtag
+draw line 554.9999999999999 194.99999999999997 557.0 183.5 545.0 180.99999999999997 -tags {deco edge system9895:OUTPORT:2%system1856:INPORT:1}
+draw line 473.00000000000006 196.5 513.9999999999999 196.99999999999997 647.0 27.5 -tags {edge system9895:OUTPORT:1%system400:INPORT:0}
+draw polygon 516.9999999999999 196.99999999999997 513.9999999999999 193.99999999999997 510.9999999999999 196.99999999999997 513.9999999999999 199.99999999999997 -fill {} -tags bendtag
+draw line 648.0 39.0 647.0 27.5 635.0 29.0 -tags {deco edge system9895:OUTPORT:1%system400:INPORT:0}
+
+array set m_block "system5099,outports {} system5568,inports {0 1 2 3 4 5 6 7 8 9 10 11} system884,ipaddr localhost system6694,inports 1 system4173,kicker {} system400,init {NODISPLAY mux_1} system5568,outports 0 system9191,filepath {\$env(DISK2)/component/stock/symbol_source_loopback} system4268,filepath {\$env(FACTORY)/basic/sink/0.01} system6694,filename symbol_source system1352,outports 1 system5099,ipaddr localhost system4173,init {5 logfile=B4_1.log {SAVE_CACHE \$env(WEB_DRIVER_HOME)/cache/dividend/current}   {dividend {url.template symbol.map} {}} {symbolpage {} {}} } system1856,inports 1 system4543,ipaddr localhost system5727,timeout 0 system9097,ipddr localhost system5568,init {NODISPLAY mux_1} system884,filename filewriter system5099,inports 1 system5727,portset {} system1352,ipaddr localhost system5568,timeout 0 system400,ipddr localhost system6694,timeout 0 system4268,ipaddr localhost system9191,ipaddr localhost system9895,kicker {} system4543,filename crawler_src system5568,portset {} system5727,ipaddr localhost system6694,outports {0 1 2} system5727,init {5 logfile=B4_2.log {SAVE_CACHE \$env(WEB_DRIVER_HOME)/cache/dividend/current}  {dividend {url.template symbol.map} {}} {symbolpage {} {}} } system6694,portset {} system6694,kicker red-ball system1856,timeout 0 system9895,init {5 logfile=B4_4.log {SAVE_CACHE \$env(WEB_DRIVER_HOME)/cache/dividend/current}   {dividend {url.template symbol.map} {}}  {symbolpage {} {}} } system884,outports {} system6757,ipddr localhost system4173,filepath {\$env(DISK2)/component/stock/common} system1856,portset {} system4268,filename sink system400,kicker {} system9191,filename symbol_source system5099,timeout 0 system5777,ipaddr localhost system4543,inports 1 system884,init {\$env(DISK2)/web_driver/common/dividend_V \$env(DISK2)/component/basic/filewriter/dividend_filter \$env(DISK2)/scratchpad/dividend_keys.txt} system5099,portset {} system4543,outports 1 system1856,filepath {\$env(DISK2)/component/basic/retry} system5568,kicker {} system5727,filepath {\$env(DISK2)/component/stock/common} system1875,inports 1 system4543,init {V dividend 2} system4268,outports {} system9191,outports {0 1 2} system9895,filepath {\$env(DISK2)/component/stock/common} system9097,init {} system9097,ipaddr localhost system4543,timeout 0 system9191,init {T {A B C D E F G H I J K L M N O P Q R S T U V W X Y Z 0}} system4173,filename common system4268,init {} system1856,ipaddr localhost system5727,ipddr localhost system4543,portset {} system400,inports 0 system1875,timeout 0 system6694,ipddr localhost system884,kicker {} system6757,init {5 logfile=B4_3.log {SAVE_CACHE \$env(WEB_DRIVER_HOME)/cache/dividend/current}  {dividend {url.template symbol.map} {}} {symbolpage {} {}} } system6757,ipaddr localhost system1856,filename retry system1875,portset {} system5727,filename common system9097,filepath {\$env(DISK2)/launcher} system4268,ipddr localhost system9191,ipddr localhost system4173,outports {1 2} system5099,kicker {} system9895,filename common system1875,ipaddr localhost system1875,init {\$env(DISK2)/scratchpad/dividend_mapper.txt} system4543,kicker {} system4173,ipddr localhost system5099,init {\$env(DISK2)/web_driver/common/dividend_T \$env(DISK2)/component/basic/filewriter/dividend_filter \$env(DISK2)/scratchpad/dividend_keys.txt} system4173,ipaddr localhost system400,timeout 0 system1352,kicker {} system1856,outports 1 system4268,kicker {} system9191,kicker red-ball system5727,outports {1 2} system400,portset {} system6757,filepath {\$env(DISK2)/component/stock/common} system4173,inports 1 system5727,kicker {} system1352,init {\$env(DISK2)/scratchpad/dividend_mapper.txt} system9895,outports {1 2} system5777,filepath {\$env(DISK2)/component/stock/crawler_src} system1856,init {} system9097,inports 1 system400,filepath {\$env(FACTORY)/basic/mux_out/0.01} system5777,inports 1 system1875,filepath {\$env(DISK2)/component/basic/mapper} system1352,inports 1 system9895,ipddr localhost system9097,filename loadmgr system884,inports 1 system5568,ipddr localhost system9895,ipaddr localhost system5777,kicker {} system5099,filepath {\$env(DISK2)/component/basic/filewriter} system6694,ipaddr localhost system6694,init {V {A B C D E F G H I J K L M N O P Q R S T U V W X Y Z 0}} system5568,filepath {\$env(FACTORY)/basic/mux_in/0.01} system9895,inports 1 system4173,timeout 0 system1856,ipddr localhost system1352,filepath {\$env(DISK2)/component/basic/mapper} system400,ipaddr localhost system6757,inports 1 system9097,timeout 0 system4173,portset {} system9097,outports {1 2 3 4} system5777,timeout 0 system1352,timeout 0 system6757,filename common system9097,kicker {} system9097,portset {} system884,timeout 0 system9191,inports 1 system4268,inports 1 system5777,filename crawler_src system5777,portset {} system1352,portset {} system5568,ipaddr localhost system884,portset {} system1856,kicker {} system400,filename mux_out system1875,filename mapper system6694,filepath {\$env(DISK2)/component/stock/symbol_source_loopback} system9895,timeout 0 system5099,filename filewriter system6757,timeout 0 system9895,portset {} system884,filepath {\$env(DISK2)/component/basic/filewriter} system6757,outports {1 2} system5568,filename mux_in system6757,kicker {} system6757,portset {} system5777,outports 1 system4268,timeout 0 system9191,timeout 0 system1352,filename mapper system5727,inports 1 system400,outports {0 1 2 3 4 5 6 7 8 9 10 11} system1875,outports 1 system4543,filepath {\$env(DISK2)/component/stock/crawler_src} system9191,portset {} system4268,portset {} system1875,kicker {} system5777,init {T dividend 2}"
+array set m_portqueue "system9895:INPORT:1 1 system4173:INPORT:1 1 system400:INPORT:0 150 system1856:INPORT:1 100 system6757:INPORT:1 1 system5727:INPORT:1 1"

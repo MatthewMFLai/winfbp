@@ -1,0 +1,4 @@
+name loadmgr
+filepath $env(DISK2)/launcher
+inports {1}
+outports {1 2}

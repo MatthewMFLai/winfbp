@@ -1,0 +1,35 @@
+symbol symbol
+{52 Week Low - High:} 52WkLowHi 
+{Cash Flow:} CashFlow
+{Consecutive Div. Increases:} ConsDivIncr
+{Debt/Equity Ratio:} DebtEquiteRatio
+{Debt/Equity to Industry:} DebtEquitytoIndusty
+{Dividend AllStar Ranking:} AllStarRank
+{Dividend Amount Current:} DivCur
+{Dividend Amount Previous:} DivPrev
+{Dividend Declaration Date:} DivDeclDate
+{Dividend Ex Date:} DivExDate
+{Dividend Growth Rate 3yr Avg:} DivGrow3yrAvg
+{Dividend Growth Rate 5yr Avg:} DivGrow5yrAvg
+{Dividend Pay Date:} DivPayDate
+{Dividend Payment Type:} DivPayType
+{Dividend Payments:} DivPay
+{Dividend Payout Ratio 5yr Avg:} DivPayRatio5yrAvg
+{Dividend Payout Ratio:} DivPayRatio
+{Dividend Rate:} DivRate
+{Dividend Record Date:} DivRecordDate
+{Dividend Yield 5yr Avg:} DivYield5yrAvg
+{Dividend Yield:} DivYield
+{Dividends Paid Since:} DivSince
+EPS: EPS
+{Latest Close Price:} LastClosePrice
+{Latest Trade Date:} LastTradeDate
+{Market Cap:} MarketCap
+{Net Income:} NetIncome
+{PE Ratio to Industry:} PEtoIndustry
+{PE Ratio:} PE
+{Projected 10yr Dividend Yield:} DivYield10yrProj 
+Revenue: Revenue
+{Total Return Last 12mths:} TotalReturn12mon
+{Total Return Last 3yrs:} TotalReturn3yr
+{Total Return Last 5yrs:} TotalReturn5yr

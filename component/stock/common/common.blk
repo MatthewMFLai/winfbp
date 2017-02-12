@@ -1,0 +1,5 @@
+name common
+filepath $env(DISK2)/component/stock/common
+init {5 logfile=B4_1.log {fundamental {} dividend} {dividend {url.template symbol.map} {}} {financials {url.template} {}} {symbolpage {} {}} {table {} {}} {optionlist {} {}} {options {} {}}}
+inports {1}
+outports {1 2}

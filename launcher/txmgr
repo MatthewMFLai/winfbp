@@ -1,0 +1,464 @@
+# Copyright (C) 2016 by Matthew Lai, email : mmlai@sympatico.ca
+#
+# The author  hereby grants permission to use,  copy, modify, distribute,
+# and  license this  software  and its  documentation  for any  purpose,
+# provided that  existing copyright notices  are retained in  all copies
+# and that  this notice  is included verbatim  in any  distributions. No
+# written agreement, license, or royalty  fee is required for any of the
+# authorized uses.  Modifications to this software may be copyrighted by
+# their authors and need not  follow the licensing terms described here,
+# provided that the new terms are clearly indicated on the first page of
+# each file where they apply.
+#
+# IN NO  EVENT SHALL THE AUTHOR  OR DISTRIBUTORS BE LIABLE  TO ANY PARTY
+# FOR  DIRECT, INDIRECT, SPECIAL,  INCIDENTAL, OR  CONSEQUENTIAL DAMAGES
+# ARISING OUT  OF THE  USE OF THIS  SOFTWARE, ITS DOCUMENTATION,  OR ANY
+# DERIVATIVES  THEREOF, EVEN  IF THE  AUTHOR  HAVE BEEN  ADVISED OF  THE
+# POSSIBILITY OF SUCH DAMAGE.
+#
+# THE  AUTHOR  AND DISTRIBUTORS  SPECIFICALLY  DISCLAIM ANY  WARRANTIES,
+# INCLUDING,   BUT   NOT  LIMITED   TO,   THE   IMPLIED  WARRANTIES   OF
+# MERCHANTABILITY,  FITNESS   FOR  A  PARTICULAR   PURPOSE,  AND
+# NON-INFRINGEMENT.  THIS  SOFTWARE IS PROVIDED  ON AN "AS  IS" BASIS,
+# AND  THE  AUTHOR  AND  DISTRIBUTORS  HAVE  NO  OBLIGATION  TO  PROVIDE
+# MAINTENANCE, SUPPORT, UPDATES, ENHANCEMENTS, OR MODIFICATIONS.
+#!/bin/sh
+# \
+exec tclsh $0 $@
+#exec tclsh "$0" ${1+"$@"}
+
+# ----------------------------------------------------
+# New procedures to handle the port group structures.
+proc portgrp_status_init {} {
+    global g_port_status
+
+    foreach inport [get_inports] { 
+	set g_port_status($inport) 1
+    }	
+    return
+}
+
+proc portgrp_set {p_indata} {
+    upvar $p_indata indata
+    global g_portgrp_map
+    global g_portgrp_list
+    global g_port_status
+
+    foreach index [array names indata "PORTSET-*"] {
+	set tokens $indata($index)
+        set port [lindex $tokens 0]	
+        set portgrp [lindex $tokens 1]	
+        set status [lindex $tokens 2]
+	set g_portgrp_map($port) $portgrp
+	if {[info exists g_portgrp_list($portgrp)] == 0} {
+	    set g_portgrp_list($portgrp) ""
+	}
+	lappend g_portgrp_list($portgrp) $port
+	if {$status == "ON"} {
+	    set g_port_status($port) 1
+	} else {
+	    set g_port_status($port) 0 
+	}
+    }
+}
+
+proc portgrp_check {port} {
+    global g_port_status
+
+    return $g_port_status($port)
+}
+
+proc portgrp_get {port} {
+    global g_portgrp_map
+
+    if {[info exists g_portgrp_map($port)]} {
+        return $g_portgrp_map($port)
+    } else {
+	return ""
+    }
+}
+
+proc portgrp_update {portgrp portlist} {
+    global g_portgrp_list
+    global g_port_status
+
+    foreach port $g_portgrp_list($portgrp) {
+	set g_port_status($port) 0
+    }
+    foreach port $portlist {
+	# A little protection since the portlist is returned from
+	# application code.
+	if {[info exists g_port_status($port)]} {
+	    set g_port_status($port) 1
+	}
+    }
+    return
+}
+
+# ----------------------------------------------------
+proc get_port {token} {
+    return [lindex [split $token ":"] 1]
+}
+
+proc get_ipaddr {token} {
+    return [lindex [split $token ":"] 0]
+}
+
+set server_accept_template {
+proc server_accept_xxx {cid addr port} {
+    global g_ports
+    global g_channels
+
+    fileevent $cid readable "server_handle $cid"
+    fconfigure $cid -buffering line -translation binary
+    set g_channels($cid) xxx 
+}}
+
+proc server_handle {cid} {
+    global g_channels
+    global g_ports
+    global g_cur_request
+    global g_state
+    global g_port_status
+    global g_ack_pending
+    global g_async_send
+    global g_process_rc
+    global g_rx_inport
+
+    if {[gets $cid request] < 0} {
+        close $cid
+	unset g_channels($cid)
+    } else {
+	append g_cur_request($cid) $request
+	if {[info complete $g_cur_request($cid)]} {
+	    set request $g_cur_request($cid)
+	    set g_cur_request($cid) ""
+	} else {
+	    return
+	}
+	if {$g_state == "STATE_DRAIN"} {
+	    # Send ack back to rxmgr.
+	    catch {puts $cid "ACK"} rc
+	    catch {flush $cid} rc
+	    return
+	}
+        # Custom code to handle request
+        #
+	set rx_inport $g_channels($cid)
+	if {![portgrp_check $rx_inport]} {
+	    catch {puts $cid "NAK_QUIET"} rc
+	    catch {flush $cid} rc
+	    return
+	}
+
+	# async send feature: store the cid to send the
+	# pending NAK once all the IPs in the send list are 
+	# all delivered.
+	if {$g_ack_pending != ""} {
+	    lappend g_ack_pending [list $cid "NAK"]
+	    return
+	}
+
+	set p_ip [ip::assemble $request]
+	if {[catch {process $rx_inport $p_ip} rc]} {
+	    puts "[get_port $g_ports(INIT)] rc = $rc"
+	    set rc ""
+	}
+	ip::destroy $p_ip
+
+	# Send ack back to rxmgr.
+	#puts "tx sends ACK to rx"
+	if {$rc == ""} {
+	    lappend g_ack_pending [list $cid "ACK"]
+	} else {
+	    lappend g_ack_pending [list $cid "ACK_QUIET"]
+	}
+	if {$rc != ""} {
+	    set g_process_rc $rc
+	    set g_rx_inport $rx_inport
+	}
+	# Send the first out IP.
+	server_async_send ""
+    }
+}
+
+proc server_init {cid addr port} {
+    fileevent $cid readable "server_handle_init $cid"
+    fconfigure $cid -buffering line -translation binary
+}
+
+proc server_handle_init {cid} {
+    if {[gets $cid request] < 0} {
+	global main-loop
+        close $cid
+	set main-loop 1
+    } else {
+        # Custom code to handle initialization. 
+        #
+	set response ""
+        if {[initialize $request response]} {
+	    puts $cid $response
+	    flush $cid
+	}
+    }
+}
+
+proc initialize {request p_response} {
+    global g_channels
+    global g_ports
+    global g_logfile
+    global g_state
+    global g_buffersize
+    global g_async_send
+    global g_ack_pending
+
+    upvar $p_response response
+    set response ""
+    set rc 0
+
+    switch -- [lindex $request 0] {
+        ENABLE {
+	    foreach outport [get_outports] {
+    	    	set g_channels($outport) [socket [get_ipaddr $g_ports($outport)]\
+                    [get_port $g_ports($outport)]]
+    		fileevent $g_channels($outport) readable "server_async_send $g_channels($outport)"
+		fconfigure $g_channels($outport) -buffering line -buffersize $g_buffersize -translation binary
+		puts "Initialized out port $outport"
+	    }
+	    # Set up log file. Check for custom log file name.
+	    if {[string first "logfile=" [lindex $request 2]] == 0} {
+		set g_logfile [lindex [split [lindex $request 2] "="] 1]
+	    } else {
+		set g_logfile $g_ports(BLOCK)
+	    	append g_logfile ".log"
+	    }
+
+	    # Pass the list of data to component for initialization.
+	    init [lrange $request 1 end] 
+	    ready_file [get_port $g_ports(INIT)]
+        }
+	DRAIN {
+	    set g_state "STATE_DRAIN"
+	    ready_file [get_port $g_ports(INIT)]
+        }
+        DISABLE {
+	    foreach cid [array names g_channels] {
+		if {[string first "OUT-" $g_channels($cid)] == 0} {
+		    close $cid
+		}
+	    }
+	    if {$g_async_send != "" || $g_ack_pending != ""} {
+		puts "[get_port $g_ports(INIT)] $g_async_send $g_ack_pending"
+	    }
+	    shutdown
+	    ready_file [get_port $g_ports(INIT)]
+        }
+	TEST {
+	    set outports [array names g_channels "OUT-*"]
+	    if {[info commands kicker] == "kicker"} {
+		kicker [lrange $request 1 end]
+		server_async_send ""
+	    } else {
+		puts "component $g_ports(PROGRAM) does not support kicker!"
+	    }
+	}
+	PID {
+	    set response [pid]
+	    #after 30000 alive_alert
+	    set rc 1
+	}
+	default {
+
+	}
+    }
+    return $rc
+}
+
+proc alive_alert {} {
+    global g_logfile
+
+    set idx [string first ":" $g_logfile]
+    incr idx
+    set idx2 [string first "." $g_logfile]
+    incr idx2 -1
+    puts "[string range $g_logfile $idx $idx2] is alive..."
+    after 30000 alive_alert
+}
+
+proc server_send {p_ip portid} {
+    global g_async_send
+
+    if {$portid != ""} {
+	lappend g_async_send [list $portid [ip::serialize $p_ip]]
+    }
+    return
+}
+
+proc server_async_send {cid} {
+    global g_channels
+    global g_async_send
+    global g_ack_pending
+    global g_process_rc
+    global g_rx_inport
+
+    if {$cid != ""} {
+    	gets $cid rc
+    	if {$rc != "ACK"} {
+    	    # debug print?
+    	}
+    }
+
+    if {$g_async_send != ""} {
+    	set tokens [lindex $g_async_send 0]
+    	set g_async_send [lreplace $g_async_send 0 0]
+    	set portid [lindex $tokens 0]
+    	if {[catch {puts $g_channels($portid) [lindex $tokens 1]} rc]} {
+	    puts "send to $portid error: $rc"
+    	} else {
+    	    catch {flush $g_channels($portid)} rc
+	}
+    } else {
+	foreach token $g_ack_pending {
+	    set cid [lindex $token 0]
+	    set ack [lindex $token 1]
+	    if {![catch {puts $cid $ack} rc]} {
+	        catch {flush $cid} rc
+	    }
+	}
+	set g_ack_pending ""
+	if {$g_process_rc != ""} {
+	    portgrp_update [portgrp_get $g_rx_inport] $g_process_rc
+	    set g_process_rc ""
+	    set g_rx_inport ""
+	}
+    }
+    return
+}
+
+proc server_log {mode data} {
+    global g_logfile
+    set fd [open $g_logfile a]
+    puts $fd "[clock format [clock seconds]] $mode $data"
+    flush $fd
+    close $fd
+}
+
+proc get_server_id {} {
+    global g_ports
+    return [get_port $g_ports(INIT)]
+}
+
+proc get_inports {} {
+    global g_ports
+    return [array names g_ports "IN-*"]
+}
+
+proc get_outports {} {
+    global g_ports
+    return [array names g_ports "OUT-*"]
+}
+
+proc ready_file {initport} {
+    # Put a marker file to let the launcher know that
+    # the sockets have been set up.
+    set fd [open data_$initport.ready w]
+    puts $fd ""
+    close $fd
+}
+
+# For the stand-alone single folder windows install
+# This points to the htmlparse package.
+if {[string first "Windows" $tcl_platform(os)] > -1} {
+    lappend auto_path $env(DISK2)/tclkit/modules
+}
+# end
+
+variable g_ports
+variable g_channels
+variable g_logfile
+variable g_state
+
+variable g_portgrp_map
+variable g_portgrp_list
+variable g_port_status
+
+# Data arrays to support the async send feature.
+# All IPs passed into server_send() will be buffered up and
+# sent to outports in async mode. During the async send the
+# component will not respond to any IPs received in any
+# inports. Once all the IPs are sent any IPs received in
+# any inports are returned with the NAK rc.
+variable g_async_send
+variable g_ack_pending
+variable g_process_rc
+variable g_rx_inport
+
+array set g_channels {}
+set g_state "STATE_RUNNING"
+
+variable g_cur_request
+
+array set g_cur_request {}
+array set g_portgrp_map {}
+array set g_portgrp_list {}
+array set g_port_status {}
+
+set g_async_send ""
+set g_ack_pending "" 
+set g_process_rc ""
+set g_rx_inport ""
+
+source $env(LAUNCHER_HOME)/config.dat
+
+# Passed in arguments should be of format
+# "IN-<port number> <os port number> OUT-<port number> <os port number>
+# eg.
+# IN-1 9000 IN-2 9001 IN-3 9002 IN-4 9003 INIT 9004
+# PORTSET-1 {IN-1 PORTGRP-1 ON}
+# PORTSET-2 {IN-2 PORTGRP-1 OFF}
+# PORTSET-3 {IN-3 PORTGRP-2 ON}
+# PORTSET-4 {IN-4 PORTGRP-2 ON}
+#
+# These map to
+# g_portgrp_map(IN-1) PORTGRP-1
+# g_portgrp_map(IN-2) PORTGRP-1
+# g_portgrp_map(IN-3) PORTGRP-2
+# g_portgrp_map(IN-4) PORTGRP-2
+# g_portgrp_list(PORTGRP-1) {IN-1 IN-2}
+# g_portgrp_list(PORTGRP-2) {IN-3 IN-4}
+# g_port_status(IN-1) 1 
+# g_port_status(IN-2) 0 
+set datalist $argv
+# Why do we need to substitute the slash below?
+if {$tcl_platform(os) == "Linux"} {
+    regsub -all {\\} $datalist "" datalist
+}
+array set g_ports $datalist
+portgrp_status_init
+portgrp_set g_ports
+
+#source $g_ports(PROGRAM)
+
+# Source in pattern classes to handle ip and memory allocation.
+source $env(PATTERN_HOME)/malloc.tcl
+source $env(COMP_HOME)/ip/ip.tcl
+ip::init malloc
+source $g_ports(PROGRAM)
+
+foreach inport [get_inports] { 
+    # Need to bind the in port number to the handler procedure.
+    # Create a handler procedure on the fly, with the name
+    # server_accept_<inport>
+    regsub -all "xxx" $server_accept_template $inport server_proc
+    eval $server_proc
+
+    socket -server server_accept_$inport [get_port $g_ports($inport)]
+}
+
+socket -server server_init [get_port $g_ports(INIT)]
+
+ready_file [get_port $g_ports(INIT)]
+
+vwait main-loop
+
+exit 0

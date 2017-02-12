@@ -1,0 +1,4 @@
+variable g_buffersize
+set g_buffersize 2048 
+variable g_inport_queue_max_default
+set g_inport_queue_max_default 50

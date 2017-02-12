@@ -1,0 +1,12 @@
+proc filter {p_ip} {
+    set rc ""
+    array set data [byList::get_list $p_ip]
+    unset data(urlerror)
+    foreach idx [array names data] {
+	lappend rc "$idx $data($idx)"
+    }
+    return $rc 
+}
+
+global env
+source $env(COMP_HOME)/ip2/byList.tcl

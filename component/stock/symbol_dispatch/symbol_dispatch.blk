@@ -1,0 +1,5 @@
+name symbol_dispatch
+filepath $env(DISK2)/component/stock/symbol_dispatch
+init {T}
+inports {1}
+outports {0 1 2}
