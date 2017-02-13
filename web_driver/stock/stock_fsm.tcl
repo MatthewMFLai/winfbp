@@ -1,4 +1,4 @@
-# Copyright (C) 2016 by Matthew Lai, email : mmlai@sympatico.ca
+# Copyright (C) 2017 by Matthew Lai, email : mmlai@sympatico.ca
 #
 # The author  hereby grants permission to use,  copy, modify, distribute,
 # and  license this  software  and its  documentation  for any  purpose,
@@ -23,25 +23,32 @@
 # AND  THE  AUTHOR  AND  DISTRIBUTORS  HAVE  NO  OBLIGATION  TO  PROVIDE
 # MAINTENANCE, SUPPORT, UPDATES, ENHANCEMENTS, OR MODIFICATIONS
 namespace eval stock_fsm {
-
-variable m_trim_begin
-variable m_trim_end
+variable m_key
 variable m_data
 
 proc init {} {
-    variable m_trim_begin
-    variable m_trim_end
+    variable m_keys
     variable m_data
     
     # raw data looks like this
-    #{"query":{"count":1,"created":"2016-04-03T14:52:10Z","lang":"en-US","results":{"quote":{"symbol":"fts.to","Ask":"40.79","AverageDailyVolume":"1320660",...,"LastTradeTime":"4:00pm","TickerTrend":null,"OneyrTargetPrice":null,"Volume":"929570","HoldingsValue":null,"HoldingsValueRealtime":null,"YearRange":"34.16 - 41.58","DaysValueChange":null,"DaysValueChangeRealtime":null,"StockExchange":"TOR","DividendYield":"3.72","PercentChange":"+0.15%"}}}}
-    #
-    # We want to trim everything before the first "quote" and remove the last 4 braces
-    #
-    set m_trim_begin -1
-    set m_trim_end -4 
+	# 2.28,88.71M,270.27M,118540000,N/A,300724,255287,0.04,2.00,1.13,57.00,1.94
+	# 2.28 = last trade (price only) : LastTradePriceOnly
+	#88.71M = revenue : Revenue
+	#270.27M = market capitalization : MarketCapitalization
+	#118540000 = shares outstanding : SharesOutstanding
+	#N/A = shares owned : SharesOwned
+	#300724 = volume : Volume
+	#255287 = avg daily volume : AverageDailyVolume
+	#0.04 = earnings per share : EarningsShare
+	#2.00 = book value : BookValue
+	#1.13 = price / book : PriceBook
+	#57.00 = P/E ratio : PERatio
+	#1.94 = short ratio : ShortRatio
+	
+    set m_keys {LastTradePriceOnly Revenue MarketCapitalization SharesOutstanding SharesOwned \
+                Volume AverageDailyVolume EarningsShare BookValue PriceBook PERatio ShortRatio}
     if {[info exists m_data]} {
-	unset m_data
+		unset m_data
     }
     array set m_data {}
 
@@ -50,35 +57,23 @@ proc init {} {
 
 proc process_generic {p_data} {
     upvar $p_data argarray
-    variable m_trim_begin
-    variable m_trim_end
+    variable m_keys
     variable m_data
 
     set data $argarray(data)
-
-    set idx [string first "symbol" $data]
-    incr idx $m_trim_begin
-    set idx2 [string last "\}" $data]
-    incr idx2 $m_trim_end
-    set dataline [string range $data $idx $idx2]
-    set tokens [split $dataline ","]
-    foreach token $tokens {
-	# token looks like
-	# "name":"value"
-	set idx [string first ":" $token]
-	incr idx -2
-	set key [string range $token 1 $idx]
-	incr idx 3
-	if {[string index $token $idx] == "\""} {
-	    incr idx 1
-	    set value [string range $token $idx end-1]
-	} else {
-	    set value [string range $token $idx end]
-	}
-	regsub -all {\+} $value "" value	
-	set m_data($key) $value
+    set tokens [split $data ","]
+    foreach key $m_keys token $tokens {
+		regsub -all {\+} $token "" value
+		regsub -all "," $value "" value
+		if {[string index $value end] == "M"} {
+			regsub "M" $value "" value
+			set value [expr round($value * 1000000)]
+		} elseif {[string index $value end] == "B"} {
+			regsub "B" $value "" value
+			set value [expr round($value * 1000000000)]
+		}
+		set m_data($key) $value
     }
-
     return
 }
 	    
@@ -94,7 +89,7 @@ proc Dump {} {
     variable m_data
 
     foreach idx [lsort [array names m_data]] {
-	puts "$idx $m_data($idx)"
+		puts "$idx $m_data($idx)"
     }
     return
 }

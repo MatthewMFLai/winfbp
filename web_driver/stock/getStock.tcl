@@ -28,7 +28,7 @@ exec tclsh $0 "$@"
 source $env(FSM_HOME)/fsm.tcl
 source $env(PATTERN_HOME)/malloc.tcl
 source $env(PATTERN_HOME)/geturl.tcl
-source $env(PWD)/stock_fsm.tcl
+source $env(WEB_DRIVER_HOME)/stock/stock_fsm.tcl
 
 set sanity_mode 1
 Url::init

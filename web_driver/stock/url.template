@@ -1,1 +1,13 @@
-http://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20yahoo.finance.quotes%20where%20symbol%20in%20(%22XXXXX.YYYYY%22)&env=http%3A%2F%2Fdatatables.org%2Falltables.env&format=json
+http://download.finance.yahoo.com/d/quotes.csv?s=XXXXX.YYYYY&f=l1s6j1j2s1va2eb4p6rs7
+l1 = last trade (price only)
+s6 = revenue
+j1 = market capitalization
+j2 = shares outstanding
+s1 = shares owned
+v = volume
+a2 = avg daily volume
+e = earnings per share
+b4 = book value
+p6 = price / book
+r = P/E ratio
+s7 = short ratio
