@@ -55,16 +55,32 @@ proc getit {query} {
 	set idx [string last "#" $url]
 	incr idx
 	set group [string range $url $idx end]
-	set tmpjsfile $env(DISK2)/scratchpad/scrape_$group[clock seconds].js
-	if {[file exists $tmpjsfile]} {
-		after 1000
-		set tmpjsfile $env(DISK2)/scratchpad/scrape_$group[clock seconds].js
+	
+	# Multiple instances of getphantomjsurl script may be running concurrently
+	# and using the same file name will not end well for all those instances!
+	# We use a simple server socket as a makeshift monitor to serialize the
+	# file generation here.
+	# Loop with 10 seconds wait interval, for a max of 300 seconds.
+	set cnt 30
+	set interval 10000
+	while {$cnt} {
+			incr cnt -1
+		} else {
+			break
+		}
+		after $interval
+	if {!$cnt} {
+		return ""
 	}
+	set tmpjsfile $env(DISK2)/scratchpad/scrape_$group[clock seconds].js
 	set fd [open $tmpjsfile w]
 	puts $fd $query
 	close $fd
 	set data [exec $env(PHANTOMJS)/phantomjs $tmpjsfile]
 	file delete $tmpjsfile
+	
+	# Release server socket.
+	close $sockfd
 	return $data
 }
 
