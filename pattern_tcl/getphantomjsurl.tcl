@@ -64,14 +64,17 @@ proc getit {query} {
 	set cnt 30
 	set interval 10000
 	while {$cnt} {
+		if {[catch {socket -server localhost 18000} sockfd]} {
 			incr cnt -1
 		} else {
 			break
 		}
 		after $interval
+	}
 	if {!$cnt} {
 		return ""
 	}
+
 	set tmpjsfile $env(DISK2)/scratchpad/scrape_$group[clock seconds].js
 	set fd [open $tmpjsfile w]
 	puts $fd $query
@@ -81,6 +84,7 @@ proc getit {query} {
 	
 	# Release server socket.
 	close $sockfd
+
 	return $data
 }
 
