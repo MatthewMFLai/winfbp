@@ -57,9 +57,9 @@ proc getit {query} {
 	set group [string range $url $idx end]
 	
 	# Multiple instances of getphantomjsurl script may be running concurrently
-	# and using the same file name will not end well for all those instances!
+	# and may cause some problem in some platforms!
 	# We use a simple server socket as a makeshift monitor to serialize the
-	# file generation here.
+	# phantomjs execution here.
 	# Loop with 10 seconds wait interval, for a max of 300 seconds.
 	set cnt 30
 	set interval 10000
@@ -74,8 +74,8 @@ proc getit {query} {
 	if {!$cnt} {
 		return ""
 	}
-
-	set tmpjsfile $env(DISK2)/scratchpad/scrape_$group[clock seconds].js
+	
+	set tmpjsfile $env(DISK2)/scratchpad/scrape_$group.js
 	set fd [open $tmpjsfile w]
 	puts $fd $query
 	close $fd
