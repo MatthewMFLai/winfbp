@@ -54,3 +54,5 @@ web_driver/common/company_*
 web_driver/common/dividend_*
 web_driver/common/stock_T
 web_driver/common/stock_V
+scratchpad/db/*
+fbp_draw/fbp.dat

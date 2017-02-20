@@ -1,0 +1,5 @@
+name datawriter
+filepath $env(DISK2)/component/basic/datawriter
+init {$env(DISK2)/scratchpad/db/db_T_%Y%m%d {company $env(DISK2)/scratchpad/company_keys.txt co} {dividend $env(DISK2)/scratchpad/dividend_keys.txt di} {stock $env(DISK2)/scratchpad/stock_keys.txt st}}
+inports {co di st}
+outports {}
