@@ -71,6 +71,8 @@ proc process_generic {p_arg_array} {
     regsub -all "\n" $m_text "" m_text
     regsub -all "\"" $m_text "" m_text
     regsub -all "," $m_text "" m_text
+    regsub -all {\$} $m_text "" m_text
+    regsub -all "%" $m_text "" m_text
     set m_param $arg_array(param)
     set m_slash [string trim $arg_array(slash)]
     set m_tag [string trim $arg_array(tag)]

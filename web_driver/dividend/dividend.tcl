@@ -27,6 +27,24 @@ namespace eval dividend {
 variable g_url_template
 variable g_mapper
 
+proc star_to_value {datastr} {
+	if {$datastr == "" || $datastr == "nul"} {
+		return 0
+	} elseif {$datastr == "*"} {
+		return 1
+	} elseif {$datastr == "* *"} {
+		return 2
+	} elseif {$datastr == "* * *"} {
+		return 3
+	} elseif {$datastr == "* * * *"} {
+		return 4
+	} elseif {$datastr == "* * * * *"} {
+		return 5
+	} else {
+		return 0
+	}
+}
+
 proc init {url_template p_mapper} {
     variable g_url_template
     variable g_mapper
@@ -125,6 +143,14 @@ proc extract_data {cur_symbol p_data} {
     doit $cur_symbol $g_url_template g_mapper symbol tmpdata
     if {[info exists tmpdata(ERROR)] == 0} {
 	array set data [array get tmpdata]
+	
+	# Kludge: convert the star * to value
+	set idx "Dividend AllStar Ranking:"
+	if {[info exists data($idx)]} {
+		set data($idx) [star_to_value $data($idx)]
+	}
+	# Kludge: end
+	
 	set data(urlerror) ""
 	set data(symbol) $symbol
     } else {
