@@ -76,11 +76,12 @@ proc search {col_name low high p_rc} {
     }
     return
 }
-    # or
+
 proc query {criteria} {
     # criteria should be of the form
     # {{<col_name> low high} {<col_name> low high} ... }
-
+    # or
+    # {<col_name> <matching string>}
     variable m_symbols
 
     array set result {}
