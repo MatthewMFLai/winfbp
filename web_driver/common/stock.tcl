@@ -2,8 +2,38 @@ namespace eval stock {
 
 variable m_stockdb
 
-proc init {filename} {
+proc init_file {filename} {
 
+    variable m_stockdb
+
+    set rc ""
+    set fd [open $filename r]
+    gets $fd col_desc
+
+    while {[gets $fd line] > -1} {
+
+	array set tmptable {}
+	set line [split $line "\t"]
+	set len [llength $line]
+	for {set i 0} {$i < $len} {incr i} {
+	    set col [lindex $col_desc $i]
+	    set tmptable($col) [lindex $line $i]
+	}
+
+	set symbol $tmptable(symbol)
+	lappend rc $symbol
+	unset tmptable(symbol)
+
+	foreach col [array names tmptable] {
+	    set m_stockdb($symbol,$col) $tmptable($col) 
+	}
+	unset tmptable
+    }
+    close $fd
+    return $rc
+}
+
+proc init {filenames} {
     variable m_stockdb
     variable m_symbols
 
@@ -12,22 +42,24 @@ proc init {filename} {
     }
     array set m_stockdb {}
     set m_symbols ""
- 
-    set fd [open $filename r]
-    gets $fd col_desc
 
-    while {[gets $fd line] > -1} {
-	set line [split $line "\t"]
-	set symbol [lindex $line end]
-	lappend m_symbols $symbol
-	set line [lrange $line 0 end-1]
-	set len [llength $line]
-	for {set i 0} {$i < $len} {incr i} {
-	    set col [lindex $col_desc $i]
-	    set m_stockdb($symbol,$col) [lindex $line $i]
+    foreach filename $filenames {
+	set m_symbols [concat $m_symbols [init_file $filename]]
+    }
+    set m_symbols [lsort -unique $m_symbols]
+    return
+}
+
+proc search_str {col_name match_str p_rc} {
+    upvar $p_rc rc
+    variable m_stockdb
+
+    foreach idx [array names m_stockdb "*,$col_name"] {
+	if {[string first $match_str $m_stockdb($idx)] > -1} {
+	    set symbol [lindex [split $idx ","] 0]
+	    set rc($symbol) $m_stockdb($idx)
 	}
     }
-    close $fd
     return
 }
 
@@ -44,7 +76,7 @@ proc search {col_name low high p_rc} {
     }
     return
 }
-
+    # or
 proc query {criteria} {
     # criteria should be of the form
     # {{<col_name> low high} {<col_name> low high} ... }
@@ -57,12 +89,16 @@ proc query {criteria} {
     }
 
     foreach tokens $criteria {
-	set col_name [lindex $tokens 0]
-	set low [lindex $tokens 1]
-	set high [lindex $tokens 2]
 	array set rc {}
-	search $col_name $low $high rc
-
+	set col_name [lindex $tokens 0]
+	if {[llength $tokens] ==  3} {
+	    set low [lindex $tokens 1]
+	    set high [lindex $tokens 2]
+	    search $col_name $low $high rc
+	} elseif {[llength $tokens] == 2} {
+	    set matchstr [lindex $tokens 1]
+	    search_str $col_name $matchstr rc
+	}
 	foreach symbol [array names result] {
 	    if {![info exists rc($symbol)]} {
 		unset result($symbol)
@@ -80,7 +116,7 @@ proc query_file_prepare {filename} {
 	if {[string index $line 0] == "#"} {
 	    continue
 	}
-	if {[llength $line] != 3} {
+	if {[llength $line] < 2} {
 	    continue
 	}
 	lappend criteria $line
