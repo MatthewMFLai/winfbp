@@ -156,7 +156,7 @@ proc query_file_symbol {symbol filename} {
     }
     return $rc
 }
-proc get_info {symbol} {
+proc get_info_imp {symbol {filterlist ""}} {
     variable m_symbols
     variable m_stockdb
 
@@ -166,9 +166,31 @@ proc get_info {symbol} {
     set rc ""
     foreach idx [lsort [array names m_stockdb "$symbol,*"]] {
 	set col [lindex [split $idx ","] 1]
-	lappend rc "$col $m_stockdb($idx)"
+	if {$filterlist == "" ||
+	    [lsearch $filterlist $col] > -1} {
+	    lappend rc "$col $m_stockdb($idx)"
+	}
     }
     return $rc
+}
+
+proc get_info {symbol {filename ""}} {
+    set criteria ""
+    if {$filename != "" &&
+	[file exists $filename]} {
+    	set fd [open $filename r]
+    	while {[gets $fd line] > -1} {
+	    if {$line == ""} {
+		continue
+	    }
+	    if {[string index $line 0] == "#"} {
+	    	continue
+	    }
+	    lappend criteria [lindex $line 0]
+    	}
+    	close $fd
+    }
+    return [get_info_imp $symbol $criteria]
 }
 
 proc get_all_symbols {} {
@@ -177,4 +199,10 @@ proc get_all_symbols {} {
     return $m_symbols
 }
 
+}
+
+proc pprint {data} {
+    foreach token $data {
+	puts $token
+    }
 }
