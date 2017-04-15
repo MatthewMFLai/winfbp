@@ -1,4 +1,5 @@
 symbol
+symbol_div
 52WkLowHi
 CashFlow
 ConsDivIncr

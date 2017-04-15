@@ -1,4 +1,5 @@
 symbol symbol
+symbol_div symbol_div
 {52 Week Low - High:} 52WkLowHi 
 {Cash Flow:} CashFlow
 {Consecutive Div. Increases:} ConsDivIncr

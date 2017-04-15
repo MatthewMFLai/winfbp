@@ -152,7 +152,8 @@ proc extract_data {cur_symbol p_data} {
 	# Kludge: end
 	
 	set data(urlerror) ""
-	set data(symbol) $symbol
+	set data(symbol) $cur_symbol
+	set data(symbol_div) $symbol
     } else {
 	set data(urlerror) $tmpdata(ERROR)
     }
