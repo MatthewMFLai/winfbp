@@ -55,7 +55,7 @@ proc search_str {col_name match_str p_rc} {
     variable m_stockdb
 
     foreach idx [array names m_stockdb "*,$col_name"] {
-	if {[string first $match_str $m_stockdb($idx)] > -1} {
+	if {[regexp $match_str $m_stockdb($idx)]} {
 	    set symbol [lindex [split $idx ","] 0]
 	    set rc($symbol) $m_stockdb($idx)
 	}
@@ -199,10 +199,4 @@ proc get_all_symbols {} {
     return $m_symbols
 }
 
-}
-
-proc pprint {data} {
-    foreach token $data {
-	puts $token
-    }
 }
