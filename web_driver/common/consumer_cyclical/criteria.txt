@@ -1,0 +1,11 @@
+BookValue
+EarningsShare
+MarketCapitalization
+PERatio
+PriceBook
+SharesOwned
+SharesOutstanding
+ShortRatio
+Revenue
+description
+industry

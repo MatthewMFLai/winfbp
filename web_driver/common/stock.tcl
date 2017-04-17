@@ -168,7 +168,7 @@ proc get_info_imp {symbol {filterlist ""}} {
 	set col [lindex [split $idx ","] 1]
 	if {$filterlist == "" ||
 	    [lsearch $filterlist $col] > -1} {
-	    lappend rc "$col $m_stockdb($idx)"
+	    lappend rc "$col [list $m_stockdb($idx)]"
 	}
     }
     return $rc
