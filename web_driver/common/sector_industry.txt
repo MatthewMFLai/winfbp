@@ -1,0 +1,91 @@
+Basic Materials,Chemicals - Agricultural
+Basic Materials,Chemicals - Commodity
+Basic Materials,Chemicals - Specialty
+Basic Materials,Construction Materials
+Basic Materials,Containers & Packaging
+Basic Materials,Forest & Wood Products
+Basic Materials,Mining & Metals - Specialty
+Basic Materials,Paper Packaging
+Basic Materials,Paper Products
+Basic Materials,Precious Metals & Minerals
+Basic Materials,Steel
+Cyclical Consumer Goods & Services,Advertising / Marketing
+Cyclical Consumer Goods & Services,Apparel & Accessories
+Cyclical Consumer Goods & Services,Appliances, Tools & Housewares
+Cyclical Consumer Goods & Services,Auto / Truck / Motorcycle Parts
+Cyclical Consumer Goods & Services,Broadcasting
+Cyclical Consumer Goods & Services,Casinos & Gaming
+Cyclical Consumer Goods & Services,Entertainment Production
+Cyclical Consumer Goods & Services,Home Furnishing
+Cyclical Consumer Goods & Services,Homebuilding
+Cyclical Consumer Goods & Services,Hotels, Motels & Cruise Lines
+Cyclical Consumer Goods & Services,Leisure & Recreation
+Cyclical Consumer Goods & Services,Leisure Products
+Cyclical Consumer Goods & Services,Media Diversified
+Cyclical Consumer Goods & Services,Publishing
+Cyclical Consumer Goods & Services,Restaurants
+Cyclical Consumer Goods & Services,Retail - Apparel & Accessories
+Cyclical Consumer Goods & Services,Retail - Department Stores
+Cyclical Consumer Goods & Services,Retail - Discount Stores
+Cyclical Consumer Goods & Services,Retail - Specialty
+Cyclical Consumer Goods & Services,Tires & Rubber Products
+Energy,Coal
+Energy,Integrated Oil & Gas
+Energy,Oil & Gas Drilling
+Energy,Oil & Gas Exploration & Production
+Energy,Oil & Gas Refining & Marketing
+Energy,Oil Related Services & Equipment
+Financials,Banks
+Financials,Consumer Financial Services
+Financials,Financial Services - Diversified
+Financials,Financials - Specialty
+Financials,Insurance - Life & Health
+Financials,Insurance - Multiline
+Financials,Insurance - Property & Casualty
+Financials,Investment Services
+Financials,Investment Trusts
+Financials,REIT - Residential & Commercial
+Financials,Real Estate Operations
+Healthcare,Advanced Medical Equipment
+Healthcare,Biotechnology
+Healthcare,Healthcare Facilities
+Healthcare,Medical Equipment, Supplies & Distribution
+Healthcare,Pharmaceuticals - Diversified
+Healthcare,Pharmaceuticals - Generic & Specialty
+Industrials,Aerospace & Defense
+Industrials,Air Freight & Courier Services
+Industrials,Airlines
+Industrials,Commercial Printing Services
+Industrials,Commercial Services & Supplies
+Industrials,Construction & Agricultural Machinery
+Industrials,Construction - Supplies & Fixtures
+Industrials,Electrical Components & Equipment
+Industrials,Engineering & Construction
+Industrials,Environmental Services
+Industrials,Heavy Electrical Equipment
+Industrials,Highways & Railtracks
+Industrials,Industrial Machinery & Equipment
+Industrials,Marine Port Services
+Industrials,Marine Transportation
+Industrials,Rails & Roads - Freights
+Industrials,Rails & Roads - Passengers
+Non-Cyclical Consumer Goods & Services,Beverages - Brewers
+Non-Cyclical Consumer Goods & Services,Beverages - Distillers & Wineries
+Non-Cyclical Consumer Goods & Services,Beverages - Non-Alcoholic
+Non-Cyclical Consumer Goods & Services,Fishing & Farming
+Non-Cyclical Consumer Goods & Services,Food Distribution & Convenience Stores
+Non-Cyclical Consumer Goods & Services,Food Processing
+Non-Cyclical Consumer Goods & Services,Personal Products
+Non-Cyclical Consumer Goods & Services,Personal Services
+Non-Cyclical Consumer Goods & Services,Retail - Drugs
+Technology,Communications Equipment
+Technology,Computer Hardware
+Technology,IT Services & Consulting
+Technology,Office Equipment
+Technology,Semiconductors
+Technology,Software
+Telecommunications Services,Integrated Telecommunications Services
+Telecommunications Services,Wireless Telecommunications Services
+Utilities,Utilities - Electric
+Utilities,Utilities - Multiline
+Utilities,Utilities - Natural Gas

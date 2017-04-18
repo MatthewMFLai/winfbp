@@ -18,6 +18,38 @@ proc get_all_data {criterion} {
     return $rc
 }
 
+proc get_sector_industry {} {
+
+    set rc ""
+	array set tmptable {}
+	foreach symbol [stock::get_all_symbols] {
+	    foreach token [stock::get_info_imp $symbol "sector industry"] {
+			set criterion [lindex $token 0]
+			set value [lindex $token 1]
+			if {$value == "nul"} {
+				break
+			}
+		    if {$criterion == "sector"} {
+			    set sector $value
+			} else {
+			    set industry $value			
+			}
+		}
+		if {$value == "nul"} {
+		    continue
+		}
+		set key "$sector,$industry"
+		if {![info exists tmptable($key)]} {
+		    set tmptable($key) 1
+		}
+	}
+	
+	foreach key [lsort [array names tmptable]] {
+		lappend rc $key
+	}
+    return $rc
+}
+
 proc pprint {data} {
     foreach token $data {
 	puts $token
