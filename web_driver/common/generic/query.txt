@@ -1,0 +1,2 @@
+sector Utilities
+industry {Utilities - Natural Gas}
