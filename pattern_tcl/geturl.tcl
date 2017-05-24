@@ -23,6 +23,8 @@
 # AND  THE  AUTHOR  AND  DISTRIBUTORS  HAVE  NO  OBLIGATION  TO  PROVIDE
 # MAINTENANCE, SUPPORT, UPDATES, ENHANCEMENTS, OR MODIFICATIONS.
 package require http
+package require tls
+http::register https 443 [list ::tls::socket -tls1 1]
 
 namespace eval Url {
     # mode can be one of NORMAL, READ_CACHE, SAVE_CACHE, CACHE_NORMAL

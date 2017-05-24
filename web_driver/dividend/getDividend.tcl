@@ -25,10 +25,13 @@
 #!/bin/sh
 # \
 exec tclsh $0 "$@"
+
+lappend auto_path $env(DISK2)/tclkit/modules
+
 source $env(FSM_HOME)/fsm.tcl
 source $env(PATTERN_HOME)/malloc.tcl
 source $env(PATTERN_HOME)/geturl.tcl
-source $env(PWD)/dividend_fsm.tcl
+source $env(WEB_DRIVER_HOME)/dividend/dividend_fsm.tcl
 
 set sanity_mode 1
 Url::init
