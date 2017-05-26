@@ -33,6 +33,7 @@ namespace eval Url {
 
 proc url_to_filename {url} {
     regsub "http://" $url "" url
+	regsub "https://" $url "" url
     regsub -all "/" $url "%" url 
     regsub -all {\?} $url "%%" url 
     regsub -all "\&" $url "%%%" url
