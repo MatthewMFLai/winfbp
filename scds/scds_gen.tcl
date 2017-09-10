@@ -206,6 +206,7 @@ proc Buildit {configfile} {
  
     set fd [open $configfile r]
     while {[gets $fd line] > -1} {
+	set line [string trim $line]
 	if {$line == ""} {
 	    continue
 	}
