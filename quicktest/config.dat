@@ -1,0 +1,31 @@
+BEGIN simple QUICKTEST_HOME
+  byCommon common
+  byWord   word
+END
+
+BEGIN complex PATTERN_HOME
+  byRelation graph
+  byOrder ordered_assoc
+  byMain assoc
+  byConcepts assoc
+END
+
+BEGIN dynamic_type
+
+  Main byMain init_whole
+  Main byConcepts init_whole
+  
+  Word byCommon init
+  Word byWord init
+  Word byRelation graph_init_vertex
+  Word byMain init_part_new
+  
+  Concept byCommon init
+  Concept byRelation graph_init_vertex
+  Concept byOrder init_whole
+  Concept byConcepts init_part_new
+  
+  Link byCommon init
+  Link byRelation graph_init_edge
+  Link byOrder init_part_new
+END

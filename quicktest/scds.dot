@@ -1,0 +1,22 @@
+digraph G {
+graph[rankdir=LR];
+byWord -> word;
+byCommon -> common;
+byMain -> assoc;
+byConcepts -> assoc;
+byOrder -> ordered_assoc;
+byRelation -> graph;
+Word -> byMain [label="init_part_new",fontsize=8];
+Link -> byOrder [label="init_part_new",fontsize=8];
+Word -> byRelation [label="graph_init_vertex",fontsize=8];
+Concept -> byConcepts [label="init_part_new",fontsize=8];
+Main -> byConcepts [label="init_whole",fontsize=8];
+Concept -> byCommon [label="init",fontsize=8];
+Link -> byCommon [label="init",fontsize=8];
+Main -> byMain [label="init_whole",fontsize=8];
+Concept -> byRelation [label="graph_init_vertex",fontsize=8];
+Link -> byRelation [label="graph_init_edge",fontsize=8];
+Word -> byCommon [label="init",fontsize=8];
+Word -> byWord [label="init",fontsize=8];
+Concept -> byOrder [label="init_whole",fontsize=8];
+}

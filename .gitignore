@@ -56,3 +56,7 @@ web_driver/common/stock_T
 web_driver/common/stock_V
 scratchpad/db/*
 fbp_draw/fbp.dat
+quicktest/gencode/*/*.tcl
+quicktest/dat/*.tcl
+quicktest/dat/makefile
+quicktest/gencode/*/makefile
