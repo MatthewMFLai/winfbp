@@ -1,0 +1,66 @@
+BEGIN simple FI_DB_HOME
+  bySymbol symbol
+  byCompany company
+  bySector sector
+  byMetric metric
+  byMetric_value metric_value
+  byIndexGrp index_generic
+  byIndex index_generic
+END
+
+BEGIN complex PATTERN_HOME
+  byMain_Company assoc
+  byCompany_Symbol assoc
+  byMain_Metric assoc
+  byCompany_Metric graph
+  byMetric_Link ordered_assoc
+  byMain_Sector assoc
+  bySector_Company assoc
+  byMain_Warrant assoc
+  byMain_Yield ordered_assoc
+  byMain_IndexGrp assoc
+  byIndexGrp_Index assoc
+  byCompany_Index lattice
+END
+
+BEGIN dynamic_type 
+  Main byMain_Company init_whole
+  Main byMain_Metric init_whole 
+  Main byMain_Sector init_whole
+  Main byMain_Warrant init_whole
+  Main byMain_Yield init_whole
+  Main byMain_IndexGrp init_whole
+
+  Company byCompany init
+  Company byMain_Company init_part_new
+  Company byCompany_Symbol init_whole
+  Company byCompany_Metric graph_init_vertex
+  Company bySector_Company init_part_new
+  Company byCompany_Index init_entity
+
+  Symbol bySymbol init
+  Symbol byCompany_Symbol init_part_new
+  Symbol byMain_Warrant init_part_new
+  Symbol byMain_Yield init_part_new
+
+  Metric byMetric init
+  Metric byMain_Metric init_part_new
+  Metric byCompany_Metric graph_init_vertex
+  Metric byMetric_Link init_whole
+
+  Link byMetric_value init
+  Link byCompany_Metric graph_init_edge
+  Link byMetric_Link init_part_new
+
+  Sector bySector init
+  Sector bySector_Company init_whole
+  Sector byMain_Sector init_part_new
+
+  IndexGrp byIndexGrp init
+  IndexGrp byMain_IndexGrp init_part_new
+  IndexGrp byIndexGrp_Index init_whole
+
+  Index byIndex init
+  Index byIndexGrp_Index init_part_new
+  Index byCompany_Index init_entity
+END
