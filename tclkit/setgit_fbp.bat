@@ -12,3 +12,4 @@ set WEB_DRIVER_HOME=%DISK2%/web_driver
 set QUICKTEST_HOME=%DISK2%/quicktest
 set FACTORY=%DISK2%/factory
 set PHANTOMJS=%DISK2%/utility/phantomjs-2.1.1-windows/bin
+set MDG_HOME=C:/mdg/common
