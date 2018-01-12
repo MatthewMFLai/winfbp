@@ -25,16 +25,35 @@
 #!/bin/sh
 # \
 exec tclsh $0 "$@"
-if {[string first "Windows" $env(OS)] > -1} {
-    set runcmd [list exec tclsh [pwd]/getSymbolpage.tcl [pwd]/url.in test]
-} else {
-    set runcmd [list exec $env(PWD)/getSymbolpage.tcl $env(PWD)/url.in test]
-}
-set status [catch $runcmd rc]
-if {$status} {
-    puts $errorCode
-} else {
-    puts "pass"
+
+lappend auto_path $env(DISK2)/tclkit/modules
+
+source $env(FSM_HOME)/fsm.tcl
+source $env(PATTERN_HOME)/malloc.tcl
+source $env(PATTERN_HOME)/geturl.tcl
+source $env(PATTERN_HOME)/stock_util.tcl
+source $env(WEB_DRIVER_HOME)/company/company_fsm.tcl
+source $env(WEB_DRIVER_HOME)/company/company.tcl
+
+Url::init
+malloc::init
+Fsm::Init
+
+Fsm::Load_Fsm company_fsm.dat
+Fsm::Init_Fsm company_fsm
+
+array set data {}
+set fd [open $env(WEB_DRIVER_HOME)/company/url.template r]
+gets $fd url_template
+close $fd
+company::init $url_template
+
+set exchange [lindex $argv 0]
+set cur_symbol [lindex $argv 1]
+
+company::extract_data $exchange $cur_symbol data
+
+foreach idx [lsort [array names data]] {
+    puts "$idx $data($idx)"
 }
 exit 0
-

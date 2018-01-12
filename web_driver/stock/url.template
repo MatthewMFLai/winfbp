@@ -1,13 +1,1 @@
-http://download.finance.yahoo.com/d/quotes.csv?s=XXXXX.YYYYY&f=l1s6j1j2s1va2eb4p6rs7
-l1 = last trade (price only)
-s6 = revenue
-j1 = market capitalization
-j2 = shares outstanding
-s1 = shares owned
-v = volume
-a2 = avg daily volume
-e = earnings per share
-b4 = book value
-p6 = price / book
-r = P/E ratio
-s7 = short ratio
+https://web.tmxmoney.com/quote.php?qm_symbol=XXX

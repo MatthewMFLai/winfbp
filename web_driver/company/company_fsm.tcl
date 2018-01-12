@@ -31,13 +31,11 @@ proc init {} {
     variable m_rx_list
     variable m_data
 
-    set m_rx_list {{description About(?:<.*?>){4}(.*?)<.*?> nul} \
-                   {description2 {Continue reading(?:<.*?>){3}(.*?)<.*?>Hide} nul} \
-                   {name company-name\"><h2>(.*?)<\/h2> nul} \
-                   {sector Sector:<.*?><.*?>(.*?)<.*?> nul} \
-                   {industry Industry:<.*?><.*?>(.*?)<.*?> nul} \
-                   {employees {Full-Time Employees<.*?><.*?>(.*?)<.*?>} nul} \
-                   {incorporated Incorporated<.*?><.*?>(.*?)<.*?> nul} \
+	set m_rx_list {{description Description<.*?><.*?><.*?>(.*?)<.*?> nul} \
+	               {name Profile(.*?)Stock nul} \
+                   {sector Sector<.*?><.*?>:\\s<.*?><.*?>(.*?)<.*?> nul} \
+                   {industry Industry<.*?><.*?>:\\s<.*?><.*?>(.*?)<.*?> nul} \
+                   {employees Full\\sTime\\sEmployees<.*?><.*?>:\\s<.*?><.*?><.*?>(.*?)<.*?> nul} \
                   }
     if {[info exists m_data]} {
 	unset m_data
@@ -74,15 +72,15 @@ proc process_generic {p_data} {
     if {[info exists m_data(description)]} {
 	set desc $m_data(description)
 	regsub -all "amp;" $desc "" desc
-	if {[info exists m_data(description2)]} {
-	    set desc2 $m_data(description2)
-	    regsub -all "amp;" $desc2 "" desc2
-	    append desc $desc2
-	    unset m_data(description2)
-	}
 	set m_data(description) $desc
     }
 
+	if {[info exists m_data(name)]} {
+	    set name $m_data(name)
+	    regsub -all {\|} $name "" name
+	    set m_data(name) [string trim $name]
+    }
+	
     return
 }
 	    

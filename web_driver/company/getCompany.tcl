@@ -44,6 +44,18 @@ if {$sanity_mode} {
     Fsm::Init_Fsm company_fsm
 }
 
+proc fsm {tag slash param text} {
+    global g_fd
+    # A simple state machine to extract company 
+    # description data from globeinvestor.com
+    regsub -all "\n" $text "" text
+    puts $g_fd "tag = $tag"
+    puts $g_fd "slash = $slash"
+    puts $g_fd "param = $param"
+    puts $g_fd "text = $text"
+    puts $g_fd ""
+}
+
 set infile [lindex $argv 0]
 set sanity [lindex $argv 1]
 
@@ -80,6 +92,10 @@ if {$sanity_mode} {
 	    exit -1
 	}
     }
+} else {
+    set g_fd [open out.dat w]
+    htmlparse::parse -cmd fsm $data
+    close $g_fd
 }
 #Fsm::Dump
 exit 0

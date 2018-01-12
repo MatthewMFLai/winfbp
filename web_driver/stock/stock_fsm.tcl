@@ -23,57 +23,78 @@
 # AND  THE  AUTHOR  AND  DISTRIBUTORS  HAVE  NO  OBLIGATION  TO  PROVIDE
 # MAINTENANCE, SUPPORT, UPDATES, ENHANCEMENTS, OR MODIFICATIONS
 namespace eval stock_fsm {
-variable m_key
+
+variable m_rx_list
 variable m_data
 
 proc init {} {
-    variable m_keys
+    variable m_rx_list
     variable m_data
-    
-    # raw data looks like this
-	# 2.28,88.71M,270.27M,118540000,N/A,300724,255287,0.04,2.00,1.13,57.00,1.94
-	# 2.28 = last trade (price only) : LastTradePriceOnly
-	#88.71M = revenue : Revenue
-	#270.27M = market capitalization : MarketCapitalization
-	#118540000 = shares outstanding : SharesOutstanding
-	#N/A = shares owned : SharesOwned
-	#300724 = volume : Volume
-	#255287 = avg daily volume : AverageDailyVolume
-	#0.04 = earnings per share : EarningsShare
-	#2.00 = book value : BookValue
-	#1.13 = price / book : PriceBook
-	#57.00 = P/E ratio : PERatio
-	#1.94 = short ratio : ShortRatio
-	
-    set m_keys {LastTradePriceOnly Revenue MarketCapitalization SharesOutstanding SharesOwned \
-                Volume AverageDailyVolume EarningsShare BookValue PriceBook PERatio ShortRatio}
+
+	set m_rx_list {{shares_outstanding Shares\\sOut.:</td>.*?<.*?>(.*?)<.*?> nul} \
+	               {market_cap Market\\sCap:<.*?>.*?<.*?>(.*?)<.*?>  nul} \
+                   {pe P/E\\sRatio:<.*?>.*?<.*?>(.*?)<.*?> nul} \
+                   {eps EPS:<.*?>.*?<.*?>(.*?)<.*?> nul} \
+                   {pb P/B\\sRatio:<.*?>.*?<.*?>(.*?)<.*?> nul} \
+				   {volume Volume:<.*?><.*?>(.*?)<.*?> nul} \
+				   {price priceLarge.*?<.*?>(.*?)<.*?> nul} \
+                  }
     if {[info exists m_data]} {
-		unset m_data
+	    unset m_data
     }
     array set m_data {}
 
     return
 }
 
+proc trim_trail_zero {data} {
+    set idx [string first "." $data]
+	if {$idx == -1} {
+	    return $data
+	}
+    set lastidx [string length $data]
+	incr lastidx -1
+	while {$lastidx > $idx} {
+        if {[string index $data $lastidx] != "0"} {
+		    break
+		}
+	    incr lastidx -1
+	}
+	if {$lastidx != $idx} {
+	    return [string range $data 0 $lastidx]
+	} else {
+	   return [string range $data 0 [expr $idx - 1]]
+	}
+}
+
 proc process_generic {p_data} {
     upvar $p_data argarray
-    variable m_keys
+    variable m_rx_list
     variable m_data
 
     set data $argarray(data)
-    set tokens [split $data ","]
-    foreach key $m_keys token $tokens {
-		regsub -all {\+} $token "" value
-		regsub -all "," $value "" value
-		if {[string index $value end] == "M"} {
-			regsub "M" $value "" value
-			set value [expr round($value * 1000000)]
-		} elseif {[string index $value end] == "B"} {
-			regsub "B" $value "" value
-			set value [expr round($value * 1000000000)]
+    foreach rx_tokens $m_rx_list {
+		set key [lindex $rx_tokens 0]
+		set exp [lindex $rx_tokens 1]
+		set default [lindex $rx_tokens 2]
+		if {[regexp $exp $data -> s1]} {
+		    if {$s1 != "N/A"} {
+				regsub -all "," $s1 "" s1
+				set s1 [trim_trail_zero $s1]			
+				set m_data($key) $s1
+			}
+		} else {
+			#set m_data($key) $default
 		}
-		set m_data($key) $value
     }
+
+    if {[info exists m_data(volume)]} {
+		set token $m_data(volume)
+		regsub -all "\t" $token "" token
+		regsub -all "\n" $token "" token
+		set m_data(volume) $token
+    }
+	
     return
 }
 	    

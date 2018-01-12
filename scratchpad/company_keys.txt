@@ -4,4 +4,3 @@ name
 sector
 industry
 employees
-incorporated

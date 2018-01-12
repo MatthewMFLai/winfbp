@@ -4,4 +4,3 @@ name name
 sector sector
 industry industry
 employees employees
-incorporated incorporated
