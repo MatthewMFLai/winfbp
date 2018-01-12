@@ -60,3 +60,6 @@ quicktest/gencode/*/*.tcl
 quicktest/dat/*.tcl
 quicktest/dat/makefile
 quicktest/gencode/*/makefile
+web_driver/company/out.dat
+web_driver/company/raw.dat
+*.swp

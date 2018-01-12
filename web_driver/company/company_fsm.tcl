@@ -32,9 +32,9 @@ proc init {} {
     variable m_data
 
 	set m_rx_list {{description Description<.*?><.*?><.*?>(.*?)<.*?> nul} \
-	               {name Profile(.*?)Stock nul} \
-                   {sector Sector<.*?><.*?>:\\s<.*?><.*?>(.*?)<.*?> nul} \
-                   {industry Industry<.*?><.*?>:\\s<.*?><.*?>(.*?)<.*?> nul} \
+	               {name <h3\\sclass=.*?>(.*?)</h3> nul} \
+                   {sector Sector:<.*?><.*?>:\\s<.*?><.*?>(.*?)<.*?> nul} \
+                   {industry Industry:<.*?><.*?>:\\s<.*?><.*?>(.*?)<.*?> nul} \
                    {employees Full\\sTime\\sEmployees<.*?><.*?>:\\s<.*?><.*?><.*?>(.*?)<.*?> nul} \
                   }
     if {[info exists m_data]} {
@@ -52,33 +52,34 @@ proc process_generic {p_data} {
 
     set data $argarray(data)
     foreach rx_tokens $m_rx_list {
-	set key [lindex $rx_tokens 0]
-	set exp [lindex $rx_tokens 1]
-	set default [lindex $rx_tokens 2]
-	if {[regexp $exp $data -> s1]} {
-	    regsub -all "amp;" $s1 "" s1 
-	    set m_data($key) $s1
-	} else {
-	    set m_data($key) $default
-	}
+		set key [lindex $rx_tokens 0]
+		set exp [lindex $rx_tokens 1]
+		set default [lindex $rx_tokens 2]
+		if {[regexp $exp $data -> s1]} {
+			regsub -all "amp;" $s1 "" s1 
+			set m_data($key) $s1
+		} else {
+			set m_data($key) $default
+		}
     }
 
     if {[info exists m_data(employees)]} {
-	set number $m_data(employees)
-	regsub -all "," $number "" number
-	set m_data(employees) $number
+		set number $m_data(employees)
+		regsub -all "," $number "" number
+		set m_data(employees) $number
     }
 
     if {[info exists m_data(description)]} {
-	set desc $m_data(description)
-	regsub -all "amp;" $desc "" desc
-	set m_data(description) $desc
+		set desc $m_data(description)
+		regsub -all "amp;" $desc "" desc
+		regsub -all "&#x27;" $desc "'" desc
+		set m_data(description) $desc
     }
 
-	if {[info exists m_data(name)]} {
-	    set name $m_data(name)
-	    regsub -all {\|} $name "" name
-	    set m_data(name) [string trim $name]
+    if {[info exists m_data(name)]} {
+		set name $m_data(name)
+		regsub -all "&#x27;" $name "'" name
+		set m_data(name) $name
     }
 	
     return

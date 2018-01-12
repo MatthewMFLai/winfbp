@@ -33,7 +33,7 @@ source $env(PATTERN_HOME)/malloc.tcl
 source $env(PATTERN_HOME)/geturl.tcl
 source $env(WEB_DRIVER_HOME)/company/company_fsm.tcl
 
-set sanity_mode 1 
+set sanity_mode 2
 Url::init
 
 if {$sanity_mode} {
@@ -42,18 +42,6 @@ if {$sanity_mode} {
 
     Fsm::Load_Fsm company_fsm.dat
     Fsm::Init_Fsm company_fsm
-}
-
-proc fsm {tag slash param text} {
-    global g_fd
-    # A simple state machine to extract company 
-    # description data from globeinvestor.com
-    regsub -all "\n" $text "" text
-    puts $g_fd "tag = $tag"
-    puts $g_fd "slash = $slash"
-    puts $g_fd "param = $param"
-    puts $g_fd "text = $text"
-    puts $g_fd ""
 }
 
 set infile [lindex $argv 0]
@@ -92,10 +80,6 @@ if {$sanity_mode} {
 	    exit -1
 	}
     }
-} else {
-    set g_fd [open out.dat w]
-    htmlparse::parse -cmd fsm $data
-    close $g_fd
 }
 #Fsm::Dump
 exit 0
