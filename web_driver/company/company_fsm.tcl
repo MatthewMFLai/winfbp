@@ -33,8 +33,8 @@ proc init {} {
 
 	set m_rx_list {{description Description<.*?><.*?><.*?>(.*?)<.*?> nul} \
 	               {name <h3\\sclass=.*?>(.*?)</h3> nul} \
-                   {sector Sector:<.*?><.*?>:\\s<.*?><.*?>(.*?)<.*?> nul} \
-                   {industry Industry:<.*?><.*?>:\\s<.*?><.*?>(.*?)<.*?> nul} \
+                   {sector Sector<.*?><.*?>:\\s<.*?><.*?>(.*?)<.*?> nul} \
+                   {industry Industry<.*?><.*?>:\\s<.*?><.*?>(.*?)<.*?> nul} \
                    {employees Full\\sTime\\sEmployees<.*?><.*?>:\\s<.*?><.*?><.*?>(.*?)<.*?> nul} \
                   }
     if {[info exists m_data]} {
