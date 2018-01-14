@@ -80,6 +80,8 @@ proc process_generic {p_data} {
 		if {[regexp $exp $data -> s1]} {
 		    if {$s1 != "N/A"} {
 				regsub -all "," $s1 "" s1
+				regsub -all "\t" $s1 "" s1
+				set s1 [string trim $s1]
 				set s1 [trim_trail_zero $s1]			
 				set m_data($key) $s1
 			}

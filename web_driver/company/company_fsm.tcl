@@ -56,8 +56,8 @@ proc process_generic {p_data} {
 		set exp [lindex $rx_tokens 1]
 		set default [lindex $rx_tokens 2]
 		if {[regexp $exp $data -> s1]} {
-			regsub -all "amp;" $s1 "" s1 
-			set m_data($key) $s1
+			regsub -all "amp;" $s1 "" s1			
+			set m_data($key) [string trim $s1]
 		} else {
 			set m_data($key) $default
 		}
