@@ -22,53 +22,62 @@
 # NON-INFRINGEMENT.  THIS  SOFTWARE IS PROVIDED  ON AN "AS  IS" BASIS,
 # AND  THE  AUTHOR  AND  DISTRIBUTORS  HAVE  NO  OBLIGATION  TO  PROVIDE
 # MAINTENANCE, SUPPORT, UPDATES, ENHANCEMENTS, OR MODIFICATIONS.
-namespace eval template_fsm {
+namespace eval template {
 
-variable m_rx_list
-variable m_data
+variable g_url_template
 
-proc init {} {
-    variable m_rx_list
-    variable m_data
+proc init {url_template} {
+    variable g_url_template
 
-	set m_rx_list {{description Description<.*?><.*?><.*?>(.*?)<.*?> nul} \
-	               {name <h3\\sclass=.*?>(.*?)</h3> nul} \
-                  }
-    if {[info exists m_data]} {
-        unset m_data
+    set g_url_template $url_template
+    return 
+}
+
+proc doit {exchange symbol url_template p_outdata} {
+    upvar $p_outdata outdata
+
+	# Quick check.
+    if {$exchange == "V"} {
+	    set exchange "X"
     }
-    array set m_data {}
+	set yahoo_symbol [UtilStock::convert_symbol_GM_YAHOO $symbol]
+    set yahoo_exchange [UtilStock::convert_exchange_GM_YAHOO $exchange]
+    regsub -all "888" $url_template $yahoo_symbol tmpurl
+    regsub -all "999" $tmpurl $yahoo_exchange url
+    if {[catch {Url::get $url} data]} {
+    	set outdata(ERROR) $data 
+	return 
+    }
+
+    set argdata(data) $data
+    Fsm::Run template_fsm argdata
+    if {[Fsm::Is_In_Service template_fsm] == 1} {
+    	array set tmpdata {}
+    	template_fsm::Dump_template tmpdata
+    	array set outdata [array get tmpdata]
+    } else {
+    	 set outdata(ERROR) "$symbol FAIL [Fsm::Get_Error template_fsm]"
+    }
+
+    Fsm::Init_Fsm template_fsm
+    Fsm::Set_State template_fsm ONE
 
     return
 }
 
-proc process_generic {p_data} {
-    upvar $p_data argarray
-    variable m_rx_list
-    variable m_data
-
-    set data $argarray(data)
-    foreach rx_tokens $m_rx_list {
-		set key [lindex $rx_tokens 0]
-		set exp [lindex $rx_tokens 1]
-		set default [lindex $rx_tokens 2]
-		if {[regexp $exp $data -> s1]} {
-			regsub -all "amp;" $s1 "" s1
-		    regsub -all "&#x27;" $s1 "'" s1			
-			set m_data($key) [string trim $s1]
-		} else {
-			set m_data($key) $default
-		}
-    }
-	
-    return
-}
-	    
-proc Dump_template {p_data} {
+proc extract_data {exchange symbol p_data} {
+    variable g_url_template
     upvar $p_data data
-    variable m_data
 
-    array set data [array get m_data]
+    array set tmpdata {}
+    doit $exchange $symbol $g_url_template tmpdata
+    if {[info exists tmpdata(ERROR)] == 0} {
+		array set data [array get tmpdata]
+		set data(urlerror) ""
+		set data(symbol) $symbol
+    } else {
+	    set data(urlerror) $tmpdata(ERROR)
+    }
     return
 }
 

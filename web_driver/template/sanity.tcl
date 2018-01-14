@@ -25,7 +25,11 @@
 #!/bin/sh
 # \
 exec tclsh $0 "$@"
-set runcmd [list exec $env(PWD)/getTemplate.tcl $env(PWD)/url.in test]
+if {[string first "Windows" $env(OS)] > -1} {
+    set runcmd [list exec tclsh [pwd]/gethistprice.tcl [pwd]/url.in test]
+} else {
+    set runcmd [list exec $env(PWD)/gethistprice.tcl $env(PWD)/url.in test]
+}
 set status [catch $runcmd rc]
 if {$status} {
     puts $errorCode

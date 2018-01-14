@@ -1,4 +1,4 @@
-# Copyright (C) 2016 by Matthew Lai, email : mmlai@sympatico.ca
+# Copyright (C) 2018 by Matthew Lai, email : mmlai@sympatico.ca
 #
 # The author  hereby grants permission to use,  copy, modify, distribute,
 # and  license this  software  and its  documentation  for any  purpose,
@@ -22,54 +22,40 @@
 # NON-INFRINGEMENT.  THIS  SOFTWARE IS PROVIDED  ON AN "AS  IS" BASIS,
 # AND  THE  AUTHOR  AND  DISTRIBUTORS  HAVE  NO  OBLIGATION  TO  PROVIDE
 # MAINTENANCE, SUPPORT, UPDATES, ENHANCEMENTS, OR MODIFICATIONS.
-namespace eval template_fsm {
+#!/bin/sh
+# \
+exec tclsh $0 "$@"
 
-variable m_rx_list
-variable m_data
+set compname [lindex $argv 0]
 
-proc init {} {
-    variable m_rx_list
-    variable m_data
-
-	set m_rx_list {{description Description<.*?><.*?><.*?>(.*?)<.*?> nul} \
-	               {name <h3\\sclass=.*?>(.*?)</h3> nul} \
-                  }
-    if {[info exists m_data]} {
-        unset m_data
-    }
-    array set m_data {}
-
-    return
+if {[string first "Windows" $env(OS)] > -1} {
+    set compdir [pwd]
+} else {
+    set compdir $env(PWD)
 }
 
-proc process_generic {p_data} {
-    upvar $p_data argarray
-    variable m_rx_list
-    variable m_data
+regsub "template" $compdir $compname compdir
 
-    set data $argarray(data)
-    foreach rx_tokens $m_rx_list {
-		set key [lindex $rx_tokens 0]
-		set exp [lindex $rx_tokens 1]
-		set default [lindex $rx_tokens 2]
-		if {[regexp $exp $data -> s1]} {
-			regsub -all "amp;" $s1 "" s1
-		    regsub -all "&#x27;" $s1 "'" s1			
-			set m_data($key) [string trim $s1]
-		} else {
-			set m_data($key) $default
-		}
-    }
-	
-    return
-}
-	    
-proc Dump_template {p_data} {
-    upvar $p_data data
-    variable m_data
+file mkdir $compdir
 
-    array set data [array get m_data]
-    return
+set filelist [glob *]
+foreach filename $filelist {
+    if {$filename == "gen_component.tcl"} {
+	    continue
+	}
+	set fd [open $filename r]
+	set filebody [read $fd]
+	close $fd
+	regsub -all "template" $filebody $compname filebody
+	if {$filename == "template_test.tcl"} {
+	    # Preserve the "url.template" string.
+	    regsub -all "url.$compname" $filebody "url.template" filebody    
+	}
+	if {$filename != "url.template"} {
+	    regsub -all "template" $filename $compname filename    
+	}
+	set fd [open $compdir/$filename w]
+	puts $fd $filebody
+	close $fd
 }
-
-}
+exit 0

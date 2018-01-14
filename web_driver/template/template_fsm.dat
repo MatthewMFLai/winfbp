@@ -1,32 +1,20 @@
 #Node section
 #Name process_proc
-BEGIN_STATE 
-FIND_PAGE symbolpage_fsm::process_generic
-FIND_EXCHANGE symbolpage_fsm::process_generic
-FIND_COMPANY symbolpage_fsm::process_generic
-FIND_SYMBOL symbolpage_fsm::process_generic
-TERMINATE null 
+BEGIN_STATE
+ONE template_fsm::process_generic
 END_STATE
 
 #Link section
 #from_state to_state eval_proc action_proc
 BEGIN_LINK
-FIND_PAGE FIND_EXCHANGE symbolpage_fsm::eval_page_to_exchange symbolpage_fsm::act_page_to_exchange 
-FIND_PAGE FIND_COMPANY symbolpage_fsm::eval_to_company null 
-FIND_EXCHANGE FIND_COMPANY symbolpage_fsm::eval_to_company null 
-FIND_COMPANY FIND_SYMBOL symbolpage_fsm::eval_company_to_symbol symbolpage_fsm::act_company_to_symbol
-FIND_SYMBOL FIND_SYMBOL symbolpage_fsm::eval_symbol_to_symbol symbolpage_fsm::act_symbol_to_symbol
-FIND_SYMBOL FIND_COMPANY symbolpage_fsm::eval_symbol_to_company symbolpage_fsm::act_symbol_save
-FIND_SYMBOL TERMINATE symbolpage_fsm::eval_symbol_to_terminate symbolpage_fsm::act_symbol_save 
-
 END_LINK
 
 #Init section
 BEGIN_INIT
-proc = symbolpage_fsm::init
+proc = template_fsm::init
 END_INIT
 
 #Default state section
-#BEGIN_DEFAULT_STATE
-state = ...
+BEGIN_DEFAULT_STATE
+state = ONE
 END_DEFAULT_STATE
