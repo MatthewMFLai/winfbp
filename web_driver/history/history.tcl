@@ -37,9 +37,8 @@ proc doit {exchange symbol startdate enddate url_history p_outdata} {
     upvar $p_outdata outdata
 
 	# qm = quotemedia.
-	set qm_symbol [UtilStock::convert_symbol_GM_YAHOO $symbol]
-	set qm_exchange "ca"
-    regsub -all "XXXXX" $url_history $qm_symbol tmpurl
+	set qm_exchange [UtilStock::convert_exchange_GM_QuoteMedia $exchange]
+    regsub -all "XXXXX" $url_history $symbol tmpurl
     regsub -all "YYYYY" $tmpurl $qm_exchange url
 	
 	set startdate [split $startdate "-"]

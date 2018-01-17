@@ -42,6 +42,10 @@ proc convert_exchange_GM_YAHOO {exchange} {
     } 
 }
 
+proc convert_exchange_GM_QuoteMedia {exchange} {
+	return "ca"
+}
+
 proc convert_symbol_YAHOO_GM {symbol} {
     regsub {\-} $symbol "." symbol
     return $symbol
