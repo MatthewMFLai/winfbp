@@ -1,4 +1,6 @@
 set DISK2=C:/winfbp
+set DISK2_BACKUP=D:/winfbp
+set DISK2_DATA=C:/winfbp_data
 set PATH=%DISK2%;C:/winfbp/tclkit;%PATH%
 set PATTERN_HOME=%DISK2%/pattern_tcl
 set UTIL_HOME=%DISK2%/pattern_tcl

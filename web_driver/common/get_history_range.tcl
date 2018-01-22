@@ -30,12 +30,14 @@ source $env(WEB_DRIVER_HOME)/common/history_range.tcl
 array set g_histrange {}
 
 # cd C:/winfbp/web_driver/common
-# tclsh get_history_range.tcl 4 history_range.cfg c:/winfbp/scratchpad/history stock_history.dat
+# tclsh get_history_range.tcl 4 1.00 1.00 history_range.cfg c:/winfbp_data/scratchpad/history stock_history.dat
 
 set column [lindex $argv 0]
-set cfgfile [lindex $argv 1]
-set datadir [lindex $argv 2]
-set outfile [lindex $argv 3]
+set ref_value_limit [lindex $argv 1]
+set value_limit [lindex $argv 2]
+set cfgfile [lindex $argv 3]
+set datadir [lindex $argv 4]
+set outfile [lindex $argv 5]
 
 set fd2 [open $outfile w]
 
@@ -75,7 +77,7 @@ foreach filename [glob $datadir/*] {
 	    if {!$g_histrange($idx)} {
 		    continue
 		}
-		lappend result "$idx $g_histrange($idx)"
+		set result [linsert $result 0 "$idx $g_histrange($idx)"]
 	}
 	
 	if {[string last "/" $filename] > -1} {
@@ -84,11 +86,11 @@ foreach filename [glob $datadir/*] {
 	    set symbol $filename
 	}
 	
-	if {$ref_value < 1.00 || $value < 1.00} {
+	if {$ref_value < $ref_value_limit || $value < $value_limit} {
 	    continue
 	}
 	
-	puts $fd2 "$symbol $result $ref_value $value"
+	puts $fd2 "$symbol $ref_value $value $result"
 	unset g_histrange
 }
 close $fd2

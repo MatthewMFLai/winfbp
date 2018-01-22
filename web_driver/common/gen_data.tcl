@@ -29,7 +29,7 @@ proc gen_content {fd table separator nul} {
 proc gen_table {table exchange} {
     global env
 
-    set filename $env(DISK2)/web_driver/common/$table\_$exchange
+    set filename $env(DISK2_DATA)/web_driver/common/$table\_$exchange
     if {[file exists $filename]} {
 	file delete $filename
     }
@@ -62,7 +62,7 @@ package require Mk4tcl
 set datepattern "%Y%m%d"
 set datestr [clock format [clock seconds] -format $datepattern] 
 
-set env(DISK2) C:/winfbp
+set env(DISK2) $env(DISK2_BACKUP)
 set dbfile $env(DISK2)/scratchpad/db/db_T_$datestr
 gen_tables $dbfile T
 set dbfile $env(DISK2)/scratchpad/db/db_V_$datestr

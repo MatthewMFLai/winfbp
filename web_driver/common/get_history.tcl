@@ -49,7 +49,7 @@ close $fd
 history::init $url_temp
 
 # cd C:/winfbp/web_driver/common folder
-# tclsh get_history.tcl T company_T c:/winfbp/scratchpad/history 2017-01-02 2018-01-12
+# tclsh get_history.tcl T c:/winfbp_data/web_driver/common/company_T c:/winfbp_data/scratchpad/history 2017-01-02 2018-01-12
 
 set exchange [lindex $argv 0]
 set datafile [lindex $argv 1]
