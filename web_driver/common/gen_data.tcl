@@ -62,7 +62,7 @@ package require Mk4tcl
 set datepattern "%Y%m%d"
 set datestr [clock format [clock seconds] -format $datepattern] 
 
-set env(DISK2) $env(DISK2_BACKUP)
+set env(DISK2) $env(DISK2_DATA)
 set dbfile $env(DISK2)/scratchpad/db/db_T_$datestr
 gen_tables $dbfile T
 set dbfile $env(DISK2)/scratchpad/db/db_V_$datestr

@@ -24,6 +24,7 @@
 # MAINTENANCE, SUPPORT, UPDATES, ENHANCEMENTS, OR MODIFICATIONS.
 package require http
 package require tls
+package require sha1
 http::register https 443 [list ::tls::socket -tls1 1]
 
 namespace eval Url {
@@ -39,7 +40,7 @@ proc url_to_filename {url} {
     regsub -all "\&" $url "%%%" url
     regsub -all "=" $url "%%%%" url
     regsub -all {\*} $url "%%%%%" url 
-    return $url
+    return [sha1::sha1 $url]
 }
 
 proc init {{mode NORMAL}} {

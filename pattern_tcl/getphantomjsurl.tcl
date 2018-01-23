@@ -26,6 +26,8 @@
 # This module requires phantomjs to be installed in the windows pc and
 # phantomjs to be defined in the system path environment variable.
 
+package require sha1
+
 namespace eval PhantomjsUrl {
     # mode can be one of NORMAL, READ_CACHE, SAVE_CACHE, CACHE_NORMAL
     variable m_mode
@@ -97,7 +99,7 @@ proc url_to_filename {url} {
     regsub -all "\&" $url "%%%" url
     regsub -all "=" $url "%%%%" url
     regsub -all {\*} $url "%%%%%" url 
-    return $url
+    return [sha1::sha1 $url]
 }
 
 proc init {{mode NORMAL}} {
