@@ -90,6 +90,7 @@ foreach filename [glob $historydir/*] {
 	set data(SYMBOL) $symbol
 	set fd [open $filename r]
 	while {[gets $fd line] > -1} {
+	    set line [split $line ","]
 	    set date [lindex $line 0]
 		if {[string first $year $date] == -1} {
 		    continue
