@@ -66,3 +66,4 @@ web_driver/company/raw.dat
 web_driver/history/raw.dat
 *.dll
 *.exe
+*.log
