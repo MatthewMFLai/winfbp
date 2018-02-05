@@ -64,3 +64,5 @@ web_driver/company/out.dat
 web_driver/company/raw.dat
 *.swp
 web_driver/history/raw.dat
+*.dll
+*.exe
