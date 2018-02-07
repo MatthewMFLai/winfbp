@@ -91,13 +91,14 @@ proc gen_tables {dbfile exchange} {
 			set datestr [clock format [clock seconds] -format $datepattern]
 			set datepattern "%Y"
 			set year [clock format [clock seconds] -format $datepattern]
-		    update_db [lindex $token 0] $year $date
+		    update_db [lindex $token 0] $year $datestr
 		}
     }
     mk::file close g_db
     return
 }
 
+lappend auto_path $env(DISK2)/tclkit/modules
 package require Mk4tcl
 source $env(DISK2)/web_driver/common/db_if.tcl
 set dbpath $env(DISK2_DATA)/scratchpad/db/db
