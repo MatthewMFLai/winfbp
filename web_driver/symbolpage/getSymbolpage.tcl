@@ -25,6 +25,7 @@
 #!/bin/sh
 # \
 exec tclsh $0 "$@"
+lappend auto_path $env(DISK2)/tclkit/modules
 source $env(FSM_HOME)/fsm.tcl
 source $env(PATTERN_HOME)/malloc.tcl
 source $env(PATTERN_HOME)/getphantomjsurl.tcl
