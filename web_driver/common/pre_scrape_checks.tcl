@@ -24,4 +24,8 @@ if {[file exists "$cachedir/current"]} {
     file rename $cachedir/current $cachedir/previous
 }
 
+if {![file exists "$cachedir/current"]} {
+    file mkdir $cachedir/current
+}
+
 exit 0
