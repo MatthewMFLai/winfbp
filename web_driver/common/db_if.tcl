@@ -89,6 +89,68 @@ proc get_record {symbol year p_data} {
     return ""
 }
 
+# p_data is an array with index "date", "close" and "volume" and empty contents
+# "date" is of the format YYYY-MM-DD
+# symbol is <xxx>[.yy]
+# year is YYYY
+proc get_recordlist {symbol year collist colname min max p_rc} {
+    variable m_idx
+	variable m_dbptr
+    variable m_opendb
+	
+    upvar $p_rc rc
+	set rc ""
+
+    regsub -all {\.} $symbol "_" symbol_nodot
+    if {![info exists m_idx($symbol_nodot,$year)]} {
+    	reutrn "$symbol,$year not found in database!"
+    }
+	
+	set tokens $m_idx($symbol_nodot,$year)
+	set dbfile [lindex $tokens 0]
+	set m_dbptr [lindex $tokens 1]
+	set idx [lsearch $m_opendb $m_dbptr]
+	if {$idx == -1} {
+	    lappend m_opendb $m_dbptr
+	    mk::file open $m_dbptr $dbfile
+	}
+    set view $m_dbptr.$symbol_nodot
+
+	# Check table properties against pass in properties
+	set properties [mk::view layout $view]
+	if {[lsearch $properties $colname] == -1} {
+		set m_dbptr ""
+		return "$colname not in database!"
+	}
+	
+	# Check table properties against pass in properties
+	set properties [mk::view layout $view]
+	foreach property $collist {
+	    if {[lsearch $properties $property] == -1} {
+		    set m_dbptr ""
+		    return "$property not in database!"
+        }
+	}
+
+	# Fetch records.
+	set charnames ""
+	foreach col $collist {
+	    append charnames "$col "
+	}
+	set charnames [string range $charnames 0 end-1]
+	foreach row [mk::select $view -min $colname $min -max $colname $max -sort $colname] {
+	    set cmd "mk::get $view!$row "
+		append cmd $charnames
+	    lappend rc [eval $cmd]
+	}
+	
+	if {$rc == ""} {
+	    set m_dbptr ""
+	    return "No records exist for $symbol,$year with characteristic $colname within $min and $max"
+	}
+    return ""
+}
+
 # p_data is an array with index "date", "close" and "volume"
 # "date" is of the format YYYY-MM-DD
 # symbol is <xxx>[.yy]
