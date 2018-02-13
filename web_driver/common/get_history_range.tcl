@@ -1,4 +1,4 @@
-# Copyright (C) 2016 by Matthew Lai, email : mmlai@sympatico.ca
+# Copyright (C) 2018 by Matthew Lai, email : mmlai@sympatico.ca
 #
 # The author  hereby grants permission to use,  copy, modify, distribute,
 # and  license this  software  and its  documentation  for any  purpose,
@@ -25,45 +25,79 @@
 #!/bin/sh
 # \
 exec tclsh $0 "$@"
-source $env(WEB_DRIVER_HOME)/common/history_range.tcl
 
+# date should be YYYY-MM-DD
+proc gen_date_ranges {date_begin date_end} {
+    set rc ""
+	set month_begin "-01-01"
+	set month_end "-12-31"
+	set year_begin [lindex [split $date_begin "-"] 0]
+	set year_end [lindex [split $date_end "-"] 0]
+	
+	set year_cur $year_begin
+	lappend rc $date_begin
+	while {$year_cur < $year_end} {
+	    lappend rc "$year_cur$month_end"
+        incr year_cur
+        lappend rc "$year_cur$month_begin"	
+	}
+	lappend rc $date_end
+	return $rc
+}
+
+#-------------------------------------------------------
+lappend auto_path $env(DISK2)/tclkit/modules
+package require Mk4tcl
+source db_if.tcl
+
+set dbpath $env(DISK2_DATA)/scratchpad/db/db
+db_if::Init $dbpath
+#-------------------------------------------------------
+
+source $env(WEB_DRIVER_HOME)/common/history_range.tcl
 array set g_histrange {}
 
 # cd C:/winfbp/web_driver/common
-# tclsh get_history_range.tcl 4 1.00 1.00 history_range.cfg c:/winfbp_data/scratchpad/history stock_history.dat
+# tclsh get_history_range2.tcl close 1.00 1.00 history_range.cfg date 2017-01-01 2018-02-09 stock_history.dat
 
 set column [lindex $argv 0]
 set ref_value_limit [lindex $argv 1]
 set value_limit [lindex $argv 2]
 set cfgfile [lindex $argv 3]
-set datadir [lindex $argv 4]
-set outfile [lindex $argv 5]
+set column_date [lindex $argv 4]
+set min_date [lindex $argv 5]
+set max_date [lindex $argv 6]
+set outfile [lindex $argv 7]
 
 set fd2 [open $outfile w]
 
 histrange::init $cfgfile
 set idxlist [histrange::get_idx_all]
 
-foreach filename [glob $datadir/*] {
+set daterangelist [gen_date_ranges $min_date $max_date] 
+puts "date ranges are $daterangelist"
+
+foreach filename [db_if::Get_Symbollist] {	
 	puts "processing $filename"
 	
     foreach idx $idxlist {
 	    set g_histrange($idx) 0
 	}
-	
-    set fd [open $filename r]
+
 	set buffer ""
-    while {[gets $fd line] > -1} {
-	    set buffer [linsert $buffer 0 $line]	
-	}
-	close $fd
+	foreach {date1 date2} $daterangelist {
+		set rc ""
+		set year [lindex [split $date1 "-"] 0]
+		db_if::get_recordlist $filename $year $column date $date1 $date2 rc
+		if {$rc != ""} {
+            set buffer [concat $buffer $rc]
+        }		
+    }
 	
 	# Use the first line as reference line
-	set line [lindex $buffer 0]
-	set ref_value [lindex [split $line ","] $column]
+	set ref_value [lindex $buffer 0]
 	set buffer [lreplace $buffer 0 0]
-	foreach line $buffer {
-		set value [lindex [split $line ","] $column]
+	foreach value $buffer {
 		if {$value == "0.00"} {
 		    continue
 	    }

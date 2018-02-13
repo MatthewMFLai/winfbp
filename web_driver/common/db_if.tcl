@@ -5,11 +5,13 @@ namespace eval db_if {
 variable m_idx
 variable m_dbptr
 variable m_opendb
+variable m_symbollist
 
 proc Init {dbpath} {
     variable m_idx
     variable m_dbptr
     variable m_opendb
+	variable m_symbollist
 	
     if {[info exists m_idx]} {
 	    unset m_idx
@@ -18,6 +20,7 @@ proc Init {dbpath} {
 	set m_dbptr ""
 	set m_opendb ""
 	
+	set symbollist ""
 	set yearlist [glob $dbpath/*]
 	foreach yeardir $yearlist {
         set idx [string last "/" $yeardir]
@@ -29,11 +32,13 @@ proc Init {dbpath} {
 			set infolist [mk::view layout tmpdb]
 			foreach token $infolist {
 			    set symbol [lindex $token 0]
+				lappend symbollist $symbol
 				set m_idx($symbol,$year) "$dbname $hashname"
 			}
 			mk::file close tmpdb			
 		}
 	}
+	set m_symbollist [lsort -unique $symbollist]
 	return
 }
 
@@ -195,6 +200,12 @@ proc set_record {symbol year p_data} {
     mk::file commit $view
 
     return ""
+}
+
+proc Get_Symbollist {} {
+	variable m_symbollist
+
+	return $m_symbollist
 }
 
 proc Shutdown {} {
