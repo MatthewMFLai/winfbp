@@ -24,7 +24,6 @@
 # MAINTENANCE, SUPPORT, UPDATES, ENHANCEMENTS, OR MODIFICATIONS.
 #!/bin/sh
 # \
-exec tclsh $0 "$@"
 
 # date should be YYYY-MM-DD
 proc gen_date_ranges {date_begin date_end} {
@@ -45,88 +44,67 @@ proc gen_date_ranges {date_begin date_end} {
 	return $rc
 }
 
-#-------------------------------------------------------
-lappend auto_path $env(DISK2)/tclkit/modules
-package require Mk4tcl
-source db_if.tcl
+proc gen_history_range {column ref_value_limit value_limit cfgfile column_date min_date max_date outfile} {
+    array set g_histrange {}
+	set fd2 [open $outfile w]
 
-set dbpath $env(DISK2_DATA)/scratchpad/db/db
-db_if::Init $dbpath
-#-------------------------------------------------------
+	histrange::init $cfgfile
+	set idxlist [histrange::get_idx_all]
 
-source $env(WEB_DRIVER_HOME)/common/history_range.tcl
-array set g_histrange {}
+	set daterangelist [gen_date_ranges $min_date $max_date] 
+	puts "date ranges are $daterangelist"
 
-# cd C:/winfbp/web_driver/common
-# tclsh get_history_range2.tcl close 1.00 1.00 history_range.cfg date 2017-01-01 2018-02-09 stock_history.dat
-
-set column [lindex $argv 0]
-set ref_value_limit [lindex $argv 1]
-set value_limit [lindex $argv 2]
-set cfgfile [lindex $argv 3]
-set column_date [lindex $argv 4]
-set min_date [lindex $argv 5]
-set max_date [lindex $argv 6]
-set outfile [lindex $argv 7]
-
-set fd2 [open $outfile w]
-
-histrange::init $cfgfile
-set idxlist [histrange::get_idx_all]
-
-set daterangelist [gen_date_ranges $min_date $max_date] 
-puts "date ranges are $daterangelist"
-
-foreach filename [db_if::Get_Symbollist] {	
-	puts "processing $filename"
-	
-    foreach idx $idxlist {
-	    set g_histrange($idx) 0
-	}
-
-	set buffer ""
-	foreach {date1 date2} $daterangelist {
-		set rc ""
-		set year [lindex [split $date1 "-"] 0]
-		db_if::get_recordlist $filename $year $column date $date1 $date2 rc
-		if {$rc != ""} {
-            set buffer [concat $buffer $rc]
-        }		
-    }
-	
-	# Use the first line as reference line
-	set ref_value [lindex $buffer 0]
-	set buffer [lreplace $buffer 0 0]
-	foreach value $buffer {
-		if {$value == "0.00"} {
-		    continue
-	    }
-        set change [expr ($value - $ref_value) * 100.0 / $ref_value]
-		set idx [histrange::get_range_idx $change]
-		incr g_histrange($idx)	    
-	}
-	
-	set result ""
-    foreach idx $idxlist {
-	    if {!$g_histrange($idx)} {
-		    continue
+	foreach filename [db_if::Get_Symbollist] {	
+		puts "processing $filename"
+		
+		foreach idx $idxlist {
+			set g_histrange($idx) 0
 		}
-		set result [linsert $result 0 "$idx $g_histrange($idx)"]
+
+		set buffer ""
+		foreach {date1 date2} $daterangelist {
+			set rc ""
+			set year [lindex [split $date1 "-"] 0]
+			db_if::get_recordlist $filename $year $column date $date1 $date2 rc
+			if {$rc != ""} {
+				set buffer [concat $buffer $rc]
+			}		
+		}
+		
+		# Use the first line as reference line
+		set ref_value [lindex $buffer 0]
+		set buffer [lreplace $buffer 0 0]
+		foreach value $buffer {
+			if {$value == "0.00"} {
+				continue
+			}
+			set change [expr ($value - $ref_value) * 100.0 / $ref_value]
+			set idx [histrange::get_range_idx $change]
+			incr g_histrange($idx)	    
+		}
+		
+		set result ""
+		foreach idx $idxlist {
+			if {!$g_histrange($idx)} {
+				continue
+			}
+			set result [linsert $result 0 "$idx $g_histrange($idx)"]
+		}
+		
+		if {[string last "/" $filename] > -1} {
+			set symbol [lindex [split $filename "/"] end]
+		} else {
+			set symbol $filename
+		}
+		
+		if {$ref_value < $ref_value_limit || $value < $value_limit} {
+			continue
+		}
+		
+		puts $fd2 "$symbol $ref_value $value $result"
+		unset g_histrange
 	}
-	
-	if {[string last "/" $filename] > -1} {
-	    set symbol [lindex [split $filename "/"] end]
-	} else {
-	    set symbol $filename
-	}
-	
-	if {$ref_value < $ref_value_limit || $value < $value_limit} {
-	    continue
-	}
-	
-	puts $fd2 "$symbol $ref_value $value $result"
-	unset g_histrange
+	close $fd2
+	return
 }
-close $fd2
-exit 0
 
