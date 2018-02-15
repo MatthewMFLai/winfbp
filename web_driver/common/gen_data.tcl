@@ -101,16 +101,23 @@ proc gen_tables {dbfile exchange} {
 lappend auto_path $env(DISK2)/tclkit/modules
 package require Mk4tcl
 source $env(DISK2)/web_driver/common/db_if.tcl
+source $env(DISK2)/web_driver/common/get_history_range.tcl
+source $env(WEB_DRIVER_HOME)/common/history_range.tcl
 set dbpath $env(DISK2_DATA)/scratchpad/db/db
 db_if::Init $dbpath
 
 set datepattern "%Y%m%d"
 set datestr [clock format [clock seconds] -format $datepattern] 
 
-set env(DISK2) $env(DISK2_DATA)
-set dbfile $env(DISK2)/scratchpad/db/db_T_$datestr
+set dbfile $env(DISK2_DATA)/scratchpad/db/db_T_$datestr
 gen_tables $dbfile T
-set dbfile $env(DISK2)/scratchpad/db/db_V_$datestr
+set dbfile $env(DISK2_DATA)/scratchpad/db/db_V_$datestr
 gen_tables $dbfile V
+
+set datepattern "%Y-%m-%d"
+set datestr [clock format [clock seconds] -format $datepattern]
+
+gen_history_range close 1.00 1.00 $env(DISK2)/web_driver/common/history_range.cfg date 2017-01-01 $datestr $env(DISK2_DATA)/web_driver/common/stock_history.dat
+gen_history_range volume 10000 10000 $env(DISK2)/web_driver/common/history_range.cfg date 2017-01-01 $datestr $env(DISK2_DATA)/web_driver/common/stock_history_vol.dat
 
 db_if::Shutdown
