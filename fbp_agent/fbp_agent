@@ -27,6 +27,7 @@
 exec tclsh $0 $@
 source $env(DISK2)/fbp_agent/fbp_agent.dat
 source $env(LAUNCHER_HOME)/launcher_factory.tcl
+source $env(PATTERN_HOME)/socketlock.tcl
 
 proc server_init {cid addr port} {
     fileevent $cid readable "server_handle_init $cid"

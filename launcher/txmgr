@@ -361,9 +361,13 @@ proc get_outports {} {
 proc ready_file {initport} {
     # Put a marker file to let the launcher know that
     # the sockets have been set up.
+	while {[SocketLock::acquire_lock "FBP_PROCESS_SYNC"] != "SOCKETLOCK_OK"} {
+	    after 10
+	}
     set fd [open data_$initport.ready w]
     puts $fd ""
     close $fd
+	SocketLock::release_lock "FBP_PROCESS_SYNC"
 }
 
 # For the stand-alone single folder windows install
@@ -442,6 +446,7 @@ portgrp_set g_ports
 # Source in pattern classes to handle ip and memory allocation.
 source $env(PATTERN_HOME)/malloc.tcl
 source $env(COMP_HOME)/ip/ip.tcl
+source $env(PATTERN_HOME)/socketlock.tcl
 ip::init malloc
 source $g_ports(PROGRAM)
 

@@ -446,10 +446,14 @@ proc check_ready_file {initport} {
     # launching another task.
     set toloop 1
     while {$toloop} {
+		while {[SocketLock::acquire_lock "FBP_PROCESS_SYNC"] != "SOCKETLOCK_OK"} {
+			after 10
+		}
     	if {[file exists data_$initport.ready]} {
-	    set toloop 0
-	    file delete data_$initport.ready
-	}
+			set toloop 0
+			file delete data_$initport.ready
+		}
+		SocketLock::release_lock "FBP_PROCESS_SYNC"
     	after 50
     }
 }
