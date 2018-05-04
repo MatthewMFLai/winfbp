@@ -358,18 +358,25 @@ proc get_outports {} {
     return [array names g_ports "OUT-*"]
 }
 
-proc ready_file {initport} {
+proc ready_file {initport p_zero_port_map} {
+    upvar $p_zero_port_map zero_port_map
+	
     # Put a marker file to let the launcher know that
     # the sockets have been set up.
 	while {[SocketLock::acquire_lock "FBP_PROCESS_SYNC"] != "SOCKETLOCK_OK"} {
 	    after 10
 	}
     set fd [open data_$initport.ready w]
-    puts $fd ""
+    puts $fd [array get zero_port_map]
     close $fd
 	SocketLock::release_lock "FBP_PROCESS_SYNC"
 }
 
+proc port_0_get {inport} {
+    set tmp_fd [socket -server server_accept_$inport 0]
+	return [lindex [fconfigure $tmp_fd -sockname] 2]
+}
+	
 # For the stand-alone single folder windows install
 # This points to the htmlparse package.
 if {[string first "Windows" $tcl_platform(os)] > -1} {
@@ -450,6 +457,7 @@ source $env(PATTERN_HOME)/socketlock.tcl
 ip::init malloc
 source $g_ports(PROGRAM)
 
+array set zero_port_map {}
 foreach inport [get_inports] { 
     # Need to bind the in port number to the handler procedure.
     # Create a handler procedure on the fly, with the name
@@ -457,12 +465,14 @@ foreach inport [get_inports] {
     regsub -all "xxx" $server_accept_template $inport server_proc
     eval $server_proc
 
-    socket -server server_accept_$inport [get_port $g_ports($inport)]
+	set portnum [port_0_get [get_port $g_ports($inport)]]
+	set zero_port_map([get_port $g_ports($inport)]) $portnum
 }
 
-socket -server server_init [get_port $g_ports(INIT)]
+set portnum [port_0_get [get_port $g_ports($INIT)]]
+set zero_port_map([get_port $g_ports($INIT)]) $portnum
 
-ready_file [get_port $g_ports(INIT)]
+ready_file [get_port $g_ports(INIT) zero_port_map]
 
 vwait main-loop
 
