@@ -229,6 +229,7 @@ proc Runit_Create {taskfile ipaddr p_program_data p_program_testdata} {
     upvar $p_program_testdata program_testdata
 
     set_block_port $taskfile $ipaddr
+	array set portmap {}
     array set program_data {}
     array set program_testdata {}
     set initportlist ""
@@ -273,8 +274,15 @@ proc Runit_Create {taskfile ipaddr p_program_data p_program_testdata} {
 		set rc [exec_imp rqstmgr $task]
 	    }
 	}
+	foreach {port alloc_port} [check_ready_file $mtcport] {
+	    set portmap($port) $alloc_port
+	}
+	# Return the allocated INIT port i.e.
+	# the original init port may be localhost:9034, and the launcher
+	# maps it to localhost:20100, and thus 20100 is the real INIT port.
+	set mtcport [get_port $portmap($temptable(INIT))]
+	
 	lappend initportlist $mtcport
-	check_ready_file $mtcport
 	# Mark the init port for the connector component.
 	if {$temptable(BLOCK) == "CONNECT"} {
 	    set m_connector_port $mtcport
@@ -282,7 +290,7 @@ proc Runit_Create {taskfile ipaddr p_program_data p_program_testdata} {
 	unset temptable
     }
     close $fd
-    return $initportlist
+    return [list $initportlist [array get portmap]]
 }
 
 proc Runit_Enable {initportlist p_program_data} {
@@ -445,17 +453,22 @@ proc check_ready_file {initport} {
     # Check for the presence of marker file before 
     # launching another task.
     set toloop 1
+	set rc ""
     while {$toloop} {
 		while {[SocketLock::acquire_lock "FBP_PROCESS_SYNC"] != "SOCKETLOCK_OK"} {
 			after 10
 		}
     	if {[file exists data_$initport.ready]} {
+		    # Read the first line of the file and return the data.
+			set fd [open $initport.ready r]
+			gets $fd rc
+			close $fd
 			set toloop 0
 			file delete data_$initport.ready
 		}
 		SocketLock::release_lock "FBP_PROCESS_SYNC"
-    	after 50
     }
+	return $rc
 }
 
 }
