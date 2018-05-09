@@ -96,14 +96,6 @@ proc portgrp_update {portgrp portlist} {
 }
 
 # ----------------------------------------------------
-proc get_port {token} {
-    return [lindex [split $token ":"] 1]
-}
-
-proc get_ipaddr {token} {
-    return [lindex [split $token ":"] 0]
-}
-
 set server_accept_template {
 proc server_accept_xxx {cid addr port} {
     global g_ports
@@ -274,26 +266,6 @@ proc initialize {request p_response} {
     return $rc
 }
 
-proc alive_alert {} {
-    global g_logfile
-
-    set idx [string first ":" $g_logfile]
-    incr idx
-    set idx2 [string first "." $g_logfile]
-    incr idx2 -1
-    puts "[string range $g_logfile $idx $idx2] is alive..."
-    after 30000 alive_alert
-}
-
-proc server_send {p_ip portid} {
-    global g_async_send
-
-    if {$portid != ""} {
-	lappend g_async_send [list $portid [ip::serialize $p_ip]]
-    }
-    return
-}
-
 proc server_async_send {cid} {
     global g_channels
     global g_async_send
@@ -333,46 +305,6 @@ proc server_async_send {cid} {
 	}
     }
     return
-}
-
-proc server_log {mode data} {
-    global g_logfile
-    set fd [open $g_logfile a]
-    puts $fd "[clock format [clock seconds]] $mode $data"
-    flush $fd
-    close $fd
-}
-
-proc get_server_id {} {
-    global g_ports
-    return [get_port $g_ports(INIT)]
-}
-
-proc get_inports {} {
-    global g_ports
-    return [array names g_ports "IN-*"]
-}
-
-proc get_outports {} {
-    global g_ports
-    return [array names g_ports "OUT-*"]
-}
-
-proc ready_file {initport {zero_port_map ""}} {	
-    # Put a marker file to let the launcher know that
-    # the sockets have been set up.
-	while {[SocketLock::acquire_lock "FBP_PROCESS_SYNC"] != "SOCKETLOCK_OK"} {
-	    after 10
-	}
-    set fd [open data_$initport.ready w]
-    puts $fd $zero_port_map
-    close $fd
-	SocketLock::release_lock "FBP_PROCESS_SYNC"
-}
-
-proc port_0_get {inport} {
-    set tmp_fd [socket -server server_accept_$inport 0]
-	return [lindex [fconfigure $tmp_fd -sockname] 2]
 }
 	
 # For the stand-alone single folder windows install
@@ -417,6 +349,7 @@ set g_ack_pending ""
 set g_process_rc ""
 set g_rx_inport ""
 
+source $env(LAUNCHER_HOME)/common.tcl
 source $env(LAUNCHER_HOME)/config.dat
 
 # Passed in arguments should be of format
@@ -463,12 +396,12 @@ foreach inport [get_inports] {
     regsub -all "xxx" $server_accept_template $inport server_proc
     eval $server_proc
 
-	set portnum [port_0_get [get_port $g_ports($inport)]]
-	set zero_port_map([get_port $g_ports($inport)]) $portnum
+	set portnum [port_0_get $g_ports($inport)]
+	set zero_port_map($g_ports($inport)) $portnum
 }
 
-set portnum [port_0_get [get_port $g_ports($INIT)]]
-set zero_port_map([get_port $g_ports($INIT)]) $portnum
+set portnum [port_0_get $g_ports($INIT)]
+set zero_port_map($g_ports($INIT)) $portnum
 
 ready_file [get_port $g_ports(INIT)] [array get zero_port_map]
 

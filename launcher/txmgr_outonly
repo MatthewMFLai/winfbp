@@ -27,14 +27,6 @@
 exec tclsh $0 $@
 #exec tclsh "$0" ${1+"$@"}
 
-proc get_port {token} {
-    return [lindex [split $token ":"] 1]
-}
-
-proc get_ipaddr {token} {
-    return [lindex [split $token ":"] 0]
-}
-
 proc server_init {cid addr port} {
     fileevent $cid readable "server_handle_init $cid"
     fconfigure $cid -buffering line -translation binary
@@ -121,15 +113,6 @@ proc initialize {request p_response} {
     return $rc
 }
 
-proc server_send {p_ip portid} {
-    global g_async_send
-
-    if {$portid != ""} {
-	lappend g_async_send [list $portid [ip::serialize $p_ip]]
-    }
-    return
-}
-
 proc server_async_send {cid} {
     global g_ports
     global g_channels
@@ -167,41 +150,6 @@ proc server_async_send {cid} {
     return
 }
 
-proc server_log {mode data} {
-    global g_logfile
-    set fd [open $g_logfile a]
-    puts $fd "[clock format [clock seconds]] $mode $data"
-    flush $fd
-    close $fd
-}
-
-proc get_server_id {} {
-    global g_ports
-    return [get_port $g_ports(INIT)]
-}
-
-proc get_outports {} {
-    global g_ports
-    return [array names g_ports "OUT-*"]
-}
-
-proc ready_file {initport {zero_port_map ""}} {
-    # Put a marker file to let the launcher know that
-    # the sockets have been set up.
-	while {[SocketLock::acquire_lock "FBP_PROCESS_SYNC"] != "SOCKETLOCK_OK"} {
-	    after 10
-	}
-    set fd [open data_$initport.ready w]
-    puts $fd $zero_port_map
-    close $fd
-	SocketLock::release_lock "FBP_PROCESS_SYNC"
-}
-
-proc port_0_get {inport} {
-    set tmp_fd [socket -server server_accept_$inport 0]
-	return [lindex [fconfigure $tmp_fd -sockname] 2]
-}
-
 # For the stand-alone single folder windows install
 # This points to the htmlparse package.
 if {[string first "Windows" $tcl_platform(os)] > -1} {
@@ -234,6 +182,7 @@ set g_state "STATE_RUNNING"
 variable g_cur_request
 array set g_cur_request {}
 
+source $env(LAUNCHER_HOME)/common.tcl
 source $env(LAUNCHER_HOME)/config.dat
 
 # Passed in arguments should be of format
@@ -266,8 +215,8 @@ ip::init malloc
 source $g_ports(PROGRAM)
 
 array set zero_port_map {}
-set portnum [port_0_get [get_port $g_ports($INIT)]]
-set zero_port_map([get_port $g_ports($INIT)]) $portnum
+set portnum [port_0_get $g_ports($INIT)]
+set zero_port_map($g_ports($INIT)) $portnum
 
 ready_file [get_port $g_ports(INIT)] [array get zero_port_map]
 
