@@ -84,6 +84,7 @@ proc process {request} {
 			set g_initportlist [lindex $create_rc 0]
 			# Need to return the allocated ports for this graph on
 			# this ipaddr back to fbp_mgr
+			set response [concat $response [lindex $create_rc 1]]
 	}
         ENABLE {
     	    set graph_id [lindex $request 1]
