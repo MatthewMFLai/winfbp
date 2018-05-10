@@ -282,7 +282,7 @@ proc Runit_Create {taskfile ipaddr p_program_data p_program_testdata} {
 	# maps it to localhost:20100, and thus 20100 is the real INIT port.
 	set mtcport [get_port $portmap($temptable(INIT))]
 	
-	lappend initportlist $mtcport
+	lappend initportlist "[get_port $temptable(INIT)] $mtcport"
 	# Mark the init port for the connector component.
 	if {$temptable(BLOCK) == "CONNECT"} {
 	    set m_connector_port $mtcport
@@ -299,8 +299,10 @@ proc Runit_Enable {initportlist p_program_data} {
 
     # Now initialize each task to open the socket connection for the
     # OUT-* ports.
-    foreach initport $initportlist {
-	set fd [socket localhost $initport]
+    foreach token $initportlist {
+	    set initport [lindex $token 0]
+		set allocport [lindex $token 1]
+	set fd [socket localhost $allocport]
 	fconfigure $fd -buffering line
 	if {$program_data($initport) == ""} {
 	    puts $fd "ENABLE"
