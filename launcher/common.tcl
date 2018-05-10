@@ -90,17 +90,21 @@ proc ready_file {initport {zero_port_map ""}} {
 	SocketLock::release_lock "FBP_PROCESS_SYNC"
 }
 
-proc port_0_get {inport} {
+proc port_0_get {inportname inport} {
     set portnum [get_port $inport]
 	set ipaddr [get_ipaddr $inport]
-    set tmp_fd [socket -server server_accept_$portnum 0]
+	if {$inportname == "INIT"} {
+        set tmp_fd [socket -server server_init 0]
+	} else {
+        set tmp_fd [socket -server server_accept_$inportname 0]	
+	}
 	set alloc_portnum [lindex [fconfigure $tmp_fd -sockname] 2]
 	return [build_port $ipaddr $alloc_portnum]
 }
 
-proc port_0_get_localhost {portnum} {
+proc port_0_get_localhost {inportname portnum} {
     set ipaddr "localhost"
-    set tmp_fd [socket -server server_accept_$portnum 0]
+    set tmp_fd [socket -server server_accept_$inportname 0]
 	set alloc_portnum [lindex [fconfigure $tmp_fd -sockname] 2]
 	return [build_port $ipaddr $alloc_portnum]
 }

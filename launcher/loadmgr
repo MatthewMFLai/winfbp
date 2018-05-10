@@ -339,7 +339,7 @@ foreach inport [array names g_ports "IN-*"] {
     regsub -all "xxx" $server_accept_template $inport server_proc
     eval $server_proc
 
-	set portnum [port_0_get $g_ports($inport)]
+	set portnum [port_0_get $inport $g_ports($inport)]
 	set zero_port_map($g_ports($inport)) $portnum
 
     set g_inport_queue($inport) ""
@@ -363,7 +363,7 @@ foreach outport [get_outports] {
     set g_outport_status($outport) "OUTPORT_IDLE" 
 }
 
-set portnum [port_0_get $g_ports(INIT)]
+set portnum [port_0_get INIT $g_ports(INIT)]
 set zero_port_map($g_ports(INIT)) $portnum
 
 ready_file [get_port $g_ports(INIT)] [array get zero_port_map]
