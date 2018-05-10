@@ -293,6 +293,23 @@ proc Runit_Create {taskfile ipaddr p_program_data p_program_testdata} {
     return [list $initportlist [array get portmap]]
 }
 
+proc Runit_Update_Portmap {initportlist portmaplist} {
+    variable m_initportmap
+
+    # Now initialize each task to open the socket connection for the
+    # OUT-* ports.
+    foreach token $initportlist {
+	    set initport [lindex $token 0]
+		set allocport [lindex $token 1]
+	    set fd [socket localhost $allocport]
+	    fconfigure $fd -buffering line
+		set m_initportmap($initport) $fd
+	    puts $fd "UPDATE_PORTMAP $portmaplist"
+		check_ready_file $initport
+    }
+    return
+}
+
 proc Runit_Enable {initportlist p_program_data} {
     variable m_initportmap
     upvar $p_program_data program_data
@@ -301,16 +318,13 @@ proc Runit_Enable {initportlist p_program_data} {
     # OUT-* ports.
     foreach token $initportlist {
 	    set initport [lindex $token 0]
-		set allocport [lindex $token 1]
-	set fd [socket localhost $allocport]
-	fconfigure $fd -buffering line
-	if {$program_data($initport) == ""} {
-	    puts $fd "ENABLE"
-	} else {
-	    puts $fd "ENABLE $program_data($initport)"
-	}
-	set m_initportmap($initport) $fd
-	check_ready_file $initport
+		set fd $m_initportmap($initport)
+		if {$program_data($initport) == ""} {
+			puts $fd "ENABLE"
+		} else {
+			puts $fd "ENABLE $program_data($initport)"
+		}
+		check_ready_file $initport
     }
     return
 }

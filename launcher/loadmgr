@@ -234,16 +234,21 @@ proc initialize {request p_response} {
     global g_ports
     global g_logfile
     global g_state
-
+    global g_portmap
+	
     upvar $p_response response
     set response ""
     set rc 0
 
     switch -- [lindex $request 0] {
+	    UPDATE_PORTMAP {
+		    array set g_portmap [lrange $request 1 end]
+	        ready_file [get_port $g_ports(INIT)]		
+		}
         ENABLE {
 	    foreach outport [get_outports] {
-            	set cid [socket [get_ipaddr $g_ports($outport)]\
-                                [get_port $g_ports($outport)]]
+            	set cid [socket [get_ipaddr $g_portmap($g_ports($outport))]\
+                                [get_port $g_portmap($g_ports($outport))]]
             	set g_channels($cid) $outport
             	set g_channels($outport) $cid
 	    	fileevent $cid readable "server_handle $cid"
@@ -297,11 +302,13 @@ variable g_outport_data
 variable g_inport_queue_max 
 variable g_waitlist
 variable g_state
+variable g_portmap
 array set g_channels {}
 array set g_inport_queue {}
 array set g_inport_queue_max {} 
 array set g_outport_status {}
 array set g_outport_data {}
+array set g_portmap {}
 set g_waitlist ""
 set g_state "STATE_RUNNING"
 variable g_cur_request

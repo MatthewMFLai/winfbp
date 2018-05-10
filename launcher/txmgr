@@ -203,16 +203,21 @@ proc initialize {request p_response} {
     global g_buffersize
     global g_async_send
     global g_ack_pending
-
+    global g_portmap
+	
     upvar $p_response response
     set response ""
     set rc 0
 
     switch -- [lindex $request 0] {
+	    UPDATE_PORTMAP {
+		    array set g_portmap [lrange $request 1 end]
+	        ready_file [get_port $g_ports(INIT)]		
+		}
         ENABLE {
 	    foreach outport [get_outports] {
-    	    	set g_channels($outport) [socket [get_ipaddr $g_ports($outport)]\
-                    [get_port $g_ports($outport)]]
+    	    	set g_channels($outport) [socket [get_ipaddr $g_portmap($g_ports($outport))]\
+                    [get_port $g_portmap($g_ports($outport))]]
     		fileevent $g_channels($outport) readable "server_async_send $g_channels($outport)"
 		fconfigure $g_channels($outport) -buffering line -buffersize $g_buffersize -translation binary
 		puts "Initialized out port $outport"
@@ -318,6 +323,7 @@ variable g_ports
 variable g_channels
 variable g_logfile
 variable g_state
+variable g_portmap
 
 variable g_portgrp_map
 variable g_portgrp_list
@@ -343,6 +349,7 @@ array set g_cur_request {}
 array set g_portgrp_map {}
 array set g_portgrp_list {}
 array set g_port_status {}
+array set g_portmap {}
 
 set g_async_send ""
 set g_ack_pending "" 

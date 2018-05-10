@@ -54,16 +54,21 @@ proc initialize {request p_response} {
     global g_logfile
     global g_state
     global g_timeout
+	global g_portmap
 
     upvar $p_response response
     set response ""
     set rc 0
 
     switch -- [lindex $request 0] {
+	    UPDATE_PORTMAP {
+		    array set g_portmap [lrange $request 1 end]
+	        ready_file [get_port $g_ports(INIT)]		
+		}
         ENABLE {
 	    foreach outport [get_outports] {
-    	    	set g_channels($outport) [socket [get_ipaddr $g_ports($outport)]\
-                     [get_port $g_ports($outport)]]
+    	    	set g_channels($outport) [socket [get_ipaddr $g_portmap($g_ports($outport))]\
+                     [get_port $g_portmap($g_ports($outport)]]
     		fileevent $g_channels($outport) readable "server_async_send $g_channels($outport)"
 		fconfigure $g_channels($outport) -buffering line -translation binary
 		puts "Initialized out port $outport"
@@ -163,6 +168,7 @@ variable g_logfile
 variable g_outport_status
 variable g_state
 variable g_timeout
+variable g_portmap
 
 # Data arrays to support the async send feature.
 # All IPs passed into server_send() will be buffered up and
@@ -177,6 +183,7 @@ set g_process_rc 1
 
 array set g_channels {}
 array set g_outportt_status {}
+array set g_portmap {}
 set g_state "STATE_RUNNING"
 
 variable g_cur_request

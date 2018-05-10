@@ -86,11 +86,16 @@ proc process {request} {
 			# this ipaddr back to fbp_mgr
 			set response [concat $response [lindex $create_rc 1]]
 	}
-        ENABLE {
-    	    set graph_id [lindex $request 1]
+    UPDATE_PORTMAP {
+    	set graph_id [lindex $request end]
 	    set launcher [Launcher_Obj::Get_Obj $graph_id]
-    	    ${launcher}::Runit_Enable $g_initportlist g_program_data
-        }
+    	${launcher}::Runit_Update_Portmap $g_initportlist [lrange $request 1 end-1]
+    }
+    ENABLE {
+    	set graph_id [lindex $request 1]
+	    set launcher [Launcher_Obj::Get_Obj $graph_id]
+    	${launcher}::Runit_Enable $g_initportlist g_program_data
+    }
 	PID {
     	    set graph_id [lindex $request 1]
 	    set launcher [Launcher_Obj::Get_Obj $graph_id]
