@@ -277,16 +277,17 @@ proc Runit_Create {taskfile ipaddr p_program_data p_program_testdata} {
 	foreach {port alloc_port} [check_ready_file $mtcport] {
 	    set portmap($port) $alloc_port
 	}
-	# Return the allocated INIT port i.e.
-	# the original init port may be localhost:9034, and the launcher
-	# maps it to localhost:20100, and thus 20100 is the real INIT port.
-	set mtcport [get_port $portmap($temptable(INIT))]
 	
-	lappend initportlist "[get_port $temptable(INIT)] $mtcport"
 	# Mark the init port for the connector component.
 	if {$temptable(BLOCK) == "CONNECT"} {
 	    set m_connector_port $mtcport
 	}
+	
+	# Return the allocated INIT port i.e.
+	# the original init port may be localhost:9034, and the launcher
+	# maps it to localhost:20100, and thus 20100 is the real INIT port.
+	set mtcport [get_port $portmap($temptable(INIT))]	
+	lappend initportlist "[get_port $temptable(INIT)] $mtcport"
 	unset temptable
     }
     close $fd
