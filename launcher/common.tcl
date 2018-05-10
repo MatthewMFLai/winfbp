@@ -97,3 +97,10 @@ proc port_0_get {inport} {
 	set alloc_portnum [lindex [fconfigure $tmp_fd -sockname] 2]
 	return [build_port $ipaddr $alloc_portnum]
 }
+
+proc port_0_get_localhost {portnum} {
+    set ipaddr "localhost"
+    set tmp_fd [socket -server server_accept_$portnum 0]
+	set alloc_portnum [lindex [fconfigure $tmp_fd -sockname] 2]
+	return [build_port $ipaddr $alloc_portnum]
+}

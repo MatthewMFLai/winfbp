@@ -222,8 +222,8 @@ ip::init malloc
 source $g_ports(PROGRAM)
 
 array set zero_port_map {}
-set portnum [port_0_get $g_ports($INIT)]
-set zero_port_map($g_ports($INIT)) $portnum
+set portnum [port_0_get $g_ports(INIT)]
+set zero_port_map($g_ports(INIT)) $portnum
 
 ready_file [get_port $g_ports(INIT)] [array get zero_port_map]
 

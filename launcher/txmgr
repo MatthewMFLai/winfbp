@@ -407,8 +407,8 @@ foreach inport [get_inports] {
 	set zero_port_map($g_ports($inport)) $portnum
 }
 
-set portnum [port_0_get $g_ports($INIT)]
-set zero_port_map($g_ports($INIT)) $portnum
+set portnum [port_0_get $g_ports(INIT)]
+set zero_port_map($g_ports(INIT)) $portnum
 
 ready_file [get_port $g_ports(INIT)] [array get zero_port_map]
 
