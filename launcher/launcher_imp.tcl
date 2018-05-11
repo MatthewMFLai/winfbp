@@ -368,10 +368,12 @@ proc Drainit {} {
     set idx [lsearch $portlist $m_connector_port]
     set portlist [lreplace $portlist $idx $idx]
     set portlist [concat $m_connector_port $portlist]
+	puts "Drain: $portlist"
     foreach initport $portlist {
 	set fd $m_initportmap($initport)
 	puts $fd "DRAIN"
 	check_ready_file $initport
+	puts "Drain: $initport done"
     }
     return
 }
@@ -380,10 +382,12 @@ proc Stopit_outport {} {
     variable m_initportmap
 
     # close the OUT-* port for each task.
+	puts "Disable: [array names m_initportmap]"
     foreach initport [array names m_initportmap] {
 	set fd $m_initportmap($initport)
 	puts $fd "DISABLE"
 	check_ready_file $initport
+	puts "Disable: $initport done"
     }
     return
 }
@@ -393,9 +397,11 @@ proc Stopit_initport {} {
 
     # close the init port to each task. This will translate to
     # task terminte later on.
+	puts "Close: [array names m_initportmap]"
     foreach initport [array names m_initportmap] {
 	set fd $m_initportmap($initport)
 	close $fd
+	puts "Close: $initport done"
     }
     return
 }
