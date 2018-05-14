@@ -30,6 +30,9 @@ variable m_currlist
 # 2 filenames: first is the taskfile, second is the graphfile.
 variable m_filename
 variable m_cmd
+variable m_action
+variable m_reconnect
+variable m_portmap
 
 proc init {} {
     
@@ -39,13 +42,15 @@ proc init {} {
     variable m_cmd
     variable m_action
     variable m_reconnect
-
+    variable m_portmap
+	
     set m_ipaddrlist ""
     set m_currlist ""
     set m_filename ""
     set m_cmd ""
     set m_action ""
     set m_reconnect 0
+	array set m_portmap {}
 
     return
 }
@@ -68,6 +73,21 @@ proc process_ready {p_arg_array} {
     lappend m_filename $arg_array(filename)
     lappend m_filename $arg_array(graphname)
     set m_reconnect $arg_array(reconnect)
+    return
+}
+
+proc process_create {p_arg_array} {
+    upvar $p_arg_array arg_array
+    variable m_currlist
+    variable m_portmap
+
+    set ipaddr $arg_array(ipaddr)
+    set idx [lsearch $m_currlist $ipaddr]
+    if {$idx != -1} {
+	set m_currlist [lreplace $m_currlist $idx $idx]
+    }
+
+    array set m_portmap [lrange $arg_array(request) 1 end]	
     return
 }
 
@@ -153,7 +173,16 @@ proc act_ready_to_create {} {
     return
 }
 
-proc act_create_to_enable {} {
+proc act_create_to_update_portmap {} {
+    variable m_cmd
+	variable m_portmap
+
+    act_default 
+    set m_cmd "UPDATE_PORTMAP [array get m_portmap]"
+    return
+}
+
+proc act_update_portmap_to_enable {} {
     variable m_cmd
 
     act_default 

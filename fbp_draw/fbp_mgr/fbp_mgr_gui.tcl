@@ -50,13 +50,14 @@ proc fbpmgr_handle {cid} {
         close $cid
     } else {
 	puts "Rx: $request"
-	if {$request != "DONE"} {
+	if {[lindex $request 0] != "DONE"} {
 	    return
 	}
 	set tmpdata(ipaddr) [fd_to_ipaddr $cid]
 	if {$tmpdata(ipaddr) == ""} {
 	    return
 	}
+	set tmpdata(request) $request
 	Fsm::Run fbp_agent_fsm tmpdata
 	set cmd [fbp_agent_fsm::get_clr_cmd]
 	if {$cmd != ""} {

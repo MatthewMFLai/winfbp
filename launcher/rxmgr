@@ -27,14 +27,6 @@
 exec tclsh $0 $@
 #exec tclsh "$0" ${1+"$@"}
 
-proc get_port {token} {
-    return [lindex [split $token ":"] 1]
-}
-
-proc get_ipaddr {token} {
-    return [lindex [split $token ":"] 0]
-}
-
 set server_accept_template {
 proc server_accept_xxx {cid addr port} {
     global g_ports
@@ -249,15 +241,21 @@ proc initialize {request p_response} {
     global g_logfile
     global g_state
     global g_waitlist
+	global g_portmap
 
     upvar $p_response response
     set response ""
     set rc 0
     
     switch -- [lindex $request 0] {
+	    UPDATE_PORTMAP {
+		    array set g_portmap [lrange $request 1 end]
+	        ready_file [get_port $g_ports(INIT)]		
+		}
         ENABLE {
+		    set ipaddr [get_ipaddr $g_ports(INIT)]
 	    foreach outport [get_outports] {
-            	set cid [socket localhost $g_ports($outport)]
+            	set cid [socket localhost [get_port $g_portmap([build_port $ipaddr $g_ports($outport)])]]
             	set g_channels($cid) $outport
             	set g_channels($outport) $cid
 	    	#server_accept_$outport $g_channels($outport)
@@ -319,40 +317,6 @@ proc initialize {request p_response} {
     return $rc
 }
 
-proc alive_alert {} {
-    global g_logfile
-
-    set idx [string first ":" $g_logfile]
-    incr idx
-    set idx2 [string first "." $g_logfile]
-    incr idx2 -1
-    puts "[string range $g_logfile $idx $idx2] is alive..."
-    after 30000 alive_alert
-}
-
-proc server_log {mode data} {
-    global g_logfile
-    set fd [open $g_logfile a]
-    puts $fd "[clock format [clock seconds]] $mode $data"
-    flush $fd
-    close $fd
-}
-
-proc get_server_id {} {
-    global g_ports
-    return [get_port $g_ports(INIT)]
-}
-
-proc get_inports {} {
-    global g_ports
-    return [array names g_ports "IN-*"]
-}
-
-proc get_outports {} {
-    global g_ports
-    return [array names g_ports "OUT-*"]
-}
-
 proc get_portgrp {} {
     global g_ports
     return [array names g_ports "PORTGRP-*"]
@@ -399,18 +363,6 @@ proc selectport_refresh {port} {
     }
 }
 
-proc ready_file {initport} {
-    # Put a marker file to let the launcher know that
-    # the sockets have been set up.
-	while {[SocketLock::acquire_lock "FBP_PROCESS_SYNC"] != "SOCKETLOCK_OK"} {
-	    after 10
-	}
-    set fd [open data_$initport.ready w]
-    puts $fd ""
-    close $fd
-	SocketLock::release_lock "FBP_PROCESS_SYNC"
-}
-
 proc dump_port_queue {} {
     global g_port_queue
     array set tmpdata {}
@@ -427,15 +379,18 @@ variable g_inport_queue_limit
 variable g_inport_queue_max
 variable g_waitlist
 variable g_state
+variable g_portmap
 array set g_channels {}
 array set g_inport_queue_max {} 
 array set g_outportt_status {}
-array set g_waitlist {} 
+array set g_waitlist {}
+array set g_portmap {}
 set g_state "STATE_RUNNING"
 
 variable g_cur_request
 array set g_cur_request {} 
 
+source $env(LAUNCHER_HOME)/common.tcl
 source $env(LAUNCHER_HOME)/config.dat
 
 # Passed in arguments should be of format
@@ -467,6 +422,14 @@ source $env(COMP_HOME)/ip/ip.tcl
 source $env(PATTERN_HOME)/socketlock.tcl
 ip::init malloc
 
+# Extract the IP portion of the INIT port value. The INIT port value may look like 
+# INIT 192.168.2.224:8051 (multi-computer FBP) or
+# INIT localhost:8051 (single-computer FBP)
+# The IP portion (192.168.2.224 or localhost) extracted will be prefixed to the allocated inport
+# and assigned outport later on in the initialization sequence.
+set ipaddr [get_ipaddr $g_ports(INIT)]
+
+array set zero_port_map {}
 foreach inport [get_inports] {
     # Need to bind the in port number to the handler procedure.
     # Create a handler procedure on the fly, with the name
@@ -474,7 +437,8 @@ foreach inport [get_inports] {
     regsub -all "xxx" $server_accept_template $inport server_proc
     eval $server_proc
 
-    socket -server server_accept_$inport $g_ports($inport)
+	set portnum [port_0_get_localhost $inport $ipaddr]
+	set zero_port_map([build_port $ipaddr $g_ports($inport)]) $portnum
 
     set g_port_queue($inport) ""
 
@@ -513,9 +477,10 @@ foreach portgrp [get_portgrp] {
     set g_portgrp($portgrp) $portlist
 }
 
-socket -server server_init [get_port $g_ports(INIT)]
+set portnum [port_0_get INIT $g_ports(INIT)]
+set zero_port_map($g_ports(INIT)) $portnum
 
-ready_file [get_port $g_ports(INIT)]
+ready_file [get_port $g_ports(INIT)] [array get zero_port_map]
 
 vwait main-loop
 

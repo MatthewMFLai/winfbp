@@ -229,6 +229,7 @@ proc Runit_Create {taskfile ipaddr p_program_data p_program_testdata} {
     upvar $p_program_testdata program_testdata
 
     set_block_port $taskfile $ipaddr
+	array set portmap {}
     array set program_data {}
     array set program_testdata {}
     set initportlist ""
@@ -273,16 +274,41 @@ proc Runit_Create {taskfile ipaddr p_program_data p_program_testdata} {
 		set rc [exec_imp rqstmgr $task]
 	    }
 	}
-	lappend initportlist $mtcport
-	check_ready_file $mtcport
+	foreach {port alloc_port} [check_ready_file $mtcport] {
+	    set portmap($port) $alloc_port
+	}
+	
 	# Mark the init port for the connector component.
 	if {$temptable(BLOCK) == "CONNECT"} {
 	    set m_connector_port $mtcport
 	}
+	
+	# Return the allocated INIT port i.e.
+	# the original init port may be localhost:9034, and the launcher
+	# maps it to localhost:20100, and thus 20100 is the real INIT port.
+	set mtcport [get_port $portmap($temptable(INIT))]	
+	lappend initportlist "[get_port $temptable(INIT)] $mtcport"
 	unset temptable
     }
     close $fd
-    return $initportlist
+    return [list $initportlist [array get portmap]]
+}
+
+proc Runit_Update_Portmap {initportlist portmaplist} {
+    variable m_initportmap
+
+    # Now initialize each task to open the socket connection for the
+    # OUT-* ports.
+    foreach token $initportlist {
+	    set initport [lindex $token 0]
+		set allocport [lindex $token 1]
+	    set fd [socket localhost $allocport]
+	    fconfigure $fd -buffering line
+		set m_initportmap($initport) $fd
+	    puts $fd "UPDATE_PORTMAP $portmaplist"
+		check_ready_file $initport
+    }
+    return
 }
 
 proc Runit_Enable {initportlist p_program_data} {
@@ -291,16 +317,15 @@ proc Runit_Enable {initportlist p_program_data} {
 
     # Now initialize each task to open the socket connection for the
     # OUT-* ports.
-    foreach initport $initportlist {
-	set fd [socket localhost $initport]
-	fconfigure $fd -buffering line
-	if {$program_data($initport) == ""} {
-	    puts $fd "ENABLE"
-	} else {
-	    puts $fd "ENABLE $program_data($initport)"
-	}
-	set m_initportmap($initport) $fd
-	check_ready_file $initport
+    foreach token $initportlist {
+	    set initport [lindex $token 0]
+		set fd $m_initportmap($initport)
+		if {$program_data($initport) == ""} {
+			puts $fd "ENABLE"
+		} else {
+			puts $fd "ENABLE $program_data($initport)"
+		}
+		check_ready_file $initport
     }
     return
 }
@@ -343,10 +368,12 @@ proc Drainit {} {
     set idx [lsearch $portlist $m_connector_port]
     set portlist [lreplace $portlist $idx $idx]
     set portlist [concat $m_connector_port $portlist]
+	puts "Drain: $portlist"
     foreach initport $portlist {
 	set fd $m_initportmap($initport)
 	puts $fd "DRAIN"
 	check_ready_file $initport
+	puts "Drain: $initport done"
     }
     return
 }
@@ -355,10 +382,12 @@ proc Stopit_outport {} {
     variable m_initportmap
 
     # close the OUT-* port for each task.
+	puts "Disable: [array names m_initportmap]"
     foreach initport [array names m_initportmap] {
 	set fd $m_initportmap($initport)
 	puts $fd "DISABLE"
 	check_ready_file $initport
+	puts "Disable: $initport done"
     }
     return
 }
@@ -368,9 +397,11 @@ proc Stopit_initport {} {
 
     # close the init port to each task. This will translate to
     # task terminte later on.
+	puts "Close: [array names m_initportmap]"
     foreach initport [array names m_initportmap] {
 	set fd $m_initportmap($initport)
 	close $fd
+	puts "Close: $initport done"
     }
     return
 }
@@ -445,17 +476,22 @@ proc check_ready_file {initport} {
     # Check for the presence of marker file before 
     # launching another task.
     set toloop 1
+	set rc ""
     while {$toloop} {
 		while {[SocketLock::acquire_lock "FBP_PROCESS_SYNC"] != "SOCKETLOCK_OK"} {
 			after 10
 		}
     	if {[file exists data_$initport.ready]} {
+		    # Read the first line of the file and return the data.
+			set fd [open data_$initport.ready r]
+			gets $fd rc
+			close $fd
 			set toloop 0
 			file delete data_$initport.ready
 		}
 		SocketLock::release_lock "FBP_PROCESS_SYNC"
-    	after 50
     }
+	return $rc
 }
 
 }

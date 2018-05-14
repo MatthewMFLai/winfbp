@@ -27,14 +27,6 @@
 exec tclsh $0 $@
 #exec tclsh "$0" ${1+"$@"}
 
-proc get_port {token} {
-    return [lindex [split $token ":"] 1]
-}
-
-proc get_ipaddr {token} {
-    return [lindex [split $token ":"] 0]
-}
-
 proc server_init {cid addr port} {
     fileevent $cid readable "server_handle_init $cid"
     fconfigure $cid -buffering line -translation binary
@@ -62,16 +54,21 @@ proc initialize {request p_response} {
     global g_logfile
     global g_state
     global g_timeout
+	global g_portmap
 
     upvar $p_response response
     set response ""
     set rc 0
 
     switch -- [lindex $request 0] {
+	    UPDATE_PORTMAP {
+		    array set g_portmap [lrange $request 1 end]
+	        ready_file [get_port $g_ports(INIT)]		
+		}
         ENABLE {
 	    foreach outport [get_outports] {
-    	    	set g_channels($outport) [socket [get_ipaddr $g_ports($outport)]\
-                     [get_port $g_ports($outport)]]
+    	    	set g_channels($outport) [socket [get_ipaddr $g_portmap($g_ports($outport))]\
+                     [get_port $g_portmap($g_ports($outport)]]
     		fileevent $g_channels($outport) readable "server_async_send $g_channels($outport)"
 		fconfigure $g_channels($outport) -buffering line -translation binary
 		puts "Initialized out port $outport"
@@ -121,15 +118,6 @@ proc initialize {request p_response} {
     return $rc
 }
 
-proc server_send {p_ip portid} {
-    global g_async_send
-
-    if {$portid != ""} {
-	lappend g_async_send [list $portid [ip::serialize $p_ip]]
-    }
-    return
-}
-
 proc server_async_send {cid} {
     global g_ports
     global g_channels
@@ -167,36 +155,6 @@ proc server_async_send {cid} {
     return
 }
 
-proc server_log {mode data} {
-    global g_logfile
-    set fd [open $g_logfile a]
-    puts $fd "[clock format [clock seconds]] $mode $data"
-    flush $fd
-    close $fd
-}
-
-proc get_server_id {} {
-    global g_ports
-    return [get_port $g_ports(INIT)]
-}
-
-proc get_outports {} {
-    global g_ports
-    return [array names g_ports "OUT-*"]
-}
-
-proc ready_file {initport} {
-    # Put a marker file to let the launcher know that
-    # the sockets have been set up.
-	while {[SocketLock::acquire_lock "FBP_PROCESS_SYNC"] != "SOCKETLOCK_OK"} {
-	    after 10
-	}
-    set fd [open data_$initport.ready w]
-    puts $fd ""
-    close $fd
-	SocketLock::release_lock "FBP_PROCESS_SYNC"
-}
-
 # For the stand-alone single folder windows install
 # This points to the htmlparse package.
 if {[string first "Windows" $tcl_platform(os)] > -1} {
@@ -210,6 +168,7 @@ variable g_logfile
 variable g_outport_status
 variable g_state
 variable g_timeout
+variable g_portmap
 
 # Data arrays to support the async send feature.
 # All IPs passed into server_send() will be buffered up and
@@ -224,11 +183,13 @@ set g_process_rc 1
 
 array set g_channels {}
 array set g_outportt_status {}
+array set g_portmap {}
 set g_state "STATE_RUNNING"
 
 variable g_cur_request
 array set g_cur_request {}
 
+source $env(LAUNCHER_HOME)/common.tcl
 source $env(LAUNCHER_HOME)/config.dat
 
 # Passed in arguments should be of format
@@ -260,9 +221,11 @@ source $env(PATTERN_HOME)/socketlock.tcl
 ip::init malloc
 source $g_ports(PROGRAM)
 
-socket -server server_init [get_port $g_ports(INIT)]
+array set zero_port_map {}
+set portnum [port_0_get INIT $g_ports(INIT)]
+set zero_port_map($g_ports(INIT)) $portnum
 
-ready_file [get_port $g_ports(INIT)]
+ready_file [get_port $g_ports(INIT)] [array get zero_port_map]
 
 vwait main-loop
 
