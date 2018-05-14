@@ -253,8 +253,9 @@ proc initialize {request p_response} {
 	        ready_file [get_port $g_ports(INIT)]		
 		}
         ENABLE {
+		    set ipaddr [get_ipaddr $g_ports(INIT)]
 	    foreach outport [get_outports] {
-            	set cid [socket localhost [get_port $g_portmap([build_port "localhost" $g_ports($outport)])]]
+            	set cid [socket localhost [get_port $g_portmap([build_port $ipaddr $g_ports($outport)])]]
             	set g_channels($cid) $outport
             	set g_channels($outport) $cid
 	    	#server_accept_$outport $g_channels($outport)
@@ -421,6 +422,13 @@ source $env(COMP_HOME)/ip/ip.tcl
 source $env(PATTERN_HOME)/socketlock.tcl
 ip::init malloc
 
+# Extract the IP portion of the INIT port value. The INIT port value may look like 
+# INIT 192.168.2.224:8051 (multi-computer FBP) or
+# INIT localhost:8051 (single-computer FBP)
+# The IP portion (192.168.2.224 or localhost) extracted will be prefixed to the allocated inport
+# and assigned outport later on in the initialization sequence.
+set ipaddr [get_ipaddr $g_ports(INIT)]
+
 array set zero_port_map {}
 foreach inport [get_inports] {
     # Need to bind the in port number to the handler procedure.
@@ -429,8 +437,8 @@ foreach inport [get_inports] {
     regsub -all "xxx" $server_accept_template $inport server_proc
     eval $server_proc
 
-	set portnum [port_0_get_localhost $inport $g_ports($inport)]
-	set zero_port_map([build_port "localhost" $g_ports($inport)]) $portnum
+	set portnum [port_0_get_localhost $inport $ipaddr]
+	set zero_port_map([build_port $ipaddr $g_ports($inport)]) $portnum
 
     set g_port_queue($inport) ""
 
