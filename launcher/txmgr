@@ -96,7 +96,7 @@ proc portgrp_update {portgrp portlist} {
 }
 
 # ----------------------------------------------------
-set server_accept_template {
+set g_server_accept_template {
 proc server_accept_xxx {cid addr port} {
     global g_ports
     global g_channels
@@ -204,12 +204,28 @@ proc initialize {request p_response} {
     global g_async_send
     global g_ack_pending
     global g_portmap
+	global g_server_accept_template
 	
     upvar $p_response response
     set response ""
     set rc 0
 
     switch -- [lindex $request 0] {
+	    ALLOCPORT {
+			array set tmp_port_map {}
+			foreach inport [get_inports] { 
+				# Need to bind the in port number to the handler procedure.
+				# Create a handler procedure on the fly, with the name
+				# server_accept_<inport>
+				regsub -all "xxx" $g_server_accept_template $inport server_proc
+				eval $server_proc
+
+				set portnum [port_0_get $inport $g_ports($inport)]
+				set tmp_port_map($g_ports($inport)) $portnum
+			}
+            ready_file [get_port $g_ports(INIT)] [array get tmp_port_map]
+            unset tmp_port_map			
+		}
 	    UPDATE_PORTMAP {
 		    array set g_portmap [lrange $request 1 end]
 	        ready_file [get_port $g_ports(INIT)]		
@@ -396,17 +412,6 @@ ip::init malloc
 source $g_ports(PROGRAM)
 
 array set zero_port_map {}
-foreach inport [get_inports] { 
-    # Need to bind the in port number to the handler procedure.
-    # Create a handler procedure on the fly, with the name
-    # server_accept_<inport>
-    regsub -all "xxx" $server_accept_template $inport server_proc
-    eval $server_proc
-
-	set portnum [port_0_get $inport $g_ports($inport)]
-	set zero_port_map($g_ports($inport)) $portnum
-}
-
 set portnum [port_0_get INIT $g_ports(INIT)]
 set zero_port_map($g_ports(INIT)) $portnum
 

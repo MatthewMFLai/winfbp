@@ -76,7 +76,7 @@ proc process_ready {p_arg_array} {
     return
 }
 
-proc process_create {p_arg_array} {
+proc process_allocport {p_arg_array} {
     upvar $p_arg_array arg_array
     variable m_currlist
     variable m_portmap
@@ -84,10 +84,10 @@ proc process_create {p_arg_array} {
     set ipaddr $arg_array(ipaddr)
     set idx [lsearch $m_currlist $ipaddr]
     if {$idx != -1} {
-	set m_currlist [lreplace $m_currlist $idx $idx]
+	    set m_currlist [lreplace $m_currlist $idx $idx]
     }
 
-    array set m_portmap [lrange $arg_array(request) 1 end]	
+    array set m_portmap [lrange $arg_array(request) 1 end]
     return
 }
 
@@ -107,7 +107,7 @@ proc process_generic {p_arg_array} {
     set idx [lsearch $m_currlist $ipaddr]
     if {$idx != -1} {
 	set m_currlist [lreplace $m_currlist $idx $idx]
-    }		
+    }
     return
 }
 
@@ -173,7 +173,15 @@ proc act_ready_to_create {} {
     return
 }
 
-proc act_create_to_update_portmap {} {
+proc act_create_to_allocport {} {
+    variable m_cmd
+
+    act_default 
+    set m_cmd "ALLOCPORT"
+    return
+}
+
+proc act_allocport_to_update_portmap {} {
     variable m_cmd
 	variable m_portmap
 

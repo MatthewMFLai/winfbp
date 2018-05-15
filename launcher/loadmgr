@@ -27,7 +27,7 @@
 exec tclsh $0 $@
 #exec tclsh "$0" ${1+"$@"}
 
-set server_accept_template {
+set g_server_accept_template {
 proc server_accept_xxx {cid addr port} {
     global g_ports
     global g_channels
@@ -235,12 +235,43 @@ proc initialize {request p_response} {
     global g_logfile
     global g_state
     global g_portmap
+	global g_server_accept_template
+	global g_inport_queue
+	global g_inport_queue_max
+	global g_inport_queue_max_default
+	global g_outport_status
 	
     upvar $p_response response
     set response ""
     set rc 0
 
     switch -- [lindex $request 0] {
+	    ALLOCPORT {
+			array set tmp_port_map {}
+			foreach inport [array names g_ports "IN-*"] {
+				# Need to bind the in port number to the handler procedure.
+				# Create a handler procedure on the fly, with the name
+				# server_accept_<inport>
+				regsub -all "xxx" $g_server_accept_template $inport server_proc
+				eval $server_proc
+
+				set portnum [port_0_get $inport $g_ports($inport)]
+				set tmp_port_map($g_ports($inport)) $portnum
+
+				set g_inport_queue($inport) ""
+
+				# Initialize the queue length for each in port.
+				regsub "IN-" $inport "" port
+				set port Queue-$port
+				if {[info exists g_ports($port)]} {
+				    set g_inport_queue_max($inport) [get_port $g_ports($port)]
+				} else {
+				    set g_inport_queue_max($inport) $g_inport_queue_max_default
+				}
+			}
+			ready_file [get_port $g_ports(INIT)] [array get tmp_port_map]
+            unset tmp_port_map			
+		}
 	    UPDATE_PORTMAP {
 		    array set g_portmap [lrange $request 1 end]
 	        ready_file [get_port $g_ports(INIT)]		
@@ -253,6 +284,7 @@ proc initialize {request p_response} {
             	set g_channels($outport) $cid
 	    	fileevent $cid readable "server_handle $cid"
             	fconfigure $cid -buffering line -translation binary
+				set g_outport_status($outport) "OUTPORT_IDLE"
             	puts "Initialized out port $outport"
 	    } 
 
@@ -332,37 +364,6 @@ source $env(PATTERN_HOME)/socketlock.tcl
 ip::init malloc
 
 array set zero_port_map {}
-foreach inport [array names g_ports "IN-*"] {
-    # Need to bind the in port number to the handler procedure.
-    # Create a handler procedure on the fly, with the name
-    # server_accept_<inport>
-    regsub -all "xxx" $server_accept_template $inport server_proc
-    eval $server_proc
-
-	set portnum [port_0_get $inport $g_ports($inport)]
-	set zero_port_map($g_ports($inport)) $portnum
-
-    set g_inport_queue($inport) ""
-
-    # Initialize the queue length for each in port.
-    regsub "IN-" $inport "" port
-    set port Queue-$port
-    if {[info exists g_ports($port)]} {
-	set g_inport_queue_max($inport) [get_port $g_ports($port)]
-    } else {
-	set g_inport_queue_max($inport) $g_inport_queue_max_default
-    }
-}
-
-foreach outport [get_outports] { 
-    # Need to bind the in port number to the handler procedure.
-    # Create a handler procedure on the fly, with the name
-    # server_accept_<inport>
-    regsub -all "xxx" $server_accept_template $outport server_proc
-    eval $server_proc
-    set g_outport_status($outport) "OUTPORT_IDLE" 
-}
-
 set portnum [port_0_get INIT $g_ports(INIT)]
 set zero_port_map($g_ports(INIT)) $portnum
 

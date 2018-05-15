@@ -291,7 +291,25 @@ proc Runit_Create {taskfile ipaddr p_program_data p_program_testdata} {
 	unset temptable
     }
     close $fd
-    return [list $initportlist [array get portmap]]
+    return $initportlist
+}
+
+proc Runit_Allocport {initportlist} {
+    variable m_initportmap
+
+	array set portmap {}
+    foreach token $initportlist {
+	    set initport [lindex $token 0]
+		set allocport [lindex $token 1]
+	    set fd [socket localhost $allocport]
+	    fconfigure $fd -buffering line
+		set m_initportmap($initport) $fd
+	    puts $fd "ALLOCPORT"
+		foreach {port alloc_port} [check_ready_file $initport] {
+	        set portmap($port) $alloc_port
+	    }
+    }
+    return [array get portmap]
 }
 
 proc Runit_Update_Portmap {initportlist portmaplist} {
@@ -301,10 +319,7 @@ proc Runit_Update_Portmap {initportlist portmaplist} {
     # OUT-* ports.
     foreach token $initportlist {
 	    set initport [lindex $token 0]
-		set allocport [lindex $token 1]
-	    set fd [socket localhost $allocport]
-	    fconfigure $fd -buffering line
-		set m_initportmap($initport) $fd
+	    set fd $m_initportmap($initport)
 	    puts $fd "UPDATE_PORTMAP $portmaplist"
 		check_ready_file $initport
     }

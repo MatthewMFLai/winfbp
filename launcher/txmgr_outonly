@@ -61,6 +61,9 @@ proc initialize {request p_response} {
     set rc 0
 
     switch -- [lindex $request 0] {
+	    ALLOCPORT {
+            ready_file [get_port $g_ports(INIT)]			
+		}
 	    UPDATE_PORTMAP {
 		    array set g_portmap [lrange $request 1 end]
 	        ready_file [get_port $g_ports(INIT)]		

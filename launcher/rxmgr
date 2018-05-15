@@ -27,7 +27,7 @@
 exec tclsh $0 $@
 #exec tclsh "$0" ${1+"$@"}
 
-set server_accept_template {
+set g_server_accept_template {
 proc server_accept_xxx {cid addr port} {
     global g_ports
     global g_channels
@@ -242,12 +242,62 @@ proc initialize {request p_response} {
     global g_state
     global g_waitlist
 	global g_portmap
-
+	global g_port_queue
+	global g_inport_queue_max
+	global g_inport_queue_max_default
+    global g_portgrp
+    global g_selectport_togrp
+	global g_server_accept_template
+	
     upvar $p_response response
     set response ""
     set rc 0
     
     switch -- [lindex $request 0] {
+	    ALLOCPORT {
+		    set ipaddr [get_ipaddr $g_ports(INIT)]
+		    array set tmp_port_map {}
+			foreach inport [get_inports] {
+				# Need to bind the in port number to the handler procedure.
+				# Create a handler procedure on the fly, with the name
+				# server_accept_<inport>
+				regsub -all "xxx" $g_server_accept_template $inport server_proc
+				eval $server_proc
+
+				set portnum [port_0_get_localhost $inport $ipaddr]
+				set tmp_port_map([build_port $ipaddr $g_ports($inport)]) $portnum
+
+				set g_port_queue($inport) ""
+
+				# Initialize the queue length for each in port.
+				regsub "IN-" $inport "" port
+				set port QUEUE-$port
+				if {[info exists g_ports($port)]} {
+				    set g_inport_queue_max($inport) $g_ports($port)
+				} else {
+				    set g_inport_queue_max($inport) $g_inport_queue_max_default
+				}
+
+				# Initialize the per port waiting list.
+				set g_waitlist($inport) "" 
+
+				# Initialize the port to be ready to send.
+				port_status_set $inport "PORT_ACTIVE" 
+			}
+            ready_file [get_port $g_ports(INIT)] [array get tmp_port_map]
+			unset tmp_port_map
+			
+			foreach portgrp [get_portgrp] {
+				set portdatalist $g_ports($portgrp)
+				set portlist ""
+				foreach {port status} $portdatalist {
+				    set g_selectport_togrp($port) $portgrp
+				    port_status_set $port $status 
+				    lappend portlist $port
+				}
+				set g_portgrp($portgrp) $portlist
+			}			
+		}
 	    UPDATE_PORTMAP {
 		    array set g_portmap [lrange $request 1 end]
 	        ready_file [get_port $g_ports(INIT)]		
@@ -427,56 +477,8 @@ ip::init malloc
 # INIT localhost:8051 (single-computer FBP)
 # The IP portion (192.168.2.224 or localhost) extracted will be prefixed to the allocated inport
 # and assigned outport later on in the initialization sequence.
-set ipaddr [get_ipaddr $g_ports(INIT)]
 
 array set zero_port_map {}
-foreach inport [get_inports] {
-    # Need to bind the in port number to the handler procedure.
-    # Create a handler procedure on the fly, with the name
-    # server_accept_<inport>
-    regsub -all "xxx" $server_accept_template $inport server_proc
-    eval $server_proc
-
-	set portnum [port_0_get_localhost $inport $ipaddr]
-	set zero_port_map([build_port $ipaddr $g_ports($inport)]) $portnum
-
-    set g_port_queue($inport) ""
-
-    # Initialize the queue length for each in port.
-    regsub "IN-" $inport "" port
-    set port QUEUE-$port
-    if {[info exists g_ports($port)]} {
-	set g_inport_queue_max($inport) $g_ports($port)
-    } else {
-	set g_inport_queue_max($inport) $g_inport_queue_max_default
-    }
-
-    # Initialize the per port waiting list.
-    set g_waitlist($inport) "" 
-
-    # Initialize the port to be ready to send.
-    port_status_set $inport "PORT_ACTIVE" 
-}
-
-foreach outport [get_outports] {
-    # Need to bind the out port number to the handler procedure.
-    # Create a handler procedure on the fly, with the name
-    # server_accept_<outport>
-    regsub -all "xxx" $server_accept_template $outport server_proc
-    eval $server_proc
-}
-    
-foreach portgrp [get_portgrp] {
-    set portdatalist $g_ports($portgrp)
-    set portlist ""
-    foreach {port status} $portdatalist {
-	set g_selectport_togrp($port) $portgrp
-	port_status_set $port $status 
-	lappend portlist $port
-    }
-    set g_portgrp($portgrp) $portlist
-}
-
 set portnum [port_0_get INIT $g_ports(INIT)]
 set zero_port_map($g_ports(INIT)) $portnum
 

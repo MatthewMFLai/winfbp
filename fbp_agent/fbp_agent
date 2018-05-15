@@ -66,25 +66,29 @@ proc process {request} {
 	CREATE {
 	    set taskfile [lindex $request 1]
 	    set graphfile [lindex $request 2]
-    	    set graph_id [lindex $request 3]
-    	    set filename [file join $g_workdir $taskfile]
+		set graph_id [lindex $request 3]
+		set filename [file join $g_workdir $taskfile]
 	    if {![file exists $filename]} {
-		set response "$taskfile not found"
-		return $response	
+			set response "$taskfile not found"
+			return $response	
 	    }
     	    set graphname [file join $g_workdir $graphfile]
 	    if {![file exists $graphname]} {
-		set response "$graphfile not found"
+		    set response "$graphfile not found"
 	        return $response
 	    }
 	    set launcher [Launcher_Obj::Create $graph_id]
 	    ${launcher}::Init $graphname
-    	    set create_rc [${launcher}::Runit_Create $filename\
+    	set g_initportlist [${launcher}::Runit_Create $filename\
                 $g_ipaddr g_program_data g_program_testdata]
-			set g_initportlist [lindex $create_rc 0]
-			# Need to return the allocated ports for this graph on
-			# this ipaddr back to fbp_mgr
-			set response [concat $response [lindex $create_rc 1]]
+	}
+	ALLOCPORT {
+    	set graph_id [lindex $request end]
+	    set launcher [Launcher_Obj::Get_Obj $graph_id]
+	    set rc [${launcher}::Runit_Allocport $g_initportlist]
+		# Need to return the allocated ports for this graph on
+		# this ipaddr back to fbp_mgr
+		set response [concat $response $rc]
 	}
     UPDATE_PORTMAP {
     	set graph_id [lindex $request end]
