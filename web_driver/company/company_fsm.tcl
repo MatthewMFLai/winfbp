@@ -32,7 +32,7 @@ proc init {} {
     variable m_data
 
 	set m_rx_list {{description Description<.*?><.*?><.*?>(.*?)<.*?> nul} \
-	               {name <h3\\sclass=.*?>(.*?)</h3> nul} \
+	               {name Mb\\(10px\\).*?>(.*?)</h3> nul} \
                    {sector Sector<.*?><.*?>:\\s<.*?><.*?>(.*?)<.*?> nul} \
                    {industry Industry<.*?><.*?>:\\s<.*?><.*?>(.*?)<.*?> nul} \
                    {employees Full\\sTime\\sEmployees<.*?><.*?>:\\s<.*?><.*?><.*?>(.*?)<.*?> nul} \

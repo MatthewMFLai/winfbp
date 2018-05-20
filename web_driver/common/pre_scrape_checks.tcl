@@ -1,19 +1,40 @@
 lappend auto_path $env(DISK2)/tclkit/modules
 
+set platform "Linux"
+if {[string first "Linux" $tcl_platform(os)] == -1} {
+    set platform "Windows"
+}
+
 cd $env(DISK2)/web_driver/company
-set line "exec tclsh sanity.tcl &"
+if {$platform == "Linux"} {
+    set line "exec ./sanity.tcl &"
+} else {
+    set line "exec tclsh sanity.tcl &"
+}
 set rc [eval $line]
 
 cd $env(DISK2)/web_driver/dividend
-set line "exec tclsh sanity.tcl &"
+if {$platform == "Linux"} {
+    set line "exec ./sanity.tcl &"
+} else {
+    set line "exec tclsh sanity.tcl &"
+}
 set rc [eval $line]
 
 cd $env(DISK2)/web_driver/stock
-set line "exec tclsh sanity.tcl &"
+if {$platform == "Linux"} {
+    set line "exec ./sanity.tcl &"
+} else {
+    set line "exec tclsh sanity.tcl &"
+}
 set rc [eval $line]
 
 cd $env(DISK2)/web_driver/symbolpage
-set line "exec tclsh sanity.tcl &"
+if {$platform == "Linux"} {
+    set line "exec ./sanity.tcl &"
+} else {
+    set line "exec tclsh sanity.tcl &"
+}
 set rc [eval $line]
 
 set cachedir $env(DISK2_DATA)/web_driver/cache

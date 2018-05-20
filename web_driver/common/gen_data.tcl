@@ -99,7 +99,11 @@ proc gen_tables {dbfile exchange} {
 }
 
 lappend auto_path $env(DISK2)/tclkit/modules
-package require Mk4tcl
+if {$tcl_platform(os) == "Linux"} {
+    load $env(METAKIT_HOME)/Mk4tcl.so
+} else {
+    package require Mk4tcl
+}
 source $env(DISK2)/web_driver/common/db_if.tcl
 source $env(DISK2)/web_driver/common/get_history_range.tcl
 source $env(WEB_DRIVER_HOME)/common/history_range.tcl

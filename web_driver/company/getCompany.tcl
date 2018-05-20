@@ -33,7 +33,7 @@ source $env(PATTERN_HOME)/malloc.tcl
 source $env(PATTERN_HOME)/geturl.tcl
 source $env(WEB_DRIVER_HOME)/company/company_fsm.tcl
 
-set sanity_mode 2
+set sanity_mode 1
 Url::init
 
 if {$sanity_mode} {

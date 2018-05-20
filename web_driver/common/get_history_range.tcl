@@ -78,6 +78,9 @@ proc gen_history_range {column ref_value_limit value_limit cfgfile column_date m
 			if {$value == "0.00"} {
 				continue
 			}
+			if {$ref_value == "0.00" || $ref_value == ""} {
+				continue
+			}
 			set change [expr ($value - $ref_value) * 100.0 / $ref_value]
 			set idx [histrange::get_range_idx $change]
 			incr g_histrange($idx)	    

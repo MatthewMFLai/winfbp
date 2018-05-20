@@ -54,7 +54,7 @@ proc get_record {symbol year p_data} {
 
     regsub -all {\.} $symbol "_" symbol_nodot
     if {![info exists m_idx($symbol_nodot,$year)]} {
-    	reutrn "$symbol,$year not found in database!"
+    	return "$symbol,$year not found in database!"
     }
 	
 	set tokens $m_idx($symbol_nodot,$year)
@@ -108,7 +108,7 @@ proc get_recordlist {symbol year collist colname min max p_rc} {
 
     regsub -all {\.} $symbol "_" symbol_nodot
     if {![info exists m_idx($symbol_nodot,$year)]} {
-    	reutrn "$symbol,$year not found in database!"
+    	return "$symbol,$year not found in database!"
     }
 	
 	set tokens $m_idx($symbol_nodot,$year)

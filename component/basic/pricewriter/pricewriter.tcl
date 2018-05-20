@@ -72,7 +72,7 @@ global tcl_platform
 if {[string first "Windows" $tcl_platform(os)] > -1} {
     package require Mk4tcl
 } else {
-    load Mk4tcl.so
+    load $env(METAKIT_HOME)/Mk4tcl.so
 }
 global g_db
 set g_db ""
