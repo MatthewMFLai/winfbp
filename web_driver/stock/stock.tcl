@@ -36,7 +36,10 @@ proc init {url_template} {
 proc doit {exchange symbol url_template p_outdata} {
     upvar $p_outdata outdata
 
-    regsub "XXX" $url_template $symbol tmpurl
+	set yahoo_symbol [UtilStock::convert_symbol_GM_YAHOO $symbol]
+    set yahoo_exchange [UtilStock::convert_exchange_GM_YAHOO $exchange]
+    regsub "XXXXX" $url_template $yahoo_symbol tmpurl
+    regsub "YYYYY" $tmpurl $yahoo_exchange tmpurl
     if {[catch {Url::get $tmpurl} data]} {
     	set outdata(ERROR) $data 
 	    return 

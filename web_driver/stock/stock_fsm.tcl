@@ -31,13 +31,21 @@ proc init {} {
     variable m_rx_list
     variable m_data
 
-	set m_rx_list {{shares_outstanding Shares\\sOut.:</td>.*?<.*?>(.*?)<.*?> nul} \
-	               {market_cap Market\\sCap:<.*?>.*?<.*?>(.*?)<.*?>  nul} \
-                   {pe P/E\\sRatio:<.*?>.*?<.*?>(.*?)<.*?> nul} \
-                   {eps EPS:<.*?>.*?<.*?>(.*?)<.*?> nul} \
-                   {pb P/B\\sRatio:<.*?>.*?<.*?>(.*?)<.*?> nul} \
-				   {volume Volume:<.*?><.*?>(.*?)<.*?> nul} \
-				   {price priceLarge.*?<.*?>(.*?)<.*?> nul} \
+#"sharesOutstanding":{"raw":1441129984,"fmt":"1.441B","longFmt":"1,441,129,984"}
+#"marketCap":{"raw":141432487936,"fmt":"141.432B","longFmt":"141,432,487,936"}
+#"trailingPE":{"raw":12.925062,"fmt":"12.93"}
+#"trailingEps":{"raw":7.593,"fmt":"7.59"}
+#"priceToBook":{"raw":2.1331537,"fmt":"2.13"}
+#"regularMarketVolume":{"raw":1759541,"fmt":"1.76M","longFmt":"1,759,541.00"}
+#"regularMarketPrice":{"raw":98.14,"fmt":"98.14"}
+	
+	set m_rx_list {{shares_outstanding \"sharesOutstanding\":\{\"raw\":(.*?), nul} \
+	               {market_cap \"marketCap\":\{\"raw\":(.*?), nul} \
+                   {pe \"trailingPE\":\{\"raw\":.*?,\"fmt\":\"(.*?)\"  nul} \
+                   {eps \"trailingEps\":\{\"raw\":.*?,\"fmt\":\"(.*?)\" nul} \
+                   {pb \"priceToBook\":\{\"raw\":.*?,\"fmt\":\"(.*?)\" nul} \
+				   {volume \"regularMarketVolume\":\{\"raw\":(.*?), nul} \
+				   {price \"regularMarketPrice\":\{\"raw\":(.*?), nul} \
                   }
     if {[info exists m_data]} {
 	    unset m_data

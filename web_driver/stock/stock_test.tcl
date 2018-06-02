@@ -31,6 +31,7 @@ lappend auto_path $env(DISK2)/tclkit/modules
 source $env(FSM_HOME)/fsm.tcl
 source $env(PATTERN_HOME)/malloc.tcl
 source $env(PATTERN_HOME)/geturl.tcl
+source $env(PATTERN_HOME)/stock_util.tcl
 source $env(WEB_DRIVER_HOME)/stock/stock_fsm.tcl
 source $env(WEB_DRIVER_HOME)/stock/stock.tcl
 
