@@ -1,0 +1,2 @@
+unsteady 搖晃的；站不穩的 mare （成年）母馬 deed {（尤指很壞或很好的）事情，行為 （土地或建築的）契約，所有權證書} favours {贊同 {treatment) 特殊照顧} 好處 善意行為 同意性交 較喜歡 {of) 贊同} {preferentially) 偏袒} {(prove advantageous to) 有利於} {(oblige) 賜予} {(resemble) 長得像}} foal {馬駒 （母馬）産駒} pregnant {懷孕的，妊娠的 意味深長的，意義重大的}
+deed,7.76 0 unsteady,5.169 0 pregnant,5.19 0 foal,5.195 0 foal,3.27 0 foal,5.112 0 mare,5.28 0 mare,3.13 0 favours,7.35 2 foal,5.59 0

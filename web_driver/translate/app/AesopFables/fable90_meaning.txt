@@ -1,0 +1,2 @@
+foolish 愚蠢的，傻的 pasture 牧場 deer 鹿 ill {生病的，不健康的；要嘔吐的 【英】受傷的 壞的；不吉祥的；邪惡的 壞；冷酷地；不友善地；惡劣地 困難地；幾乎不 不完美地；不利地 不幸；禍害；苦惱} benefit {利益，好處；優勢 補助金，救濟金 得益，受惠；（使）受益；對…有幫助} disaster {災難，大禍 非常失敗，極為糟糕} recovered （尤指健康、能力、所有物等）失而復得，重新得到，追回，收復，尋回
+pasture,5.225 0 ill,5.18 0 disaster,7.98 0 benefit,7.34 0 recovered,5.168 0 pasture,5.132 0 deer,5.163 0 deer,5.2 0 deer,3.4 0 foolish,7.60 0

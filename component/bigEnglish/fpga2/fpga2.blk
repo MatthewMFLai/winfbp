@@ -1,0 +1,5 @@
+name fpga2
+filepath $env(DISK2)/component/bigEnglish/fpga2
+init {$env(DISK2)/scratchpad/dictionary/filter.txt}
+inports {1}
+outports {1}

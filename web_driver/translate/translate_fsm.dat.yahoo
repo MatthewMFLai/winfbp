@@ -1,0 +1,25 @@
+#Node section
+#Name process_proc
+BEGIN_STATE
+FIND_TITLE translate_fsm::process_generic
+FIND_H4 translate_fsm::process_generic
+TERMINATE null 
+END_STATE
+
+#Link section
+#from_state to_state eval_proc action_proc
+BEGIN_LINK
+FIND_TITLE FIND_H4 translate_fsm::eval_title_to_h4 translate_fsm::act_title_to_h4
+FIND_H4 FIND_H4 translate_fsm::eval_h4_to_h4 translate_fsm::act_to_h4 
+FIND_H4 TERMINATE translate_fsm::eval_h4_to_terminate null 
+END_LINK
+
+#Init section
+BEGIN_INIT
+proc = translate_fsm::init
+END_INIT
+
+#Default state section
+BEGIN_DEFAULT_STATE
+state = FIND_TITLE
+END_DEFAULT_STATE

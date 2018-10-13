@@ -1,0 +1,2 @@
+tiny 微小的 modest {不大（或多、貴）的；適中的 謙虛的，謙遜的 （女子的衣著、舉止等）端莊的，正派的，樸素的} erected {建立；建造 豎立；使直立 （腰板）直的；昂首挺胸直立的 （尤指軟組織）勃起的} philosopher 哲學家 disapproval 反對，不贊成 fame 名聲，名氣；聲譽；名望 achieve （尤指經過努力）完成，達到，實現 neighbours {鄰居 鄰邦，鄰國} executed {（依法）處決，處死 （尤指有計劃地）實施，履行，表演 執行遺囑} occasion {（尤指某事發生的）時刻，時候 特殊場合；重大活動；盛會 時機，機會；原因，理由 有時；偶爾，間或 造成，引起；惹起} vindicated {證明…正確；證明…是真的 證明（某人）無辜，澄清}
+tiny,3.412 0 vindicated,3.229 1 disapproval,3.199 0 modest,3.40 0 erected,3.13 0 occasion,3.297 0 fame,3.143 0 executed,5.41 0 philosopher,5.16 0 neighbours,3.318 0 achieve,3.126 0

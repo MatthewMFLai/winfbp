@@ -1,0 +1,6 @@
+name dictionary 
+filepath $env(DISK2)/component/bigEnglish/dictionary
+init {$env(DISK2)/scratchpad/dictionary/test_all.txt}
+kicker {red-ball}
+inports {1 2}
+outports {1 2}

@@ -1,0 +1,5 @@
+name fpga1 
+filepath $env(DISK2)/component/bigEnglish/fpga1
+init {browse}
+inports {1}
+outports {1 2}

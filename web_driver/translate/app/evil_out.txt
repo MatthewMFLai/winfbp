@@ -1,0 +1,45 @@
+Men imagine(想像，猜想) that thought can be kept secret(祕密的，機密的), but it cannot; it rapidly(很快地，立即，迅速地) crystallizes into habit(習慣[C][U]), and habit(習慣[C][U]) solidifies into circumstance(細節；詳情[C][U]). Bestial(殘忍的) thoughts crystallize(使成形；使具體化) into habits of drunkenness(酩酊，醉態，醉[U]) and sensuality(喜愛感官享受), which solidify(凝固) into circumstances of destitution(窮困；缺乏) and disease(病，疾病): impure(不純淨的；髒的) thoughts of every kind crystallize(使成形；使具體化) into enervating(使人衰弱的；令人萎靡不振的) and confusing(令人困惑的) habits, which solidify(凝固) into distracting(使分散注意力的，分心的) and adverse circumstances: thoughts of fear(害怕，恐懼[C][U][（+of）][+（that）]), doubt(疑問，不確實[U]), and indecision(優柔寡斷，遲疑不覺) crystallize(使成形；使具體化) into weak(弱的，虛弱的；衰弱的), unmanly(無男子漢氣概的；怯懦的), and irresolute(優柔寡斷的) habits, which solidify(凝固) into circumstances of failure(失敗[U][（+in）]), indigence(貧乏；窮困), and slavish(卑屈的) dependence(所依賴的人（或物）): lazy(懶散的，怠惰的) thoughts crystallize(使成形；使具體化) into habits of uncleanliness(the state of being dirty:) and dishonesty(不誠實；不正直；不正直的行為), which solidify(凝固) into circumstances of foulness(骯髒) and beggary(乞丐生涯): hateful(充滿憎恨的) and condemnatory(譴責的；非難的) thoughts crystallize(使成形；使具體化) into habits of accusation(指控，控告；指責[U][C][+（that）]) and violence(暴力，暴力行為), which solidify(凝固) into circumstances of injury(（對人，動物的）傷害；（對健康的）損害) and persecution(迫害；困擾[U][C]): selfish(自私的，利己主義的；只顧自己的) thoughts of all kinds crystallize(使成形；使具體化) into habits of self-seeking(追逐私利), which solidify(凝固) into circumstances more or less distressing(使人痛苦的；令人煩惱的).
+
+
+accusation {指控，控告；指責[U][C][+（that）]} 
+beggary 乞丐生涯 
+bestial 殘忍的 
+circumstance {細節；詳情[C][U]} 
+condemnatory 譴責的；非難的 
+confusing 令人困惑的 
+crystallize 使成形；使具體化 
+dependence 所依賴的人（或物） 
+destitution 窮困；缺乏 
+disease 病，疾病 
+dishonesty 不誠實；不正直；不正直的行為 
+distracting 使分散注意力的，分心的 
+distressing 使人痛苦的；令人煩惱的 
+doubt {疑問，不確實[U]} 
+drunkenness {酩酊，醉態，醉[U]} 
+enervating 使人衰弱的；令人萎靡不振的 
+failure {失敗[U][（+in）]} 
+fear {害怕，恐懼[C][U][（+of）][+（that）]} 
+foulness 骯髒 
+habit {習慣[C][U]} 
+hateful 充滿憎恨的 
+imagine 想像，猜想 
+impure 不純淨的；髒的 
+indecision 優柔寡斷，遲疑不覺 
+indigence 貧乏；窮困 
+injury （對人，動物的）傷害；（對健康的）損害 
+irresolute 優柔寡斷的 
+lazy 懶散的，怠惰的 
+persecution {迫害；困擾[U][C]} 
+rapidly 很快地，立即，迅速地 
+secret 祕密的，機密的 
+self-seeking 追逐私利 
+selfish 自私的，利己主義的；只顧自己的 
+sensuality 喜愛感官享受 
+slavish 卑屈的 
+solidify 凝固 
+uncleanliness {the state of being dirty:} 
+unmanly 無男子漢氣概的；怯懦的 
+violence 暴力，暴力行為 
+weak 弱的，虛弱的；衰弱的 
+
+

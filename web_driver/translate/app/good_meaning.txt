@@ -1,0 +1,2 @@
+abiding {持續的，持久的；不變的 abide的動詞現在分詞、動名詞} industry {{工業；企業；行業[U][C]} {工業企業的資方人員[U]} {勤勉[U]}} solidify {使團結起來 使結晶；使凝固 弄堅固 變堅固 凝固}
+solidify,1.622 4 abiding,1.813 0 solidify,1.106 0 solidify,1.502 3 solidify,1.228 1 solidify,1.363 2 industry,1.486 2 solidify,1.773 0

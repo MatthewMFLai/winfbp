@@ -1,0 +1,31 @@
+Fable 31
+
+The Wolves, the Sheep, and the Ram(公羊)
+
+The wolves sent messengers(送信人；使者) to the sheep, offering(提供) to swear(發誓；宣誓) a sacred(莊嚴的；鄭重的) oath(誓言，誓約；宣誓) of everlasting(永遠的，永久的；不朽的) peace if the sheep would just agree to hand over(面交，給，傳遞) the dogs for punishment(處罰，懲罰；刑罰). It was all because of the dogs, said the wolves, that the sheep and the wolves were at war with one another. The flock(羊群) of sheep, those foolish(愚蠢的，傻的) creatures(生物；動物) who bleat(咩咩叫) at everything, were ready to send the dogs away but there was an old ram among them whose deep fleece(羊毛) shivered(發抖，打顫) and stood on end(使人毛骨悚然). 'What kind of negotiation(談判，協商) is this!' he exclaimed(呼喊；驚叫). 'How can I hope to survive(在……之後仍然生存) in your company(同伴（們）) unless we have guards(警衛)? Even now, with the dogs keeping watch, I cannot graze(（牛，羊等）吃草；放牧) in safety.'
+
+
+bleat 咩咩叫 
+company 同伴（們）
+creatures 生物；動物 
+everlasting 永遠的，永久的；不朽的 
+exclaimed 呼喊；驚叫 
+fleece 羊毛 
+flock 羊群
+foolish 愚蠢的，傻的 
+graze （牛，羊等）吃草；放牧 
+guards 警衛 
+hand over 面交，給，傳遞 
+messengers 送信人；使者
+negotiation 談判，協商 
+oath 誓言，誓約；宣誓 
+offering 提供
+punishment 處罰，懲罰；刑罰 
+ram 公羊 
+sacred 莊嚴的；鄭重的 
+shivered 發抖，打顫 
+stood on end 使人毛骨悚然
+survive 在……之後仍然生存
+swear 發誓；宣誓 
+
+

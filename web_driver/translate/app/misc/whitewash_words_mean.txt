@@ -1,0 +1,42 @@
+abide {1. （常用於否定句和疑問句）忍受，容忍}
+absurd {1. 不合理的，荒謬的；可笑的，愚蠢的}
+ardently {1. 熱心地}
+assert {1. 斷言，聲稱[+that][O2]}
+awkward {4. 不便的，不合適的；尷尬的[（+for）]}
+blatant {2. 公然的；露骨的}
+cabal {1. 陰謀集團}
+concocted {2. 捏造}
+connivance {1. 默許；縱容}
+damning {1. 毀滅的；咒罵的}
+devastation {1. 蹂躪；荒廢}
+doltish {1. 愚蠢的}
+era {1. 時代；年代；歷史時期}
+factions {1. （政黨，組織等內部的）派別，宗派；小集團[C]}
+fathom {2. 推測；揣摸}
+grab {2. 奪取，霸佔}
+imperialists {1. 帝國主義者} {1. 帝國主義的}
+inflict {1. 給予（打擊）；使遭受（損傷等）；強加}
+intense {1. 強烈的，劇烈的；極度的}
+lynched {1. 以私刑處死}
+mendacious {1. 虛偽的} {2. 說謊的}
+mess {3. 混亂，凌亂的狀態[U][S1]}
+narrative {2. 敘述，講述[U]}
+neoconservatives {1. 新保守主義者} {1. 新保守主義者的}
+obscure {2. 使難理解；混淆}
+partisan {1. （黨派等的）強硬支持者；黨人}
+propaganda {1. 傳教總會}
+purged {1. 使潔淨，使淨化；清除；清洗[（+of/from）]}
+reputation {1. 名譽，名聲[（+for）]}
+reveal {1. 展現，顯露出}
+risible {1. 愛大笑的；可笑的；笑的}
+servile {1. 奴隸的} {2. 卑賤的，低下的}
+silver-tongued {1. 雄辯的；有口才的}
+slandered {1. 誹謗，詆毀，造謠中傷}
+smarmy {1. 【英】【口】討好的；拍馬屁的；愛說奉承話的}
+smeared {1. 弄髒的；汙跡斑斑的}
+swaggering {1. 趾高氣揚的; 神氣活現的}
+tatters {1. 破衣服}
+trillion {1. 【英】百萬兆，一百萬的三次冪} {2. 【美】萬億，兆，一千的四次冪}
+warlord {1. 軍閥}
+wittily {1. 機智地；巧妙地[U]}
+yearned {1. 思念；渴望；嚮往[（+for/after/towards）][+to-v]}

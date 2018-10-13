@@ -1,0 +1,4 @@
+name content_ui
+filepath $env(DISK2)/component/bigEnglish/content_ui
+inports {1 2 3}
+outports {1 2 3}

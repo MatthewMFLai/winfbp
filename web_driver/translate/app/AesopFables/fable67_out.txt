@@ -1,0 +1,27 @@
+fable 67
+
+The Sheep, the Shepherd(牧羊人), and the Dog
+
+A sheep once said to the shepherd, 'You shear(剪（羊毛）) us and keep all the wool(羊毛) for yourself; you like to take our milk and make it into cheese; thanks to our children, your flocks flourish(蓬勃發展) and prosper(昌盛). Yet there is no profit(益處) for us in these things. Everything we eat comes from the ground -- and what kind of blossom(小花) is there to be found on the mountain sides? The grass is dry even when covered with dew(露水). Meanwhile(（與此）同時) you nourish(養育) this dog in our midst(在…之中), feeding her on the same kind of hearty(營養豐富的) food that you yourself eat!' When the dog heard this, she said, 'If it weren't for me protecting you on every side, you would not even manage(成功做到) to get enough grass to eat! By running all around you, I ward off(擋開) the marauding(搶劫的) thief(賊) and the prowling(潛行) wolf(狼).'
+
+
+blossom （一朵）小花；植物上全部的小花 
+dew 露，露水 
+flourish 茁壯成長；繁榮；蓬勃發展 
+hearty 豐盛的；營養豐富的 
+manage 成功做到，順利完成（尤指困難之事） 
+marauding 搶劫的，掠奪的 
+meanwhile 在此期間；（與此）同時 
+midst 正當…的時候；在…之中 
+nourish 養育；滋養 
+profit 好處，益處 
+prosper （人或企業）成功；（尤指經濟上）繁榮，昌盛 
+prowling （打獵等時）悄悄來回游走（於），潛行，逡巡 
+shear 給（羊）剪（羊毛） 
+shepherd 牧羊人 
+thief 小偷，賊 
+ward off 避開；擋開；避免 
+wolf 狼 
+wool 羊毛；動物毛 
+
+

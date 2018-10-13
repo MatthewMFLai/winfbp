@@ -1,0 +1,5 @@
+name translate_ui
+filepath $env(DISK2)/component/bigEnglish/translate_ui
+init {translate}
+inports {1 2 3 4 5}
+outports {1 2 3 4 5}

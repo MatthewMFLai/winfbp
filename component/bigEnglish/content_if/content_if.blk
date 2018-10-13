@@ -1,0 +1,8 @@
+name content_if 
+filepath $env(DISK2)/component/bigEnglish/content_if
+init {1 /tmp/dummy.dat 100} 
+inports {1 2 3}
+outports {1 2 3}
+portset {PG1 1 ON}
+portset {PG1 2 ON}
+portset {PG1 3 ON}

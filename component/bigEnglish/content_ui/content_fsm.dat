@@ -1,0 +1,31 @@
+#Node section
+#Name process_proc
+BEGIN_STATE
+FIND_LEVEL_3 content_fsm::process_generic
+FIND_LEVEL_2 content_fsm::process_generic
+FIND_LEVEL_1 content_fsm::process_generic
+FIND_LEVEL_0 content_fsm::process_generic
+END_STATE
+
+#Link section
+#from_state to_state eval_proc action_proc
+BEGIN_LINK
+FIND_LEVEL_3 FIND_LEVEL_2 content_fsm::eval_level_3 content_fsm::act_level_3 
+FIND_LEVEL_2 FIND_LEVEL_1 content_fsm::eval_level_2 content_fsm::act_level_2
+FIND_LEVEL_1 FIND_LEVEL_0 content_fsm::eval_level_1 content_fsm::act_level_1
+FIND_LEVEL_0 FIND_LEVEL_0 content_fsm::eval_line content_fsm::act_content 
+FIND_LEVEL_0 FIND_LEVEL_0 content_fsm::eval_level_1 content_fsm::act_level_1
+FIND_LEVEL_0 FIND_LEVEL_1 content_fsm::eval_level_2 content_fsm::act_level_2
+FIND_LEVEL_0 FIND_LEVEL_2 content_fsm::eval_level_3 null
+FIND_LEVEL_0 FIND_LEVEL_3 content_fsm::eval_level_4 content_fsm::act_level_4
+END_LINK
+
+#Init section
+BEGIN_INIT
+proc = content_fsm::init
+END_INIT
+
+#Default state section
+BEGIN_DEFAULT_STATE
+state = FIND_LEVEL_0
+END_DEFAULT_STATE

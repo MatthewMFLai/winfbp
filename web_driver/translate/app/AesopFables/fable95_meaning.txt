@@ -1,0 +1,2 @@
+experience {經驗；經歷；實踐 經歷；閱歷 經歷；體會到，感受到} pleasant 令人愉快的；宜人的；親切友好的 seized {抓住；奪過 奪取；攫取；抓獲 沒收；查獲 （強烈情感或劇痛）突然侵襲} devour {狼吞虎嚥，吞食 吞噬，毀滅 如饑似渴地閱讀，貪婪地閱讀} opportunity {機遇；時機；機會；可能性 就業機會} opposite {相反的，對立的 對面的，相對的 對立面；對立物 在……對面 在對面，在對過} proceeded {繼續進行；繼續做（或講）下去 開始，著手，出發 進行，開展 發出，出自 （沿特定路線）行進 起訴} invited {邀請，約請 （尤指正式地）徵求，請求 引起，招致} birthday 生日 pretended 虛假的，假裝的
+opposite,7.125 0 pleasant,7.78 0 proceeded,5.172 0 seized,5.113 0 invited,5.47 0 birthday,5.34 0 experience,7.104 0 devour,5.185 0 pretended,5.8 0 opportunity,5.124 0

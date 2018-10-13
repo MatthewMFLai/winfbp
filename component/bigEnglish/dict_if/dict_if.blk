@@ -1,0 +1,4 @@
+name dict_if 
+filepath $env(DISK2)/component/bigEnglish/dict_if
+inports {1 2}
+outports {1 2}
