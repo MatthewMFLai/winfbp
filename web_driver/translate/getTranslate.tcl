@@ -38,7 +38,7 @@ proc fsm {tag slash param text} {
 # sanity mode 0: get real url data, parse with default fsm.
 # sanity mode 1: get real url data, parse with custom fsm.
 # sanity mode 2: get  url data from file, parse with custom fsm.
-set sanity_mode 0 
+set sanity_mode 1 
 Url::init
  
 if {$sanity_mode} {

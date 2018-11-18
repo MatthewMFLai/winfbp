@@ -34,7 +34,7 @@ proc doit {symbol url_template p_data} {
     }
     if {[catch {htmlparse::parse -cmd translate::fsm_if $data} rc]} {
     	Fsm::Init_Fsm translate_fsm
-    	Fsm::Set_State translate_fsm FIND_TITLE
+    	Fsm::Set_State translate_fsm FIND_WORD
         set web_data(urlerror) "$symbol FAIL htmlparse error"
 	set web_data(htmlparse_error) $rc
 	return
@@ -47,10 +47,10 @@ proc doit {symbol url_template p_data} {
     } else {
         set web_data(urlerror) "$symbol FAILfsm [Fsm::Get_Error translate_fsm]"
     	Fsm::Init_Fsm translate_fsm
-    	Fsm::Set_State translate_fsm FIND_TITLE
+    	Fsm::Set_State translate_fsm FIND_WORD
     }
     Fsm::Init_Fsm translate_fsm
-    Fsm::Set_State translate_fsm FIND_TITLE
+    Fsm::Set_State translate_fsm FIND_WORD
     return
 }
 

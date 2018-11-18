@@ -14,6 +14,11 @@ Fsm::Init
 Fsm::Load_Fsm translate_fsm.dat
 Fsm::Init_Fsm translate_fsm
 
+set fd [open url.template r]
+gets $fd url_template
+close $fd
+translate::init $url_template
+
 set wordfile [lindex $argv 0]
 set outfile [lindex $argv 1]
 
@@ -30,7 +35,7 @@ close $fd
 set fd [open $outfile "w"]
 foreach word $wordlist {
     puts "process $word ..."
-    array set tmpdata [translate::extract_data $word]
+    translate::extract_data $word tmpdata
     puts $fd "$tmpdata(symbol) $tmpdata(meanings)"
     unset tmpdata 
 }

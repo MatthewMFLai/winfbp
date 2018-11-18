@@ -1,6 +1,5 @@
 namespace eval translate_fsm {
 
-variable gWord
 variable gTranslatelist
 
 variable m_text
@@ -9,7 +8,6 @@ variable m_slash
 variable m_tag
 
 proc init {} {
-    variable gWord
     variable gTranslatelist
     
     variable m_text
@@ -17,7 +15,6 @@ proc init {} {
     variable m_slash
     variable m_tag
 
-    set gWord ""
     set gTranslatelist ""
 
     set m_text ""
@@ -40,43 +37,45 @@ proc process_generic {p_arg_array} {
     return
 }
 
-proc eval_word_to_explanation {} {
+proc eval_title_to_translate {} {
     variable m_param
-    if {[string first "fz-24" $m_param] > 0} {
+    if {[string first "def-body" $m_param] > 0} {
 	return 1
     }
     return 0
 }
 
-proc eval_explanation_to_terminate {} {
+proc eval_translate_to_title {} {
     variable m_param
-    if {[string first "dictionaryExplanation" $m_param] > 0} {
+
+    if {[string first {class="trans"} $m_param] == 0} {
 	return 1
     }
     return 0
 }
 
-proc act_word_to_explanation {} {
+proc eval_title_to_terminate {} {
     variable m_text
-    variable gWord
+    variable m_tag
 
-    set gWord $m_text
-    return
+    if {[string first "(Translation of" $m_text] == 0 &&
+        $m_tag == "small"} {
+	return 1
+    }
+    return 0
 }
 
-proc act_explanation_to_terminate {} {
-    variable m_text
+proc act_translate_to_title {} {
     variable gTranslatelist
+    variable m_text
 
-    set gTranslatelist $m_text
+    lappend gTranslatelist [string trim $m_text]
     return
 }
 
 proc Dump {} {
-    variable gWord
     variable gTranslatelist
 
-    puts "word = $gWord"
     puts "meanings = $gTranslatelist"
     return
 }
@@ -88,4 +87,3 @@ proc Dump_Translate {p_tmpdata} {
     return
 }
 }
-
