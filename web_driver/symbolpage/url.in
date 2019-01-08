@@ -1,7 +1,7 @@
 var page = require('webpage').create();
 var system = require('system');
 var group = system.args[1];
-var url = 'http://www.tmxmoney.com/en/research/listed_company_directory.html#B-T';
+var url = 'https://www.tmxmoney.com/en/research/listed_company_directory.html#B-T';
 
 var page2 = require('webpage').create();
 page2.onLoadFinished = function(status) {
